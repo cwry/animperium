@@ -9,6 +9,7 @@ public class GridManager: MonoBehaviour
 	//next two variables can also be instantiated using unity editor
 	public int gridWidthInHexes = 10;
 	public int gridHeightInHexes = 10;
+    public Vector3 offsetInit = new Vector3(0, 0, 0);
 
 	//Hexagon tile width and height in game world
 	private float hexWidth;
@@ -54,8 +55,7 @@ public class GridManager: MonoBehaviour
 	//Finally the method which initialises and positions all the tiles
 	void createGrid()
 	{
-		//Game object which is the parent of all the hex tiles
-		GameObject hexGridGO = new GameObject("HexGrid");
+        //Game object which is the parent of all the hex tiles
 
 		for (float y = 0; y < gridHeightInHexes; y++)
 		{
@@ -66,10 +66,12 @@ public class GridManager: MonoBehaviour
 				//Current position in grid
 				Vector2 gridPos = new Vector2(x, y);
 				hex.transform.position = calcWorldCoord(gridPos);
-				hex.transform.parent = hexGridGO.transform;
+				hex.transform.parent = gameObject.transform;
 			}
 		}
-	}
+
+        gameObject.transform.position = offsetInit;
+    }
 
 	//The grid should be generated on game start
 	void Start()
