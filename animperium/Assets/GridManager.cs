@@ -1,26 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GridManager: MonoBehaviour
+public class GridManager
 {
-	//following public variable is used to store the hex model prefab;
-	//instantiate it by dragging the prefab on this variable using unity editor
-	public GameObject Hex;
+    //following public variable is used to store the hex model prefab;
+    //instantiate it by dragging the prefab on this variable using unity editor
+    public GameObject container;
+	public GameObject hex;
 	//next two variables can also be instantiated using unity editor
 	public int gridWidthInHexes = 10;
 	public int gridHeightInHexes = 10;
+    public bool isMainGrid = true;
     public Vector3 offsetInit = new Vector3(0, 0, 0);
+    public GameObject[,] gridData;
 
-	//Hexagon tile width and height in game world
-	private float hexWidth;
+    //Hexagon tile width and height in game world
+    private float hexWidth;
 	private float hexHeight;
 
-	//Method to initialise Hexagon width and height
-	void setSizes()
+    public GridManager(GameObject hex, int gridWidthInHexes, int gridHeightInHexes, bool isMainGrid, Vector2 offsetInit){
+        container = new GameObject("grid container " + (isMainGrid ? "main" : "sub"));
+        this.hex = hex;
+        this.gridWidthInHexes = gridWidthInHexes;
+        this.gridHeightInHexes = gridHeightInHexes;
+        this.isMainGrid = isMainGrid;
+        this.offsetInit = offsetInit;
+
+        setSizes();
+        createGrid();
+    }
+
+    //Method to initialise Hexagon width and height
+    void setSizes()
 	{
+        Debug.Log(hex);
 		//renderer component attached to the Hex prefab is used to get the current width and height
-		hexWidth =  Hex.GetComponent<Renderer>().bounds.size.x;
-		hexHeight = Hex.GetComponent<Renderer>().bounds.size.z;
+		hexWidth =  hex.GetComponent<Renderer>().bounds.size.x;
+		hexHeight = hex.GetComponent<Renderer>().bounds.size.z;
 
 	}
 
@@ -37,7 +53,7 @@ public class GridManager: MonoBehaviour
 	}
 
 	//method used to convert hex grid coordinates to game world coordinates
-	public Vector3 calcWorldCoord(Vector2 gridPos)
+	public Vector3 calcWorldCoord(Vector2 gridPos) 
 	{
 		//Position of the first hex tile
 		Vector3 initPos = calcInitPos();
@@ -49,34 +65,34 @@ public class GridManager: MonoBehaviour
 		float x =  initPos.x + offset + gridPos.x * hexWidth;
 		//Every new line is offset in z direction by 3/4 of the hexagon height
 		float z = initPos.z - gridPos.y * hexHeight * 0.75f;
-		return new Vector3(x, 0, z);
+
+        Vector3 finalPos = new Vector3(x, 0, z) + offsetInit;
+
+        return finalPos;
 	}
 
-	//Finally the method which initialises and positions all the tiles
-	void createGrid()
-	{
+    //Finally the method which initialises and positions all the tiles
+    void createGrid()
+    {
         //Game object which is the parent of all the hex tiles
+        gridData = new GameObject[gridWidthInHexes, gridHeightInHexes];
 
-		for (float y = 0; y < gridHeightInHexes; y++)
+        for (int y = 0; y < gridHeightInHexes; y++)
 		{
-			for (float x = 0; x < gridWidthInHexes; x++)
+			for (int x = 0; x < gridWidthInHexes; x++)
 			{
 				//GameObject assigned to Hex public variable is cloned
-				GameObject hex = (GameObject)Instantiate(Hex);
+             
+				GameObject hexClone = (GameObject)UnityEngine.Object.Instantiate(hex);
 				//Current position in grid
 				Vector2 gridPos = new Vector2(x, y);
-				hex.transform.position = calcWorldCoord(gridPos);
-				hex.transform.parent = gameObject.transform;
+				hexClone.transform.position = calcWorldCoord(gridPos);
+                hexClone.transform.parent = container.transform;
+
+                gridData[x, y] = hexClone;
 			}
 		}
 
-        gameObject.transform.position = offsetInit;
+        container.transform.position = offsetInit;
     }
-
-	//The grid should be generated on game start
-	void Start()
-	{
-		setSizes();
-		createGrid();
-	}
 }
