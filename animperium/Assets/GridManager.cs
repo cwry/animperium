@@ -33,7 +33,6 @@ public class GridManager
     //Method to initialise Hexagon width and height
     void setSizes()
 	{
-        Debug.Log(hex);
 		//renderer component attached to the Hex prefab is used to get the current width and height
 		hexWidth =  hex.GetComponent<Renderer>().bounds.size.x;
 		hexHeight = hex.GetComponent<Renderer>().bounds.size.z;
