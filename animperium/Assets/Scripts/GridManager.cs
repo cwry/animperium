@@ -83,6 +83,7 @@ public class GridManager
 				//GameObject assigned to Hex public variable is cloned
              
 				GameObject hexClone = (GameObject)UnityEngine.Object.Instantiate(hex);
+                hexClone.name = "Hex (" + x + "|" + y + ")"; 
 				//Current position in grid
 				Vector2 gridPos = new Vector2(x, y);
 				hexClone.transform.position = calcWorldCoord(gridPos);

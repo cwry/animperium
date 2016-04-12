@@ -10,33 +10,33 @@ public class PathNode{
     public int x;
     public int y;
 
-    public bool isMain;
+    public GridManager grid;
 
     PathNode parent;
 
-    public PathNode(int x, int y, bool isMain){
+    public PathNode(int x, int y, GridManager grid){
         this.x = x;
         this.y = y;
-        this.isMain = isMain;
+        this.grid = grid;
     }
 
-    public PathNode(int x, int y, bool isMain, int goalX, int goalY, PathNode parent){
+    public PathNode(int x, int y, GridManager grid, int goalX, int goalY, PathNode parent){
         this.x = x;
         this.y = y;
         this.parent = parent;
-        this.isMain = isMain;
+        this.grid = grid;
         evalCost(goalX, goalY);
     }
 
     void evalCost(int goalX, int goalY){
         g = parent.g + 1;
-        Vector3 goal = Data.getGridHex(goalX, goalY, isMain).transform.position;
-        Vector3 current = Data.getGridHex(goalX, goalY, isMain).transform.position;
+        Vector3 goal = grid.gridData[x, y].transform.position;
+        Vector3 current = grid.gridData[goalX, goalY].transform.position;
         h = Mathf.Abs(goal.x - current.x) + Mathf.Abs(goal.z - current.z);
         f = g + h;
     }
 
-    void tryAlternative(PathNode alt){
+    public void tryAlternative(PathNode alt){
         float altG = alt.g + 1;
         if(altG < g){
             parent = alt;
@@ -45,7 +45,7 @@ public class PathNode{
         }
     }
 
-    Vec2i[] toPath(){
+    public Vec2i[] toPath(){
         Stack<Vec2i> path = new Stack<Vec2i>();
         PathNode current = this;
         while(current != null){
