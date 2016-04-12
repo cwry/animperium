@@ -64,6 +64,8 @@
     <Compile Include="Assets\Scripts\Data.cs" />
     <Compile Include="Assets\Scripts\EntryPoint.cs" />
     <Compile Include="Assets\Scripts\GridManager.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
+    <Compile Include="Assets\Scripts\Vec2i.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
