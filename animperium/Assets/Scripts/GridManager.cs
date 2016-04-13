@@ -65,9 +65,7 @@ public class GridManager
 		//Every new line is offset in z direction by 3/4 of the hexagon height
 		float z = initPos.z - gridPos.y * hexHeight * 0.75f;
 
-        Vector3 finalPos = new Vector3(x, 0, z) + offsetInit;
-
-        return finalPos;
+        return new Vector3(x, 0, z);
 	}
 
     //Finally the method which initialises and positions all the tiles

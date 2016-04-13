@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class PathFinding{
-    public static Vec2i[] findPath(GridManager grid, int startX, int startY, int goalX, int goalY){
+    public static Vec2i[] findPath(GridManager grid, int startX, int startY, int goalX, int goalY, Func<Vec2i, bool> checkTraversable){
         List<PathNode> reachable = new List<PathNode>();
         List<PathNode> visited = new List<PathNode>();
         reachable.Add(new PathNode(startX, startY, grid));
@@ -33,7 +34,7 @@ public class PathFinding{
                     }
                 }
 
-                if (!gotVisited){  // && traversable
+                if (!gotVisited && checkTraversable(hex)){  // && traversable
                     bool isReachable = false;
                     foreach(PathNode rNode in reachable){
                         if(hex.x == rNode.x && hex.y == rNode.y){
