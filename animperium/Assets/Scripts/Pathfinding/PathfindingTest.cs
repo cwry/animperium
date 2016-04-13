@@ -15,10 +15,19 @@ public class PathfindingTest : MonoBehaviour {
                 collisionGrid[x, y] = perlin;
             }
         }
-        Vec2i[] path = PathFinding.findPath(Data.mainGrid, 25, 29, 21, 11, (Vec2i hex) => { return collisionGrid[hex.x, hex.y]; });
+
+
+        Vec2i[] path = PathFinding.findPath(Data.mainGrid, 25, 29, 21, 11, 
+            (Vec2i hex) => {
+                return collisionGrid[hex.x, hex.y];
+            });
+
+        PathMovement.move(gameObject, Data.mainGrid, path, 3f);
+
+
+
         if (path == null) return;
-        foreach (Vec2i v in path)
-        {
+        foreach (Vec2i v in path){
             //Debug.Log(v.x + " | " + v.y);
             Data.mainGrid.gridData[v.x, v.y].GetComponent<Renderer>().material.color = Color.red;
         }

@@ -34,7 +34,7 @@ public class PathFinding{
                     }
                 }
 
-                if (!gotVisited && checkTraversable(hex)){  // && traversable
+                if (!gotVisited && checkTraversable(hex)){ 
                     bool isReachable = false;
                     foreach(PathNode rNode in reachable){
                         if(hex.x == rNode.x && hex.y == rNode.y){
