@@ -48,14 +48,17 @@
      <Compile Include="Assets\Scripts\CameraFocus.cs" />
      <Compile Include="Assets\Scripts\Data.cs" />
      <Compile Include="Assets\Scripts\EntryPoint.cs" />
+     <Compile Include="Assets\Scripts\EventSystem.cs" />
      <Compile Include="Assets\Scripts\GameObjectAction.cs" />
      <Compile Include="Assets\Scripts\GameObjectFilter.cs" />
      <Compile Include="Assets\Scripts\GridManager.cs" />
      <Compile Include="Assets\Scripts\HexagonUtil.cs" />
      <Compile Include="Assets\Scripts\InputManager.cs" />
+     <Compile Include="Assets\Scripts\PathMovement.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\PathfindingTest.cs" />
+     <Compile Include="Assets\Scripts\TileInfo.cs" />
      <Compile Include="Assets\Scripts\Vec2i.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
