@@ -23,9 +23,10 @@ public class PathFinding{
             visited.Add(cheapest);
             reachable.Remove(cheapest);
 
-            Vec2i[] adjacent = getAdjacent(grid, cheapest.x, cheapest.y);
+            GameObject[] adjacent = grid.gridData[cheapest.x, cheapest.y].GetComponent<TileInfo>().getAdjacent();
 
-            foreach(Vec2i hex in adjacent){
+            foreach(GameObject go in adjacent){
+                Vec2i hex = go.GetComponent<TileInfo>().gridPosition;
                 bool gotVisited = false;
                 foreach(PathNode vNode in visited){
                     if(hex.x == vNode.x && hex.y == vNode.y){
@@ -54,70 +55,4 @@ public class PathFinding{
         }
         return null;
     }
-
-    private static bool isInBounds(GridManager grid, int x, int y){
-        var maxW = Data.mainGrid.gridWidthInHexes;
-        var maxH = Data.mainGrid.gridHeightInHexes;
-        return x >= 0 && x < maxW && y >= 0 && y < maxH;
-    }
-
-    private static Vec2i getNE(GridManager grid, int x, int y){
-        int nx = x + (y % 2 == 1 ? 1 : 0);
-        int ny = y + 1;
-        isInBounds(grid, nx, ny);
-        return isInBounds(grid, nx, ny) ? new Vec2i(nx, ny) : null;
-    }
-
-    private static Vec2i getE(GridManager grid, int x, int y){
-        int nx = x + 1;
-        int ny = y;
-        isInBounds(grid, nx, ny);
-        return isInBounds(grid, nx, ny) ? new Vec2i(nx, ny) : null;
-    }
-
-    private static Vec2i getSE(GridManager grid, int x, int y){
-        int nx = x + (y % 2 == 1 ? 1 : 0);
-        int ny = y - 1;
-        isInBounds(grid, nx, ny);
-        return isInBounds(grid, nx, ny) ? new Vec2i(nx, ny) : null;
-    }
-
-    private static Vec2i getSW(GridManager grid, int x, int y){
-        int nx = x - (y % 2 == 0 ? 1 : 0);
-        int ny = y - 1;
-        isInBounds(grid, nx, ny);
-        return isInBounds(grid, nx, ny) ? new Vec2i(nx, ny) : null;
-    }
-
-    private static Vec2i getW(GridManager grid, int x, int y){
-        int nx = x - 1;
-        int ny = y;
-        isInBounds(grid, nx, ny);
-        return isInBounds(grid, nx, ny) ? new Vec2i(nx, ny) : null;
-    }
-
-    private static Vec2i getNW(GridManager grid, int x, int y){
-        int nx = x - (y % 2 == 0 ? 1 : 0);
-        int ny = y + 1;
-        isInBounds(grid, nx, ny);
-        return isInBounds(grid, nx, ny) ? new Vec2i(nx, ny) : null;
-    }
-
-    private static Vec2i[] getAdjacent(GridManager grid, int x , int y){
-        List<Vec2i> adjacent = new List<Vec2i>();
-        Vec2i ne = getNE(grid, x, y);
-        Vec2i e = getE(grid, x, y);
-        Vec2i se = getSE(grid, x, y);
-        Vec2i sw = getSW(grid, x, y);
-        Vec2i w = getW(grid, x, y);
-        Vec2i nw = getNW(grid, x, y);
-        if (ne != null) adjacent.Add(ne);
-        if (e != null) adjacent.Add(e);
-        if (se != null) adjacent.Add(se);
-        if (sw != null) adjacent.Add(sw);
-        if (w != null) adjacent.Add(w);
-        if (nw != null) adjacent.Add(nw);
-        return adjacent.ToArray();
-    }
-
 }

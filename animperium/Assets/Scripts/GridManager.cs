@@ -88,6 +88,9 @@ public class GridManager
                 hexClone.transform.parent = container.transform;
 
                 gridData[x, y] = hexClone;
+                TileInfo info = hexClone.AddComponent<TileInfo>();
+                info.grid = this;
+                info.gridPosition = new Vec2i(x, y);
 			}
 		}
 
