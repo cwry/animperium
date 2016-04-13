@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\CameraFocus.cs" />
     <Compile Include="Assets\Scripts\Data.cs" />
     <Compile Include="Assets\Scripts\EntryPoint.cs" />
+    <Compile Include="Assets\Scripts\EventSystem.cs" />
     <Compile Include="Assets\Scripts\GridManager.cs" />
     <Compile Include="Assets\Scripts\HexagonUtil.cs" />
     <Compile Include="Assets\Scripts\PathMovement.cs" />
