@@ -11,6 +11,10 @@ public class CameraFocus : MonoBehaviour {
 
 	private float offSet = 10f;
 	private float speed = 5f;
+	private float trembelPuffer = 3f;
+
+	private bool focusLock = false;
+	private bool isMainGrid;
 
 	// Use this for initialization
 	void Start () {
@@ -19,44 +23,109 @@ public class CameraFocus : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		MousePositionHandling ();
+		InputHandling ();
 	}
 
 	private void StartPosition()
 	{
-		int d1;
-		int d2;
-		if(Data.mainGrid.gridWidthInHexes % 2 == 0)  d1 = Data.mainGrid.gridWidthInHexes / 2;
-		else  d1 = (Data.mainGrid.gridWidthInHexes - 1) / 2;
-		if(Data.mainGrid.gridWidthInHexes % 2 == 0)  d2 = Data.mainGrid.gridWidthInHexes / 2;
-		else  d2 = (Data.mainGrid.gridWidthInHexes - 1) / 2;
-		GameObject hexMiddle = Data.mainGrid.gridData [d1, d2];
-		cam.transform.position = new Vector3 (hexMiddle.transform.position.x, offSet, hexMiddle.transform.position.z - offSet);
+		isMainGrid = true;
+		CameraJumpInStageMiddle (isMainGrid);
 	}
 
-	private void MousePositionHandling()
+	private void CameraJumpInStageMiddle(bool mainGridBool)
 	{
-		Vector3 mousePosition = Input.mousePosition;
+		if (mainGridBool) {
+			int d1;
+			int d2;
+			if (Data.mainGrid.gridWidthInHexes % 2 == 0)
+				d1 = Data.mainGrid.gridWidthInHexes / 2;
+			else
+				d1 = (Data.mainGrid.gridWidthInHexes - 1) / 2;
+			if (Data.mainGrid.gridWidthInHexes % 2 == 0)
+				d2 = Data.mainGrid.gridWidthInHexes / 2;
+			else
+				d2 = (Data.mainGrid.gridWidthInHexes - 1) / 2;
+			GameObject hexMiddle = Data.mainGrid.gridData [d1, d2];
+			CameraJump (hexMiddle);
+		}
+		else{
+			int d1;
+			int d2;
+			if (Data.subGrid.gridWidthInHexes % 2 == 0)
+				d1 = Data.subGrid.gridWidthInHexes / 2;
+			else
+				d1 = (Data.subGrid.gridWidthInHexes - 1) / 2;
+			if (Data.subGrid.gridWidthInHexes % 2 == 0)
+				d2 = Data.subGrid.gridWidthInHexes / 2;
+			else
+				d2 = (Data.subGrid.gridWidthInHexes - 1) / 2;
+			GameObject hexMiddle = Data.subGrid.gridData [d1, d2];
+			CameraJump (hexMiddle);
+		}
+	}
+	private void CameraJump(GameObject target)
+	{
+		cam.transform.position = new Vector3 (target.transform.position.x, offSet, target.transform.position.z - offSet);
+	}
+	private void InputHandling()
+	{
+		if (!focusLock) {
+			#region mousePositionHandling
+			Vector3 mousePosition = Input.mousePosition;
+			if (mousePosition.x >= Screen.width * 0.9f && mousePosition.y >= Screen.height * 0.9f) {
+				Vector3 direction = Vector3.right + Vector3.forward;
+				CameraMove (direction);
+			} else if (mousePosition.x >= Screen.width * 0.9f && mousePosition.y <= Screen.height * 0.1f) {
+				Vector3 direction = Vector3.right + Vector3.back;
+				CameraMove (direction);
+			} else if (mousePosition.x <= Screen.width * 0.1f && mousePosition.y <= Screen.height * 0.1f) {
+				Vector3 direction = Vector3.left + Vector3.back;
+				CameraMove (direction);
+			} else if (mousePosition.x <= Screen.width * 0.1f && mousePosition.y >= Screen.height * 0.9f) {
+				Vector3 direction = Vector3.left + Vector3.forward;
+				CameraMove (direction);
+			} else if (mousePosition.x >= Screen.width * 0.9f)
+				CameraMove (Vector3.right);
+			else if (mousePosition.x <= Screen.width * 0.1f)
+				CameraMove (Vector3.left);
+			else if (mousePosition.y >= Screen.height * 0.9f)
+				CameraMove (Vector3.forward);
+			else if (mousePosition.y <= Screen.height * 0.1f)
+				CameraMove (Vector3.back);
+			#endregion
 
-		if (mousePosition.x >= Screen.width * 0.9f)
-			CameraMove (Vector3.right);
-		else if (mousePosition.x <= Screen.width * 0.1f)
-			CameraMove (Vector3.left);
-		else if (mousePosition.y >= Screen.height * 0.9f)
-			CameraMove (Vector3.forward);
-		else if (mousePosition.y <= Screen.height * 0.1f)
-			CameraMove (Vector3.back);
+			if (Input.GetKeyDown (KeyCode.T)) {
+				if (isMainGrid) {
+					isMainGrid = false;
+					CameraJumpInStageMiddle (isMainGrid);
+				} else {
+					isMainGrid = true;
+					CameraJumpInStageMiddle (isMainGrid);
+				}
+			}
+		}
 	}
 
+	private void FocusHandling(Vector3 target)
+	{
+		Vector3 direction = target - cam.transform.position;
+		Vector3.Normalize (direction);
+		while (target != Vector3.zero && cam.transform.position.x <= target.x + trembelPuffer && cam.transform.position.z <= target.z + trembelPuffer
+			&& cam.transform.position.x >= target.x  && cam.transform.position.z >= target.z ) {
+			CameraMove (direction);
+		}
+		focusLock = false;
+	}
 	private void CameraMove(Vector3 direction)
 	{
 		cam.transform.position += direction * speed * Time.deltaTime;
-
 	}
 
 	public  void cameraFocusHex(GameObject hex)
 	{
-		cam.transform.position = new Vector3 (hex.transform.position.x, offSet, hex.transform.position.z - offSet);
+		focusLock = true;
+		Vector3 targetPosition = new Vector3 (hex.transform.position.x, offSet, hex.transform.position.z - offSet);
+		FocusHandling (targetPosition);
 	}
 
 }
