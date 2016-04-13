@@ -83,7 +83,7 @@ public class PathFinding{
     }
 
     private static Vec2i getSW(GridManager grid, int x, int y){
-        int nx = x - (y % 2 == 1 ? 1 : 0);
+        int nx = x - (y % 2 == 0 ? 1 : 0);
         int ny = y - 1;
         isInBounds(grid, nx, ny);
         return isInBounds(grid, nx, ny) ? new Vec2i(nx, ny) : null;
@@ -97,7 +97,7 @@ public class PathFinding{
     }
 
     private static Vec2i getNW(GridManager grid, int x, int y){
-        int nx = x - (y % 2 == 1 ? 1 : 0);
+        int nx = x - (y % 2 == 0 ? 1 : 0);
         int ny = y + 1;
         isInBounds(grid, nx, ny);
         return isInBounds(grid, nx, ny) ? new Vec2i(nx, ny) : null;
