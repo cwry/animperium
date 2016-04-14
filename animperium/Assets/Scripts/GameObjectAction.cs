@@ -3,13 +3,13 @@ using System.Collections;
 
 public class GameObjectAction {
 
-	GameObjectFilter filter;
-	GameObject gameObject;
+    GameObject gameObject;
+	
 
 	// Use this for initialization
 	public GameObjectAction ()
 	{
-		filter = new GameObjectFilter ();
+      
 	}
 
 
@@ -31,11 +31,19 @@ public class GameObjectAction {
 
 	private void ActionByType()
 	{
-		switch(filter.TypeOfGameObject(gameObject))
-		{
-		case "Hex":
-			Camera.main.gameObject.GetComponent<CameraFocus> ().CameraFocusHex (gameObject);
-			break;
-		}
+        if (SelectionManager.selectedItem == null)
+        {
+            switch (GameObjectFilter.TypeOfGameObject(gameObject))
+            {
+                case "Hex":
+                    Camera.main.gameObject.GetComponent<CameraFocus>().CameraFocusHex(gameObject);
+                    break;
+
+            }
+        }
+        else
+        {
+            SelectionManager.SelectAction(gameObject);
+        }
 	}
 }

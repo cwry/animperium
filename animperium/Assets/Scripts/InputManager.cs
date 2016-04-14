@@ -3,11 +3,11 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 
-	GameObjectAction actionManager;
+	
 
 	// Use this for initialization
 	void Start () {
-		actionManager = new GameObjectAction();
+		
 	}
 	
 	// Update is called once per frame
@@ -22,9 +22,26 @@ public class InputManager : MonoBehaviour {
 
 	private void ListenMouseInput()
 	{
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (1)) {
 			RaycastFromMouse ();
 			}
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (SelectionManager.selectedItem != null)
+            {
+                SelectionManager.Deselect();
+            }
+            else
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    SelectionManager.SelectObject(hit.collider.gameObject);
+                }
+            }
+        }
 	}
 
 
@@ -34,8 +51,28 @@ public class InputManager : MonoBehaviour {
 		RaycastHit hit;
 
 		if (Physics.Raycast (ray, out hit)) {
-			actionManager.Action (hit.collider.gameObject);
+            Action(hit.collider.gameObject);
 		}
 		
 	}
+
+    public void Action(GameObject g)
+    {
+
+        GameObject target = g;
+        if (SelectionManager.selectedItem == null)
+        {
+            switch (GameObjectFilter.TypeOfGameObject(target))
+            {
+                case "Hex":
+                    Camera.main.gameObject.GetComponent<CameraFocus>().CameraFocusHex(target);
+                    break;
+
+            }
+        }
+        else
+        {
+            SelectionManager.SelectAction(target);
+        }
+    }
 }

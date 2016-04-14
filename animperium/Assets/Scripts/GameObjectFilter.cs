@@ -8,11 +8,16 @@ public class GameObjectFilter {
 	
 	}
 	
-	public string TypeOfGameObject(GameObject g)
+	public static string TypeOfGameObject(GameObject g)
 	{
-		if(g.name.Contains("Hex"))
-			return "Hex";
-
+        if (g.name.Contains("Hex"))
+        {
+            return "Hex";
+        }
+        else if(g.name.Contains("Swordfighter"))
+        {
+            return "Swordfighter";
+        }
 		return null;
 		}
 }
