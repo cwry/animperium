@@ -11,7 +11,7 @@ public class CameraFocus : MonoBehaviour {
 	}
 
 	private float offSet = 10f;
-	private float dampen = 1f;
+	private float dampen = 8f;
 	private float dampenFocus = 2f;
 
 	private bool focusLock = false;
