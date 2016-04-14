@@ -21,6 +21,12 @@ public class UnitData {
             moveRange = 3;
             damage = 25;
         }
+       else if (GameObjectFilter.TypeOfGameObject(unit) == "Archer")
+        {
+            health = 65;
+            moveRange = 5;
+            damage = 35;
+        }
     }
 
     

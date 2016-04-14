@@ -25,13 +25,18 @@ public class UnitFunctions {
             move = Move;
 
         }
+        else if (GameObjectFilter.TypeOfGameObject(g) == "Archer")
+        {
+            attack = ArcherAttack;
+            move = Move;
+        }
     }
 	
     private void SwordfighterAttack(GameObject enemy)
     {
-        GameObject[] gA = enemy.GetComponent<TileInfo>().getAdjacent();
+        GameObject[] hexNeighbours = enemy.GetComponent<TileInfo>().getAdjacent();
         bool neighbour = false;
-        foreach (GameObject g in gA)
+        foreach (GameObject g in hexNeighbours)
         {
             if(g == enemy)
             {
@@ -44,8 +49,32 @@ public class UnitFunctions {
         }
     }
 
+    private void ArcherAttack(GameObject enemy)
+    {
+        GameObject[] hexNeighbours = enemy.GetComponent<TileInfo>().getAdjacent();
+        GameObject[][] hexNeighbours2= new GameObject[hexNeighbours.Length][];
 
-    //Hier korrigieren ###################################################################
+        for (int i = 0; i < hexNeighbours.Length; i++)
+        {
+            hexNeighbours2[i] = hexNeighbours[i].GetComponent<TileInfo>().getAdjacent();
+        }
+        bool neighbour = false;
+        foreach (GameObject[] gA in hexNeighbours2)
+        {
+            foreach (GameObject g in gA)
+            {
+                if (g == enemy)
+                {
+                    neighbour = true;
+                }
+            }
+        }
+        if (neighbour)
+        {
+            enemy.GetComponent<Unit>().data.health -= 25;
+        }
+    }
+
     private void Move(GameObject targetHex)
     {
         Debug.Log("sollte moven");
@@ -59,6 +88,10 @@ public class UnitFunctions {
            });
         PathMovement.move(gameObject, Data.mainGrid, path, 3f);
     }
-
-
 }
+
+    //Hier korrigieren ###################################################################
+  
+
+
+
