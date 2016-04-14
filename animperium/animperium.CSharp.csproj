@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathfindingTest.cs" />
     <Compile Include="Assets\Scripts\TileInfo.cs" />
+    <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Vec2i.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
