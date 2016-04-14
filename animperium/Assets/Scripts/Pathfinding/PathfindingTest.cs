@@ -22,7 +22,7 @@ public class PathfindingTest : MonoBehaviour {
                 return collisionGrid[hex.x, hex.y];
             });
 
-        PathMovement.move(gameObject, Data.mainGrid, path, 3f);
+        PathMovement.move(gameObject, Data.mainGrid, path, 3f, (GameObject go) => { Debug.Log(go.name + " is done following path"); });
 
 
         GameEvent onSuperAwesome = new GameEvent();
