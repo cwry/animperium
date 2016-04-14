@@ -25,6 +25,14 @@ public class PathfindingTest : MonoBehaviour {
         PathMovement.move(gameObject, Data.mainGrid, path, 3f);
 
 
+        GameEvent onSuperAwesome = new GameEvent();
+
+
+        onSuperAwesome.add<string>((string str) => { Debug.Log(str); });
+
+        onSuperAwesome.fire("super awesome event");
+
+
 
         if (path == null) return;
         foreach (Vec2i v in path){
