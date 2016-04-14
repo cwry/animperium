@@ -5,7 +5,7 @@ public class PathfindingTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        bool[,] collisionGrid = new bool[Data.mainGrid.gridHeightInHexes, Data.mainGrid.gridWidthInHexes];
+        /*bool[,] collisionGrid = new bool[Data.mainGrid.gridHeightInHexes, Data.mainGrid.gridWidthInHexes];
         for(int y = 0; y < Data.mainGrid.gridHeightInHexes; y++){
             for(int x = 0; x < Data.mainGrid.gridWidthInHexes; x++){
                 GameObject tile = Data.mainGrid.gridData[x, y];
@@ -14,12 +14,12 @@ public class PathfindingTest : MonoBehaviour {
                 tile.GetComponent<Renderer>().material.color = new Color(clr, clr, clr, 1);
                 collisionGrid[x, y] = perlin;
             }
-        }
+        }*/
 
 
-        Vec2i[] path = PathFinding.findPath(Data.mainGrid, 25, 29, 21, 11, 
+        Vec2i[] path = PathFinding.findPath(Data.mainGrid, 42, 30, 10, 10, 
             (Vec2i hex) => {
-                return collisionGrid[hex.x, hex.y];
+                return Data.mainGrid.gridData[hex.x, hex.y].GetComponent<TileInfo>().traversable;
             });
 
         PathMovement.move(gameObject, Data.mainGrid, path, 3f, (GameObject go) => { Debug.Log(go.name + " is done following path"); });

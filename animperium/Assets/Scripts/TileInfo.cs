@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class TileInfo : MonoBehaviour {
     public Vec2i gridPosition;
     public GridManager grid;
+    public bool traversable;
 
     private bool isInBounds(int x, int y){
         var maxW = grid.gridWidthInHexes;

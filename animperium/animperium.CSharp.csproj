@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\GameObjectFilter.cs" />
     <Compile Include="Assets\Scripts\GridManager.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
+    <Compile Include="Assets\Scripts\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\PathMovement.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
