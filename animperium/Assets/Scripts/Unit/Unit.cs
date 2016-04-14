@@ -5,8 +5,7 @@ public class Unit : MonoBehaviour {
 
     public UnitData data;
     public UnitFunctions functions;
-    private GameObject currentHex;
-    
+    public GameObject currentTile;
 
 
 	// Use this for initialization

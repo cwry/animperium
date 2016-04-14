@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathfindingTest.cs" />
     <Compile Include="Assets\Scripts\SelectionManager.cs" />
+    <Compile Include="Assets\Scripts\TeleportMovement.cs" />
     <Compile Include="Assets\Scripts\TileInfo.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />

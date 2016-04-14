@@ -6,6 +6,33 @@ public class TileInfo : MonoBehaviour {
     public Vec2i gridPosition;
     public GridManager grid;
     public bool traversable;
+    public GameObject unit;
+    public GameEvent onUnitDetached = new GameEvent();
+    public GameEvent onUnitAttached = new GameEvent();
+
+    void Awake(){
+        onUnitDetached.add<GameObject>((GameObject go) => {
+            if (go == null) return;
+            Unit u = go.GetComponent<Unit>();
+            if(u != null){
+                u.currentTile = null;
+            }
+        });
+        onUnitAttached.add<GameObject>((GameObject go) => {
+            Unit u = go.GetComponent<Unit>();
+            if (u != null){
+                u.currentTile = go;
+            }
+        });
+    }
+
+    public void detachUnit(){
+        onUnitDetached.fire(unit);
+    }
+
+    public void attachUnit(GameObject go){
+        onUnitAttached.fire(go);
+    }
 
     private bool isInBounds(int x, int y){
         var maxW = grid.gridWidthInHexes;

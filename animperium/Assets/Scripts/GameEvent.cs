@@ -6,11 +6,13 @@ using System;
 public class GameEvent {
     private List<Action<object>> callbacks = new List<Action<object>>();
 
-    public void add<T1>(Action<T1> callback){
-        callbacks.Add((data) => { callback((T1)data); });
+    public Action add<T1>(Action<T1> callback){
+        Action<object> boundCallBack = (data) => { callback((T1)data); };
+        callbacks.Add(boundCallBack);
+        return () => { callbacks.Remove(boundCallBack); };
     }
 
-    public void fire(object data) {
+    public void fire(object data = null) {
         foreach(Action<object> a in callbacks){
             a(data);
         }

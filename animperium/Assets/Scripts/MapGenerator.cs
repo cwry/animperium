@@ -24,7 +24,8 @@ public class MapGenerator : MonoBehaviour {
             for(var x = 0; x < grid.gridWidthInHexes; x++){
                 GameObject tile = grid.gridData[x, y];
                 int perlin = mapPerlin(samplePerlin(tile.transform.position));
-                tile.GetComponent<TileInfo>().traversable = perlin == 1;
+                TileInfo info = tile.GetComponent<TileInfo>();
+                info.traversable = perlin == 1;
 
                 Color clr = Color.black;
 

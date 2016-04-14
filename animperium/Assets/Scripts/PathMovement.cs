@@ -8,13 +8,18 @@ public class PathMovement : MonoBehaviour {
     public GridManager grid;
     public float speed;
     public bool init = true;
-    GameEvent onDone = new GameEvent();
+    Action<GameObject> callback;
 
     float progress = 0;
 	
 	// Update is called once per frame
 	void Update () {
 	    if(path != null && path.Length > 0 && grid != null){
+            if (init){
+                init = false;
+                TileInfo inf = grid.gridData[path[0].x, path[0].y].GetComponent<TileInfo>();
+                inf.detachUnit();
+            }
             if(progress < path.Length - 1){
                 int progI = (int) Mathf.Floor(progress);
                 Vec2i fromI = path[progI];
@@ -28,8 +33,10 @@ public class PathMovement : MonoBehaviour {
                 progress += Time.deltaTime * speed / dir.magnitude;
             }else{
                 Vec2i posI = path[path.Length - 1];
-                transform.position = grid.gridData[posI.x, posI.y].transform.position;
-                onDone.fire(gameObject);
+                GameObject tile = grid.gridData[posI.x, posI.y];
+                transform.position = tile.transform.position;
+                tile.GetComponent<TileInfo>().attachUnit(gameObject);
+                if (callback != null) callback(gameObject);
                 Destroy(this);
             }
         }
@@ -41,7 +48,7 @@ public class PathMovement : MonoBehaviour {
         pm.speed = speed;
         pm.path = path;
         if (callback != null){
-            pm.onDone.add(callback);
+            pm.callback = callback;
         }
     }
 }
