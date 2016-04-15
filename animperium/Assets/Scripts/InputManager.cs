@@ -2,29 +2,39 @@
 using System.Collections;
 
 public class InputManager : MonoBehaviour {
-
 	
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
 	void Update () {
-		ListenInput ();
+        GameObject tileHover = getTileHover();
+        SelectionManager.hoverTile = tileHover;
+        setSelection(tileHover);
 	}
 
-	private void ListenInput()
-	{
-		ListenMouseInput ();
-	}
+    private GameObject getTileHover(){
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
-	private void ListenMouseInput()
+        if (Physics.Raycast(ray, out hit)){
+            return hit.collider.gameObject;
+        }
+        return null;
+    }
+
+    private void setSelection(GameObject hover){
+        if (Input.GetMouseButtonDown(0)){
+            SelectionManager.selectedTile = hover;
+        }
+    }
+
+    /*private void ListenInput()
+    {
+        ListenMouseInput();
+    }
+
+    private void ListenMouseInput()
 	{
 		if (Input.GetMouseButtonDown (1)) {
 			RaycastFromMouse ();
-			}
+	    }
         if (Input.GetMouseButtonDown(0))
         {
             if (SelectionManager.selectedItem != null && SelectionManager.selectedItem.tag != "Unit")
@@ -74,5 +84,5 @@ public class InputManager : MonoBehaviour {
         {
             SelectionManager.SelectAction(target);
         }
-    }
+    }*/
 }

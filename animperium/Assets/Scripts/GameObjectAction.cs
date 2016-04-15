@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameObjectAction {
 
-    GameObject gameObject;
+    /*GameObject gameObject;
 	
 
 	// Use this for initialization
@@ -45,5 +45,5 @@ public class GameObjectAction {
         {
             SelectionManager.SelectAction(gameObject);
         }
-	}
+	}*/
 }

@@ -3,10 +3,11 @@ using System.Collections;
 
 public class SelectionManager  {
 
-    public static GameObject selectedItem;
+    public static GameObject selectedTile;
+    public static GameObject hoverTile;
 
 	// Use this for initialization
-	public SelectionManager ()
+	/*public SelectionManager ()
     {
 	
 	}
@@ -28,6 +29,6 @@ public class SelectionManager  {
     public static void Deselect()
     {
         selectedItem = null;
-    }
+    }*/
     
 }

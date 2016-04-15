@@ -12,6 +12,7 @@ public class TileInfo : MonoBehaviour {
 
     void Awake(){
         onUnitDetached.add<GameObject>((GameObject go) => {
+            unit = null;
             if (go == null) return;
             Unit u = go.GetComponent<Unit>();
             if(u != null){
@@ -19,6 +20,7 @@ public class TileInfo : MonoBehaviour {
             }
         });
         onUnitAttached.add<GameObject>((GameObject go) => {
+            unit = go;
             Unit u = go.GetComponent<Unit>();
             if (u != null){
                 u.currentTile = go;
