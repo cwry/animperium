@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathfindingTest.cs" />
+    <Compile Include="Assets\Scripts\SelectedUnitGridTeleporter.cs" />
     <Compile Include="Assets\Scripts\SelectedUnitMover.cs" />
     <Compile Include="Assets\Scripts\SelectionManager.cs" />
     <Compile Include="Assets\Scripts\TeleportMovement.cs" />

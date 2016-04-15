@@ -10,7 +10,7 @@ public class TeleportMovement : MonoBehaviour {
         currTileInfo.detachUnit();
         go.transform.position = destTile.transform.position;
         currTileInfo.attachUnit(go);
-        callback(go);
+        if(callback != null) callback(go);
     }
 }
  
