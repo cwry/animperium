@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TurnManager {
 
-    static TurnManager instance;
+    private static TurnManager instance = null;
 
     public int turnID = 0;
     public GameEvent onTurnBegin = new GameEvent();
