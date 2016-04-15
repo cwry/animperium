@@ -34,8 +34,6 @@ public class UnitFunctions {
 	
     private void SwordfighterAttack(GameObject heroe, GameObject enemy)
     {
-        Debug.Log("Attack!");
-
         GameObject[] hexNeighbours = heroe.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().getAdjacent();
         bool neighbour = false;
         
