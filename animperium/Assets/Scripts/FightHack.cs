@@ -23,7 +23,6 @@ public class FightHack : MonoBehaviour {
                 {
                     if (hit.collider.gameObject.GetComponent<TileInfo>().unit != null)
                     {
-                        Debug.Log("Init Attack");
                         SelectionManager.selectedTile.GetComponent<TileInfo>().unit.GetComponent<Unit>().functions.attack(SelectionManager.selectedTile.GetComponent<TileInfo>().unit, hit.collider.gameObject.GetComponent<TileInfo>().unit);
                     }
                 }

@@ -18,6 +18,10 @@ public class GameObjectFilter {
         {
             return "Swordfighter";
         }
+        else if(g.name.Contains("Archer"))
+        {
+            return "Archer";
+        }
 		return null;
 		}
 }

@@ -16,7 +16,12 @@ public class Unit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    
+
+        if (data.health <= 0)
+        {
+            Destroy(gameObject);
+            
+        }
     }
     
 }

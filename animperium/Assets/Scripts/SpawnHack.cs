@@ -19,7 +19,14 @@ public class SpawnHack : MonoBehaviour {
         {
             GameObject unit = units[i];
             float random = Random.Range(0f, 100f);
-            if (random <= 50) unit = Instantiate(archer); else unit = Instantiate(swordFighter);
+            if (random <= 50f)
+            {
+                unit = Instantiate(archer);
+            }
+            else
+            {
+                unit = Instantiate(swordFighter);
+            }
             GameObject testHex = RandomTile();
             while (!testHex.GetComponent<TileInfo>().traversable) testHex = RandomTile();
             if (testHex.GetComponent<TileInfo>().traversable)

@@ -34,8 +34,7 @@ public class UnitFunctions {
 	
     private void SwordfighterAttack(GameObject heroe, GameObject enemy)
     {
-        Debug.Log("Attaaaaack!");
-        Debug.Log(heroe.GetComponent<Unit>().currentTile.name);
+
         GameObject[] hexNeighbours = heroe.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().getAdjacent();
         bool neighbour = false;
         
@@ -44,21 +43,20 @@ public class UnitFunctions {
             
             if (h == enemy.GetComponent<Unit>().currentTile)
             {
-                Debug.Log("true");
                 neighbour = true;
             }
         }
         if (neighbour)
         {
             enemy.GetComponent<Unit>().data.health -= 25;
-            Debug.Log("dmg dealed");
+            
         }
 
     }
 
     private void ArcherAttack(GameObject heroe, GameObject enemy)
     {
-        GameObject[] hexNeighbours = enemy.GetComponent<TileInfo>().getAdjacent();
+        GameObject[] hexNeighbours = heroe.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().getAdjacent();
         GameObject[][] hexNeighbours2= new GameObject[hexNeighbours.Length][];
 
         for (int i = 0; i < hexNeighbours.Length; i++)
@@ -70,7 +68,7 @@ public class UnitFunctions {
         {
             foreach (GameObject g in gA)
             {
-                if (g == enemy)
+                if (g == enemy.GetComponent<Unit>().currentTile)
                 {
                     neighbour = true;
                 }
