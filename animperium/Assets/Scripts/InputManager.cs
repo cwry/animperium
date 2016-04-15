@@ -27,7 +27,7 @@ public class InputManager : MonoBehaviour {
 			}
         if (Input.GetMouseButtonDown(0))
         {
-            if (SelectionManager.selectedItem != null)
+            if (SelectionManager.selectedItem != null && SelectionManager.selectedItem.tag != "Unit")
             {
                 SelectionManager.Deselect();
             }
