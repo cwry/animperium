@@ -11,8 +11,7 @@ public class PathMovement : MonoBehaviour {
     Action<GameObject> callback;
 
     float progress = 0;
-	
-	// Update is called once per frame
+
 	void Update () {
 	    if(path != null && path.Length > 0 && grid != null){
             if (init){
