@@ -23,7 +23,7 @@ public class MapGenerator : MonoBehaviour {
         for(var y = 0; y < grid.gridHeightInHexes; y++){
             for(var x = 0; x < grid.gridWidthInHexes; x++){
                 GameObject tile = grid.gridData[x, y];
-                int perlin = mapPerlin(samplePerlin(tile.transform.position));
+                int perlin = mapPerlin(samplePerlin(isMain ? tile.transform.position : tile.transform.position - Data.subGrid.offsetInit));
                 TileInfo info = tile.GetComponent<TileInfo>();
                 info.traversable = perlin == 1;
 
@@ -31,13 +31,13 @@ public class MapGenerator : MonoBehaviour {
 
                 switch (perlin){
                     case 0:
-                        clr = Color.blue;
+                        clr = isMain ? Color.blue : Color.black;
                         break;
                     case 1:
-                        clr = Color.yellow;
+                        clr = isMain ? Color.yellow : Color.white;
                         break;
                     case 2:
-                        clr = Color.grey;
+                        clr = isMain ? Color.grey : Color.black;
                         break;
                 }
                 tile.GetComponent<Renderer>().material.color = clr;
