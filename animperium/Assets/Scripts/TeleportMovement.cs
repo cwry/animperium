@@ -11,7 +11,8 @@ public class TeleportMovement : MonoBehaviour {
         go.transform.position = destTile.transform.position;
         TileInfo destTileInfo = destTile.GetComponent<TileInfo>();
         destTileInfo.attachUnit(go);
-        if(callback != null) callback(go);
+        Camera.main.gameObject.GetComponent<CameraFocus>().CameraJump(destTile);
+        if (callback != null) callback(go);
     }
 }
  

@@ -22,6 +22,7 @@ public class InputManager : MonoBehaviour {
     private void setSelection(GameObject hover){
         if (Input.GetMouseButtonDown(0)){
             SelectionManager.selectedTile = hover;
+            SelectionManager.selectedUnit = hover.GetComponent<TileInfo>().unit;
         }
     }
 

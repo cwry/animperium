@@ -129,7 +129,6 @@ public class CameraFocus : MonoBehaviour {
 		}
 	}
 
-
 	private void CameraMove(float damp)
 	{
 		float lerpX = Mathf.Lerp (cam.transform.position.x, targetPosition.x, Time.deltaTime * damp);

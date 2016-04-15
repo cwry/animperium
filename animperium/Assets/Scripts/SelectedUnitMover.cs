@@ -5,9 +5,10 @@ public class SelectedUnitMover : MonoBehaviour {
 
 	void Update(){
         if (SelectionManager.selectedTile == null) return;
-        GameObject u = SelectionManager.selectedTile.GetComponent<TileInfo>().unit;
+        GameObject u = SelectionManager.selectedUnit;
         if (u == null) return;
-        TileInfo start = SelectionManager.selectedTile.GetComponent<TileInfo>();
+        if (u.GetComponent<Unit>().currentTile == null) return;
+        TileInfo start = u.GetComponent<Unit>().currentTile.GetComponent<TileInfo>();
         TileInfo end = SelectionManager.hoverTile.GetComponent<TileInfo>();
         if (Input.GetMouseButtonDown(1)){
             Vec2i[] path = PathFinding.findPath(start.grid, start.gridPosition.x, start.gridPosition.y, end.gridPosition.x, end.gridPosition.y, (Vec2i hx) => {

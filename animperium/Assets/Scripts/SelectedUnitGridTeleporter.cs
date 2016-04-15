@@ -4,9 +4,10 @@ using System.Collections;
 public class SelectedUnitGridTeleporter : MonoBehaviour {
     void Update(){
         if (SelectionManager.selectedTile == null) return;
-        GameObject u = SelectionManager.selectedTile.GetComponent<TileInfo>().unit;
+        GameObject u = SelectionManager.selectedUnit;
         if (u == null) return;
-        TileInfo start = SelectionManager.selectedTile.GetComponent<TileInfo>();
+        if (u.GetComponent<Unit>().currentTile == null) return;
+        TileInfo start = u.GetComponent<Unit>().currentTile.GetComponent<TileInfo>();
         GridManager grid = (start.grid == Data.mainGrid) ? Data.subGrid : Data.mainGrid;
         TileInfo end = grid.gridData[start.gridPosition.x, start.gridPosition.y].GetComponent<TileInfo>();
         if (Input.GetKeyDown("space")){
