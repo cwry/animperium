@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public delegate void Attack(GameObject enemy);
+public delegate void Attack(GameObject heroe, GameObject enemy);
 public delegate void Move(GameObject targetHex);
 
 public class UnitFunctions {
@@ -32,24 +32,31 @@ public class UnitFunctions {
         }
     }
 	
-    private void SwordfighterAttack(GameObject enemy)
+    private void SwordfighterAttack(GameObject heroe, GameObject enemy)
     {
-        GameObject[] hexNeighbours = enemy.GetComponent<TileInfo>().getAdjacent();
+        Debug.Log("Attaaaaack!");
+        Debug.Log(heroe.GetComponent<Unit>().currentTile.name);
+        GameObject[] hexNeighbours = heroe.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().getAdjacent();
         bool neighbour = false;
-        foreach (GameObject g in hexNeighbours)
+        
+        foreach (GameObject h in hexNeighbours)
         {
-            if(g == enemy)
+            
+            if (h == enemy.GetComponent<Unit>().currentTile)
             {
+                Debug.Log("true");
                 neighbour = true;
             }
         }
         if (neighbour)
         {
             enemy.GetComponent<Unit>().data.health -= 25;
+            Debug.Log("dmg dealed");
         }
+
     }
 
-    private void ArcherAttack(GameObject enemy)
+    private void ArcherAttack(GameObject heroe, GameObject enemy)
     {
         GameObject[] hexNeighbours = enemy.GetComponent<TileInfo>().getAdjacent();
         GameObject[][] hexNeighbours2= new GameObject[hexNeighbours.Length][];
