@@ -23,7 +23,7 @@ public class TileInfo : MonoBehaviour {
             unit = go;
             Unit u = go.GetComponent<Unit>();
             if (u != null){
-                u.currentTile = go;
+                u.currentTile = gameObject;
             }
         });
     }

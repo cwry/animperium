@@ -22,7 +22,7 @@ public class PathfindingTest : MonoBehaviour {
                 return Data.mainGrid.gridData[hex.x, hex.y].GetComponent<TileInfo>().traversable;
             });
 
-        PathMovement.move(gameObject, Data.mainGrid, path, 3f, (GameObject go) => { Debug.Log(go.name + " is done following path"); });
+        PathMovement.move(gameObject, Data.mainGrid, path, 3f, (GameObject go) => { Debug.Log(gameObject.name + " is done following path"); });
 
 
         GameEvent onSuperAwesome = new GameEvent();
