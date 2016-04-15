@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Camera\CameraFocus.cs" />
+    <Compile Include="Assets\Scripts\CameraMoveOnRightclick.cs" />
     <Compile Include="Assets\Scripts\Data.cs" />
     <Compile Include="Assets\Scripts\EntryPoint.cs" />
     <Compile Include="Assets\Scripts\GameEvent.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathfindingTest.cs" />
+    <Compile Include="Assets\Scripts\SelectedUnitGridTeleporter.cs" />
     <Compile Include="Assets\Scripts\SelectedUnitMover.cs" />
     <Compile Include="Assets\Scripts\SelectionManager.cs" />
     <Compile Include="Assets\Scripts\TeleportMovement.cs" />

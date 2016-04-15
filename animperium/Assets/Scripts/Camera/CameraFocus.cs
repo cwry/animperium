@@ -146,7 +146,7 @@ public class CameraFocus : MonoBehaviour {
 		return directionTemp;
 	}
 
-	public  void CameraFocusHex(GameObject hex)
+	public void CameraFocusHex(GameObject hex)
 	{
 		focusLock = true;
 		targetPosition = new Vector3 (hex.transform.position.x, offSet, hex.transform.position.z - offSet);
