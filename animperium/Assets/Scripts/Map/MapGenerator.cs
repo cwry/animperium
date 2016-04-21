@@ -18,6 +18,8 @@ public class MapGenerator : MonoBehaviour {
     }
 
     void Awake(){
+        Random.seed = MapLoadData.seed;
+        seed = new Vector2(Random.value * 99999, Random.value * 99999);
         GridManager grid = isMain ? Data.mainGrid : Data.subGrid;
         //temp
         for(var y = 0; y < grid.gridHeightInHexes; y++){

@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -77,9 +71,21 @@
     <Compile Include="Assets\Scripts\GameEvent.cs" />
     <Compile Include="Assets\Scripts\GameObjectAction.cs" />
     <Compile Include="Assets\Scripts\GameObjectFilter.cs" />
-    <Compile Include="Assets\Scripts\GridManager.cs" />
     <Compile Include="Assets\Scripts\InputManager.cs" />
-    <Compile Include="Assets\Scripts\MapGenerator.cs" />
+    <Compile Include="Assets\Scripts\Map\GridManager.cs" />
+    <Compile Include="Assets\Scripts\Map\MapGenerator.cs" />
+    <Compile Include="Assets\Scripts\Map\MapLoadData.cs" />
+    <Compile Include="Assets\Scripts\Map\TileInfo.cs" />
+    <Compile Include="Assets\Scripts\Networking\GameClient.cs" />
+    <Compile Include="Assets\Scripts\Networking\GameServer.cs" />
+    <Compile Include="Assets\Scripts\Networking\NetworkData.cs" />
+    <Compile Include="Assets\Scripts\Networking\NetworkInitializationManager.cs" />
+    <Compile Include="Assets\Scripts\Networking\NetworkLobbyInput.cs" />
+    <Compile Include="Assets\Scripts\Networking\ServerMessages\GameEventMessage.cs" />
+    <Compile Include="Assets\Scripts\Networking\ServerMessages\InitGameMessage.cs" />
+    <Compile Include="Assets\Scripts\Networking\ServerMessages\MoveUnitMessage.cs" />
+    <Compile Include="Assets\Scripts\Networking\ServerMessages\ServerMessageTypes.cs" />
+    <Compile Include="Assets\Scripts\Networking\ServerMessages\SpawnUnitMessage.cs" />
     <Compile Include="Assets\Scripts\PathMovement.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
@@ -88,13 +94,13 @@
     <Compile Include="Assets\Scripts\SelectedUnitMover.cs" />
     <Compile Include="Assets\Scripts\SelectionManager.cs" />
     <Compile Include="Assets\Scripts\SpawnHack.cs" />
+    <Compile Include="Assets\Scripts\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\TeleportMovement.cs" />
-    <Compile Include="Assets\Scripts\TileInfo.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitData.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitFunctions.cs" />
-    <Compile Include="Assets\Scripts\Vec2i.cs" />
+    <Compile Include="Assets\Scripts\Util\Vec2i.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

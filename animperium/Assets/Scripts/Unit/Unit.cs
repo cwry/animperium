@@ -6,6 +6,9 @@ public class Unit : MonoBehaviour {
     public UnitData data;
     public UnitFunctions functions;
     public GameObject currentTile;
+    public int playerID;
+    public string unitID;
+    public bool blockCommands;
 
 
 	// Use this for initialization
