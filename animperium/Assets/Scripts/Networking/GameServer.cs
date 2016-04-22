@@ -14,6 +14,13 @@ public class GameServer{
         NetworkServer.RegisterHandler((short)ServerMessage.Types.MOVE_UNIT, onMoveUnit);
         NetworkServer.RegisterHandler((short)ServerMessage.Types.SPAWN_UNIT, onSpawnUnit);
         NetworkServer.RegisterHandler((short)ServerMessage.Types.CLIENT_LOADED, onClientLoaded);
+        NetworkServer.RegisterHandler((short)ServerMessage.Types.TELEPORT_UNIT, onTeleportUnit);
+    }
+
+    void onTeleportUnit(NetworkMessage netMsg)
+    {
+        ServerMessage.TeleportUnitMessage msg = netMsg.ReadMessage<ServerMessage.TeleportUnitMessage>();
+        NetworkServer.SendToAll((short)ServerMessage.Types.TELEPORT_UNIT, msg);
     }
 
     void onClientLoaded(NetworkMessage netMsg){
