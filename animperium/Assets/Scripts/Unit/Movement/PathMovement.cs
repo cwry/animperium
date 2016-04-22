@@ -8,7 +8,7 @@ public class PathMovement : MonoBehaviour {
     public GridManager grid;
     public float speed;
     public bool init = true;
-    Action<GameObject> callback;
+    Action callback;
 
     float progress = 0;
 
@@ -35,13 +35,13 @@ public class PathMovement : MonoBehaviour {
                 GameObject tile = grid.gridData[posI.x, posI.y];
                 transform.position = tile.transform.position;
                 tile.GetComponent<TileInfo>().attachUnit(gameObject);
-                if (callback != null) callback(gameObject);
+                if (callback != null) callback();
                 Destroy(this);
             }
         }
 	}
 
-    public static void move(GameObject go, GridManager grid, Vec2i[] path, float speed, Action<GameObject> callback = null){
+    public static void move(GameObject go, GridManager grid, Vec2i[] path, float speed, Action callback = null){
         PathMovement pm = go.AddComponent<PathMovement>();
         pm.grid = grid;
         pm.speed = speed;

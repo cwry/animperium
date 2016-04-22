@@ -64,17 +64,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Camera\CameraFocus.cs" />
-    <Compile Include="Assets\Scripts\CameraMoveOnRightclick.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraMoveOnRightclick.cs" />
     <Compile Include="Assets\Scripts\Data.cs" />
-    <Compile Include="Assets\Scripts\EntryPoint.cs" />
-    <Compile Include="Assets\Scripts\FightHack.cs" />
-    <Compile Include="Assets\Scripts\GameEvent.cs" />
-    <Compile Include="Assets\Scripts\GameObjectAction.cs" />
-    <Compile Include="Assets\Scripts\GameObjectFilter.cs" />
-    <Compile Include="Assets\Scripts\InputManager.cs" />
+    <Compile Include="Assets\Scripts\Input\InputManager.cs" />
+    <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
     <Compile Include="Assets\Scripts\Map\GridManager.cs" />
     <Compile Include="Assets\Scripts\Map\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\Map\MapLoadData.cs" />
+    <Compile Include="Assets\Scripts\Map\MapLoader.cs" />
     <Compile Include="Assets\Scripts\Map\TileInfo.cs" />
     <Compile Include="Assets\Scripts\Networking\GameClient.cs" />
     <Compile Include="Assets\Scripts\Networking\GameServer.cs" />
@@ -86,20 +83,17 @@
     <Compile Include="Assets\Scripts\Networking\ServerMessages\MoveUnitMessage.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\ServerMessageTypes.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\SpawnUnitMessage.cs" />
-    <Compile Include="Assets\Scripts\PathMovement.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
-    <Compile Include="Assets\Scripts\Pathfinding\PathfindingTest.cs" />
-    <Compile Include="Assets\Scripts\SelectedUnitGridTeleporter.cs" />
-    <Compile Include="Assets\Scripts\SelectedUnitMover.cs" />
-    <Compile Include="Assets\Scripts\SelectionManager.cs" />
-    <Compile Include="Assets\Scripts\SpawnHack.cs" />
-    <Compile Include="Assets\Scripts\SpawnManager.cs" />
-    <Compile Include="Assets\Scripts\TeleportMovement.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
+    <Compile Include="Assets\Scripts\Unit\Movement\PathMovement.cs" />
+    <Compile Include="Assets\Scripts\Unit\Movement\PathMovementManager.cs" />
+    <Compile Include="Assets\Scripts\Unit\Movement\SelectedUnitGridTeleporter.cs" />
+    <Compile Include="Assets\Scripts\Unit\Movement\TeleportMovement.cs" />
+    <Compile Include="Assets\Scripts\Unit\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
-    <Compile Include="Assets\Scripts\Unit\UnitData.cs" />
-    <Compile Include="Assets\Scripts\Unit\UnitFunctions.cs" />
+    <Compile Include="Assets\Scripts\Unit\UnitActionQueue.cs" />
+    <Compile Include="Assets\Scripts\Util\GameEvent.cs" />
     <Compile Include="Assets\Scripts\Util\Vec2i.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

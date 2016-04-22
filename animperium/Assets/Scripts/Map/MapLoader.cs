@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EntryPoint : MonoBehaviour {
+public class MapLoader : MonoBehaviour {
 
     public GameObject hex;
     public Vector3 subOffset;

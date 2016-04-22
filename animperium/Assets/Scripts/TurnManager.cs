@@ -14,7 +14,10 @@ public class TurnManager {
     }
 
     public TurnManager getInstance(){
-        return instance == null ? new TurnManager() : instance;
+        if(instance == null){
+            instance = new TurnManager();
+        }
+        return instance;
     }
 
     public void endTurn(){

@@ -124,7 +124,7 @@ public class CameraFocus : MonoBehaviour {
 			}
 
 		} else {
-			MousePositionHandling ();
+			//MousePositionHandling ();
 			InputHandling ();
 		}
 	}

@@ -6,7 +6,6 @@ using System;
 public class GameServer{
 
     bool[] loaded = new bool[2];
-    bool allLoaded = false;
 
     public GameServer(int port){
         NetworkServer.Listen(port);
