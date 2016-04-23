@@ -7,6 +7,7 @@ public class GameServer{
 
     bool[] loaded = new bool[2];
     bool testMode = false;
+    bool initialized = false;
 
     public GameServer(int port){
         NetworkServer.Listen(port);
@@ -26,7 +27,8 @@ public class GameServer{
 
     void onClientLoaded(NetworkMessage netMsg){
         loaded[NetworkServer.connections.IndexOf(netMsg.conn) - 1] = true;
-        if(loaded[0] && loaded[1] || testMode && loaded[0]){
+        if(!initialized && (loaded[0] && loaded[1]) || (testMode && loaded[0])){
+            initialized = true;
             NetworkServer.SendToAll((short)ServerMessage.Types.ALL_LOADED, new UnityEngine.Networking.NetworkSystem.EmptyMessage());
         }
     }
