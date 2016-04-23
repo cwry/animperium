@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 public class TeleportMovement : MonoBehaviour {
-    public static void move(GameObject go, GridManager startGrid, Vec2i start, GridManager destGrid, Vec2i dest, Action<GameObject> callback = null){
+    public static void move(GameObject go, GridManager startGrid, Vec2i start, GridManager destGrid, Vec2i dest, Action callback = null){
         GameObject destTile = destGrid.gridData[dest.x, dest.y];
         GameObject startTile = startGrid.gridData[start.x, start.y];
         TileInfo currTileInfo = startTile.GetComponent<TileInfo>();
@@ -11,8 +11,7 @@ public class TeleportMovement : MonoBehaviour {
         go.transform.position = destTile.transform.position;
         TileInfo destTileInfo = destTile.GetComponent<TileInfo>();
         destTileInfo.attachUnit(go);
-        Camera.main.gameObject.GetComponent<CameraFocus>().CameraJump(destTile);
-        if (callback != null) callback(go);
+        if (callback != null) callback();
     }
 }
  

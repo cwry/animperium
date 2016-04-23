@@ -17,8 +17,10 @@ public class TeleportMovementManager : MonoBehaviour
 
         GameObject u = SelectionManager.selectedUnit;
         if (u == null) return;
-        if (u.GetComponent<Unit>().currentTile == null) return;
-        TileInfo start = u.GetComponent<Unit>().currentTile.GetComponent<TileInfo>();
+        Unit unit = u.GetComponent<Unit>();
+        if (unit == null || unit.playerID != Data.playerID || unit.currentTile == null) return;
+
+        TileInfo start = unit.currentTile.GetComponent<TileInfo>();
         GridManager grid = (start.grid == Data.mainGrid) ? Data.subGrid : Data.mainGrid;
         TileInfo end = grid.gridData[start.gridPosition.x, start.gridPosition.y].GetComponent<TileInfo>();
         if (Input.GetKeyDown("space"))
@@ -30,8 +32,9 @@ public class TeleportMovementManager : MonoBehaviour
             msg.endY = end.gridPosition.y;
             msg.isStartMainGrid = start.grid.isMainGrid;
             msg.isEndMainGrid = end.grid.isMainGrid;
-            msg.unitID = u.GetComponent<Unit>().unitID;
+            msg.unitID = unit.unitID;
             NetworkData.client.netClient.Send((short)ServerMessage.Types.TELEPORT_UNIT, msg);
+            Camera.main.gameObject.GetComponent<CameraFocus>().CameraJump(end.grid.gridData[end.gridPosition.x, end.gridPosition.y]);
         }
 
     }
@@ -46,8 +49,13 @@ public class TeleportMovementManager : MonoBehaviour
             Vec2i startPosition = new Vec2i(msg.startX, msg.startY);
             Vec2i endPosition = new Vec2i(msg.endX, msg.endY);
 
-            TeleportMovement.move(u, startGrid, startPosition, endGrid, endPosition);
-            done();
+            TeleportMovement.move(u, startGrid, startPosition, endGrid, endPosition, () => {
+                Unit unit = u.GetComponent<Unit>();
+                if(unit.playerID == Data.playerID){
+                    Camera.main.gameObject.GetComponent<CameraFocus>().CameraJump(endGrid.gridData[endPosition.x, endPosition.y]);
+                }
+                done();
+            });
         });
     }
 

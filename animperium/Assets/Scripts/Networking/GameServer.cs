@@ -6,6 +6,7 @@ using System;
 public class GameServer{
 
     bool[] loaded = new bool[2];
+    bool testMode = false;
 
     public GameServer(int port){
         NetworkServer.Listen(port);
@@ -25,7 +26,7 @@ public class GameServer{
 
     void onClientLoaded(NetworkMessage netMsg){
         loaded[NetworkServer.connections.IndexOf(netMsg.conn) - 1] = true;
-        if(loaded[0] && loaded[1]){
+        if(loaded[0] && loaded[1] || testMode && loaded[0]){
             NetworkServer.SendToAll((short)ServerMessage.Types.ALL_LOADED, new UnityEngine.Networking.NetworkSystem.EmptyMessage());
         }
     }
@@ -46,6 +47,11 @@ public class GameServer{
 
     void onDisconnected(NetworkMessage netMsg){
         Debug.Log("[SERVER] client disconnected. total connections: " + (NetworkServer.connections.Count - 1));
+    }
+
+    public void initGameDebug(int mapW, int mapH, int seed, bool testMode){
+        this.testMode = testMode;
+        initGame(mapW, mapH, seed);
     }
 
     public void initGame(int mapW, int mapH, int seed){
