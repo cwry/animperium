@@ -49,7 +49,7 @@ public class GameServer{
         Debug.Log("[SERVER] client disconnected. total connections: " + (NetworkServer.connections.Count - 1));
     }
 
-    public void initGameDebug(int mapW, int mapH, int seed, bool testMode){
+    public void initGame(int mapW, int mapH, int seed, bool testMode){
         this.testMode = testMode;
         initGame(mapW, mapH, seed);
     }
