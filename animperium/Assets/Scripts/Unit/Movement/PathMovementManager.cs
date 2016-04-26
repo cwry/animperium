@@ -5,11 +5,10 @@ using System;
 
 public class PathMovementManager : MonoBehaviour {
     void Awake(){
-        NetworkData.client.netClient.RegisterHandler((short)ServerMessage.Types.MOVE_UNIT, onMoveUnit);
+        NetworkData.client.netClient.RegisterHandler((short)ServerMessage.Types.MOVE_UNIT, onMoveUnitMessage);
     }
 
-    void onMoveUnit(NetworkMessage netMsg){
-        ServerMessage.MoveUnitMessage msg = netMsg.ReadMessage<ServerMessage.MoveUnitMessage>();
+    void onMoveUnit(ServerMessage.MoveUnitMessage msg){
         GridManager grid = msg.isMainGrid ? Data.mainGrid : Data.subGrid;
         Vec2i[] path = PathFinding.findPath(grid, msg.startX, msg.startY, msg.endX, msg.endY, (Vec2i hx) => {
             return grid.gridData[hx.x, hx.y].GetComponent<TileInfo>().traversable;
@@ -17,6 +16,11 @@ public class PathMovementManager : MonoBehaviour {
         UnitActionQueue.getInstance().push(msg.unitID, (Action done) => {
             PathMovement.move(Data.units[msg.unitID], grid, path, 3, done);
         });
+    }
+
+    void onMoveUnitMessage(NetworkMessage netMsg){
+        ServerMessage.MoveUnitMessage msg = netMsg.ReadMessage<ServerMessage.MoveUnitMessage>();
+        onMoveUnit(msg);
     }
 
     void Update(){
@@ -38,6 +42,7 @@ public class PathMovementManager : MonoBehaviour {
                 msg.isMainGrid = start.grid.isMainGrid;
                 msg.unitID = unit.unitID;
                 NetworkData.client.netClient.Send((short)ServerMessage.Types.MOVE_UNIT, msg);
+                onMoveUnit(msg);
             }
         }
     }

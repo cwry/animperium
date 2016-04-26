@@ -11,5 +11,6 @@ public class NetworkInitializationManager : MonoBehaviour {
     void onAllLoaded(NetworkMessage netMsg){
         Debug.Log("[CLIENT] All Clients Loaded");
         SpawnManager.spawnUnit(Data.mainGrid, new Vec2i(Data.playerID * 2, Data.playerID * 2), "Archer");
+        TurnManager.endTurn();
     }
 }

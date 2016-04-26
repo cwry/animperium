@@ -5,6 +5,7 @@
         ALL_LOADED = 1000,
         MOVE_UNIT = 1010,
         SPAWN_UNIT = 1015,
-        TELEPORT_UNIT = 1014
+        TELEPORT_UNIT = 1020,
+        TURN_ENDED = 1025
     }
 }

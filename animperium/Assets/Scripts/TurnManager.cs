@@ -1,28 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class TurnManager {
-
-    private static TurnManager instance = null;
+public class TurnManager : MonoBehaviour {
 
     public int turnID = 0;
-    public GameEvent onTurnBegin = new GameEvent();
-    public GameEvent onTurnEnd = new GameEvent();
+    public static GameEvent onTurnBegin = new GameEvent();
+    public static GameEvent onTurnEnd = new GameEvent();
 
-    private TurnManager(){
-        //SINGLETON
+    void Awake() {
+        NetworkData.client.netClient.RegisterHandler((short)ServerMessage.Types.TURN_ENDED, onTurnEnded);
     }
 
-    public TurnManager getInstance(){
-        if(instance == null){
-            instance = new TurnManager();
-        }
-        return instance;
-    }
-
-    public void endTurn(){
+    void onTurnEnded(NetworkMessage netMsg){
         onTurnEnd.fire(turnID);
+        Debug.Log("[TURN MANAGER] turn " + turnID + " ended");
         turnID++;
         onTurnBegin.fire(turnID);
+    }
+
+    public static void endTurn(){
+        NetworkData.client.netClient.Send((short)ServerMessage.Types.TURN_ENDED, new UnityEngine.Networking.NetworkSystem.EmptyMessage());
     } 
 }
