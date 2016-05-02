@@ -8,7 +8,29 @@ public class PathMovementManager : MonoBehaviour {
         NetworkData.client.netClient.RegisterHandler((short)ServerMessage.Types.MOVE_UNIT, onMoveUnitMessage);
     }
 
-    void onMoveUnit(ServerMessage.MoveUnitMessage msg){
+    public static void move(GameObject u, TileInfo end){
+        if (u == null) return;
+        Unit unit = u.GetComponent<Unit>();
+        if (unit.currentTile != null){
+            TileInfo start = unit.currentTile.GetComponent<TileInfo>();
+            Vec2i[] path = PathFinding.findPath(start.grid, start.gridPosition.x, start.gridPosition.y, end.gridPosition.x, end.gridPosition.y, (Vec2i hx) => {
+                return start.grid.gridData[hx.x, hx.y].GetComponent<TileInfo>().traversable;
+            });
+            if (path != null && path.Length >= 2){
+                ServerMessage.MoveUnitMessage msg = new ServerMessage.MoveUnitMessage();
+                msg.startX = start.gridPosition.x;
+                msg.startY = start.gridPosition.y;
+                msg.endX = end.gridPosition.x;
+                msg.endY = end.gridPosition.y;
+                msg.isMainGrid = start.grid.isMainGrid;
+                msg.unitID = unit.unitID;
+                NetworkData.client.netClient.Send((short)ServerMessage.Types.MOVE_UNIT, msg);
+                onMoveUnit(msg);
+            }
+        }
+    }
+
+    static void onMoveUnit(ServerMessage.MoveUnitMessage msg){
         GridManager grid = msg.isMainGrid ? Data.mainGrid : Data.subGrid;
         Vec2i[] path = PathFinding.findPath(grid, msg.startX, msg.startY, msg.endX, msg.endY, (Vec2i hx) => {
             return grid.gridData[hx.x, hx.y].GetComponent<TileInfo>().traversable;
