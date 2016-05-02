@@ -6,9 +6,8 @@ using System;
 public class TeleportMovementManager : MonoBehaviour
 {
 
-    void Awake()
-    {
-        NetworkData.client.netClient.RegisterHandler((short)ServerMessage.Types.TELEPORT_UNIT, onTeleportUnit);
+    void Awake(){
+        NetworkData.client.netClient.RegisterHandler((short)ServerMessage.Types.TELEPORT_UNIT, onTeleportUnitMessage);
     }
 
     void Update()
@@ -34,14 +33,13 @@ public class TeleportMovementManager : MonoBehaviour
             msg.isEndMainGrid = end.grid.isMainGrid;
             msg.unitID = unit.unitID;
             NetworkData.client.netClient.Send((short)ServerMessage.Types.TELEPORT_UNIT, msg);
+            onTeleportUnit(msg);
             Camera.main.gameObject.GetComponent<CameraFocus>().CameraJump(end.grid.gridData[end.gridPosition.x, end.gridPosition.y]);
         }
 
     }
 
-    void onTeleportUnit(NetworkMessage netMsg)
-    {
-        ServerMessage.TeleportUnitMessage msg = netMsg.ReadMessage<ServerMessage.TeleportUnitMessage>();
+    void onTeleportUnit(ServerMessage.TeleportUnitMessage msg){
         UnitActionQueue.getInstance().push(msg.unitID, (Action done) => {
             GameObject u = Data.units[msg.unitID];
             GridManager startGrid = msg.isStartMainGrid ? Data.mainGrid : Data.subGrid;
@@ -57,6 +55,11 @@ public class TeleportMovementManager : MonoBehaviour
                 done();
             });
         });
+    }
+
+    void onTeleportUnitMessage(NetworkMessage netMsg){
+        ServerMessage.TeleportUnitMessage msg = netMsg.ReadMessage<ServerMessage.TeleportUnitMessage>();
+        onTeleportUnit(msg);
     }
 
 }

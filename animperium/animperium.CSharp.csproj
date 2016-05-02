@@ -86,7 +86,6 @@
     <Compile Include="Assets\Scripts\Networking\NetworkData.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkInitializationManager.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkLobbyInput.cs" />
-    <Compile Include="Assets\Scripts\Networking\ServerMessages\GameEventMessage.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\InitGameMessage.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\MoveUnitMessage.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\ServerMessageTypes.cs" />
