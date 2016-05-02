@@ -94,7 +94,10 @@
     <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
+    <Compile Include="Assets\Scripts\UI\ContextMenuInteraction.cs" />
     <Compile Include="Assets\Scripts\UI\ContextMenuSpawn.cs" />
+    <Compile Include="Assets\Scripts\UI\GUIData.cs" />
+    <Compile Include="Assets\Scripts\UI\SetOnGui.cs" />
     <Compile Include="Assets\Scripts\Unit\Movement\PathMovement.cs" />
     <Compile Include="Assets\Scripts\Unit\Movement\PathMovementManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Movement\TeleportMovement.cs" />

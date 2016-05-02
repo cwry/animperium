@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class InputManager : MonoBehaviour {
+
+    
 	
 	void Update () {
         GameObject tileHover = getTileHover();
@@ -20,13 +22,15 @@ public class InputManager : MonoBehaviour {
     }
 
     private void setSelection(GameObject hover){
-        if (Input.GetMouseButtonDown(0)){
+        if (Input.GetMouseButtonDown(0) && !GUIData.pointerOnGUI)
+        {
             SelectionManager.selectedTile = hover;
             if (hover == null) return;
             SelectionManager.selectedUnit = hover.GetComponent<TileInfo>().unit;
         }
     }
 
+   
     /*private void ListenInput()
     {
         ListenMouseInput();

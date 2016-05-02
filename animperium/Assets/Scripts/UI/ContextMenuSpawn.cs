@@ -11,12 +11,12 @@ public class ContextMenuSpawn : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	    
+        GUIData.pointerOnGUI = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    if(SelectionManager.selectedTile != null && Input.GetMouseButtonDown(0))
+	    if(SelectionManager.selectedTile != null && Input.GetMouseButtonDown(0) && !GUIData.pointerOnGUI)
         {
             if (contextMenu != null)
             {
