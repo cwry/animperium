@@ -61,9 +61,20 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ContextMenuPosition.cs" />
     <Compile Include="Assets\Map\MapGeneratorInit.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFocus.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraMoveOnRightclick.cs" />
@@ -99,9 +110,11 @@
     <Compile Include="Assets\Scripts\Util\GameEvent.cs" />
     <Compile Include="Assets\Scripts\Util\Vec2i.cs" />
     <Compile Include="Assets\UI\UI-Scripts\ContextMenuInteraction.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\ContextMenuPosition.cs" />
     <Compile Include="Assets\UI\UI-Scripts\ContextMenuSpawn.cs" />
     <Compile Include="Assets\UI\UI-Scripts\DisplayRound.cs" />
     <Compile Include="Assets\UI\UI-Scripts\EndTurn.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\FadeUI.cs" />
     <Compile Include="Assets\UI\UI-Scripts\GUIData.cs" />
     <Compile Include="Assets\UI\UI-Scripts\PlayerTimer.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetOnGui.cs" />

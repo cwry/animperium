@@ -10,21 +10,45 @@ public class PlayerTimer : MonoBehaviour {
 
     private int playerTime;
     private Coroutine timer;
-    private IEnumerator timerValue;
+    private int turn;
 
 
     // Use this for initialization
     void Start () {
+        turn = TurnManager.turnID;
         actualText = player1TimerText;
-        timerValue = TimerStart();
-        timer = StartCoroutine(timerValue);
+        timer = StartCoroutine(TimerStart());
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (playerTime == 900)
+        {
+            TurnManager.endTurn();
+        }
+
+        if (turn != TurnManager.turnID)
+        {
+            turn = TurnManager.turnID;
+            StopAllCoroutines();
+            playerTime = 0;
+            actualText.text = SecondToPlayerTime(playerTime);
+
+            if (actualText == player1TimerText)
+            {
+                actualText = player2TimerText;
+            }
+            else
+            {
+                actualText = player1TimerText;
+            }
+
+            StartCoroutine(TimerStart());
+        }
         
         actualText.text = SecondToPlayerTime(playerTime);
-
+       
 	}
 
    private IEnumerator TimerStart()
@@ -33,9 +57,6 @@ public class PlayerTimer : MonoBehaviour {
         {
             yield return new WaitForSeconds(1f);
             playerTime = i;
-            
-
-
         }
         yield return 0;
     }
@@ -44,7 +65,7 @@ public class PlayerTimer : MonoBehaviour {
     {
         int min = seconds / 60;
         int sec = seconds % 60;
-        return  (min + ":" + sec);
+        return (min.ToString("d2") + ":" + sec.ToString("d2"));
     }
    
 }
