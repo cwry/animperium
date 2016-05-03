@@ -39,8 +39,10 @@ public class GridManager
         this.gridHeightInHexes = c.height;
         this.isMainGrid = c.isMainGrid;
         TileInfo[] tiles = container.GetComponentsInChildren<TileInfo>();
-        foreach(TileInfo t in tiles){
-            gridData[t.gridPosition.x, t.gridPosition.y] = t.gameObject;
+        gridData = new GameObject[c.width, c.height];
+        foreach (TileInfo t in tiles){
+            t.gridPosition = new Vec2i(t.initGridX, t.initGridY);
+            gridData[t.initGridX, t.initGridY] = t.gameObject;
         }
     }
 
@@ -105,6 +107,8 @@ public class GridManager
                 TileInfo info = hexClone.AddComponent<TileInfo>();
                 info.grid = this;
                 info.gridPosition = new Vec2i(x, y);
+                info.initGridY = y;
+                info.initGridX = x;
 			}
 		}
     }

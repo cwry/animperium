@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class TileInfo : MonoBehaviour {
+    //hack for unity prefab serialization
+    public int initGridX;
+    public int initGridY;
+
     public Vec2i gridPosition;
     public GridManager grid;
     public bool traversable;
