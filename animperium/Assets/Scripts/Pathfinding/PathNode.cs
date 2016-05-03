@@ -32,7 +32,7 @@ public class PathNode{
         g = parent.g + 1;
         Vector3 goal = grid.gridData[x, y].transform.position;
         Vector3 current = grid.gridData[goalX, goalY].transform.position;
-        h = Mathf.Abs(goal.x - current.x) + Mathf.Abs(goal.z - current.z) * 0.1f;
+        h = Mathf.Abs(goal.x - current.x) + Mathf.Abs(goal.z - current.z) * 0.3f;
         f = g + h;
     }
 
