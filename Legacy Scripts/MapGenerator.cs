@@ -42,7 +42,7 @@ public class MapGenerator : MonoBehaviour {
                         clr = isMain ? Color.grey : Color.black;
                         break;
                 }
-                tile.GetComponent<Renderer>().material.color = clr;
+                //tile.GetComponent<Renderer>().material.color = clr;
             }
         }
         //

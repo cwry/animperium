@@ -11,28 +11,41 @@ public class GridManager
 	public int gridWidthInHexes = 10;
 	public int gridHeightInHexes = 10;
     public bool isMainGrid = true;
-    public Vector3 offsetInit = new Vector3(0, 0, 0);
     public GameObject[,] gridData;
 
     //Hexagon tile width and height in game world
     private float hexWidth;
 	private float hexHeight;
 
-    public GridManager(GameObject hex, int gridWidthInHexes, int gridHeightInHexes, bool isMainGrid, Vector2 offsetInit){
+    public GridManager(GameObject hex, int gridWidthInHexes, int gridHeightInHexes, bool isMainGrid){
         container = new GameObject("grid container " + (isMainGrid ? "main" : "sub"));
+        MapGridContainer c = container.AddComponent<MapGridContainer>();
+        c.isMainGrid = isMainGrid;
+        c.width = gridWidthInHexes;
+        c.height = gridHeightInHexes;
         this.hex = hex;
         this.gridWidthInHexes = gridWidthInHexes;
         this.gridHeightInHexes = gridHeightInHexes;
         this.isMainGrid = isMainGrid;
-        this.offsetInit = offsetInit;
 
         setSizes();
         createGrid();
     }
 
+    public GridManager(GameObject container){
+        this.container = container;
+        MapGridContainer c = container.GetComponent<MapGridContainer>();
+        this.gridWidthInHexes = c.width;
+        this.gridHeightInHexes = c.height;
+        this.isMainGrid = c.isMainGrid;
+        TileInfo[] tiles = container.GetComponentsInChildren<TileInfo>();
+        foreach(TileInfo t in tiles){
+            gridData[t.gridPosition.x, t.gridPosition.y] = t.gameObject;
+        }
+    }
+
     //Method to initialise Hexagon width and height
-    void setSizes()
-	{
+    void setSizes(){
 		//renderer component attached to the Hex prefab is used to get the current width and height
 		hexWidth =  hex.GetComponent<Renderer>().bounds.size.x;
 		hexHeight = hex.GetComponent<Renderer>().bounds.size.z;
@@ -54,10 +67,11 @@ public class GridManager
 	//method used to convert hex grid coordinates to game world coordinates
 	public Vector3 calcWorldCoord(Vector2 gridPos) 
 	{
-		//Position of the first hex tile
-		Vector3 initPos = calcInitPos();
+        //Position of the first hex tile
+        //Vector3 initPos = calcInitPos();
+        Vector3 initPos = Vector3.zero;
 		//Every second row is offset by half of the tile width
-		float offset = 0;
+        float offset = 0;
 		if (gridPos.y % 2 != 0)
 			offset = hexWidth / 2;
 
@@ -93,7 +107,5 @@ public class GridManager
                 info.gridPosition = new Vec2i(x, y);
 			}
 		}
-
-        container.transform.position = offsetInit;
     }
 }

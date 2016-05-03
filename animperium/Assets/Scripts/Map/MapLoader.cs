@@ -3,12 +3,12 @@ using System.Collections;
 
 public class MapLoader : MonoBehaviour {
 
-    public GameObject hex;
-    public Vector3 subOffset;
+    public GameObject mainGrid;
+    public GameObject subGrid;
 
     void Awake(){
-        Data.mainGrid = new GridManager(hex, MapLoadData.mapW, MapLoadData.mapH, true, Vector2.zero);
-        Data.subGrid = new GridManager(hex, MapLoadData.mapW, MapLoadData.mapW, false, subOffset);
+        Data.mainGrid = new GridManager(mainGrid);
+        Data.subGrid = new GridManager(subGrid);
     }
 
 }

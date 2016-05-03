@@ -61,23 +61,18 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ContextMenuPosition.cs" />
+    <Compile Include="Assets\Map\MapGeneratorInit.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFocus.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraMoveOnRightclick.cs" />
     <Compile Include="Assets\Scripts\Data.cs" />
     <Compile Include="Assets\Scripts\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
     <Compile Include="Assets\Scripts\InputFieldStandardValue.cs" />
+    <Compile Include="Assets\Scripts\Map Editor\MapGridContainer.cs" />
     <Compile Include="Assets\Scripts\Map\GridManager.cs" />
-    <Compile Include="Assets\Scripts\Map\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\Map\MapLoadData.cs" />
     <Compile Include="Assets\Scripts\Map\MapLoader.cs" />
     <Compile Include="Assets\Scripts\Map\TileInfo.cs" />
