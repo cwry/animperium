@@ -22,7 +22,6 @@ public class PathFinding{
 
             visited.Add(cheapest);
             reachable.Remove(cheapest);
-
             GameObject[] adjacent = grid.gridData[cheapest.x, cheapest.y].GetComponent<TileInfo>().getAdjacent();
 
             foreach(GameObject go in adjacent){

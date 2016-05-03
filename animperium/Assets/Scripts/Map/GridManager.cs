@@ -42,6 +42,7 @@ public class GridManager
         gridData = new GameObject[c.width, c.height];
         foreach (TileInfo t in tiles){
             t.gridPosition = new Vec2i(t.initGridX, t.initGridY);
+            t.grid = this;
             gridData[t.initGridX, t.initGridY] = t.gameObject;
         }
     }

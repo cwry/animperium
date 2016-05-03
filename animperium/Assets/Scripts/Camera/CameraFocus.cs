@@ -68,7 +68,6 @@ public class CameraFocus : MonoBehaviour {
 	}
 	public void CameraJump(GameObject target)
 	{
-        Debug.Log(Data.mainGrid.gridData[1,1]);
 		cam.transform.position = new Vector3 (target.transform.position.x, offSet, target.transform.position.z - offSet);
 	}
 
