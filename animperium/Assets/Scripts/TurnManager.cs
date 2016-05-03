@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 
 public class TurnManager : MonoBehaviour {
 
-    public int turnID = 0;
+    public static int turnID = 0;
     public static GameEvent onTurnBegin = new GameEvent();
     public static GameEvent onTurnEnd = new GameEvent();
 
