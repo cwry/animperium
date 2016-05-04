@@ -8,10 +8,11 @@ public class PathMovementManager : MonoBehaviour {
         NetworkData.client.netClient.RegisterHandler((short)ServerMessage.Types.MOVE_UNIT, onMoveUnitMessage);
     }
 
-    public static void move(GameObject u, TileInfo end){
+    public static void move(GameObject u, GameObject endTile){
         if (u == null) return;
         Unit unit = u.GetComponent<Unit>();
         if (unit.currentTile != null){
+            TileInfo end = endTile.GetComponent<TileInfo>();
             TileInfo start = unit.currentTile.GetComponent<TileInfo>();
             Vec2i[] path = PathFinding.findPath(start.grid, start.gridPosition.x, start.gridPosition.y, end.gridPosition.x, end.gridPosition.y, (Vec2i hx) => {
                 return start.grid.gridData[hx.x, hx.y].GetComponent<TileInfo>().traversable;
@@ -44,7 +45,8 @@ public class PathMovementManager : MonoBehaviour {
         ServerMessage.MoveUnitMessage msg = netMsg.ReadMessage<ServerMessage.MoveUnitMessage>();
         onMoveUnit(msg);
     }
-
+    #region update
+    /*
     void Update(){
         GameObject u = SelectionManager.selectedUnit;
         if (u == null) return;
@@ -68,4 +70,6 @@ public class PathMovementManager : MonoBehaviour {
             }
         }
     }
+    */
+    #endregion
 }
