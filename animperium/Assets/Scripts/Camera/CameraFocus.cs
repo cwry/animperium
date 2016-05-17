@@ -10,7 +10,7 @@ public class CameraFocus : MonoBehaviour {
 		}
 	}
 
-	private float offSet = 10f;
+	private float offSet = 20f;
 	private float dampen = 8f;
 	private float dampenFocus = 2f;
 
@@ -124,7 +124,7 @@ public class CameraFocus : MonoBehaviour {
 			}
 
 		} else {
-			//MousePositionHandling ();
+			MousePositionHandling ();
 			InputHandling ();
 		}
 	}
