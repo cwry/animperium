@@ -4,11 +4,13 @@ using System.Collections;
 
 public class CameraFocus : MonoBehaviour {
 
-	private GameObject cam {
+    /*private GameObject cam {
 		get {
 			return Camera.main.gameObject;
 		}
-	}
+	}*/
+
+    public GameObject cam;
 
 	private float offSet = 20f;
 	private float dampen = 8f;
@@ -68,8 +70,9 @@ public class CameraFocus : MonoBehaviour {
 	}
 	public void CameraJump(GameObject target)
 	{
-		cam.transform.position = new Vector3 (target.transform.position.x, offSet, target.transform.position.z - offSet);
-	}
+        //cam.transform.position = new Vector3 (target.transform.position.x, offSet, target.transform.position.z - offSet);
+        cam.transform.position = target.transform.position;
+    }
 
 	private void MousePositionHandling()
 	{
@@ -148,7 +151,7 @@ public class CameraFocus : MonoBehaviour {
 	public void CameraFocusHex(GameObject hex)
 	{
 		focusLock = true;
-		targetPosition = new Vector3 (hex.transform.position.x, offSet, hex.transform.position.z - offSet);
+        targetPosition = hex.transform.position;
 	}
 
 }

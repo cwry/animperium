@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraMoveOnRightclick : MonoBehaviour {
 	void Update () {
         if (Input.GetMouseButtonDown(1) && SelectionManager.hoverTile != null){
-            Camera.main.gameObject.GetComponent<CameraFocus>().CameraFocusHex(SelectionManager.hoverTile);
+            Camera.main.gameObject.transform.GetComponentInParent<CameraFocus>().CameraFocusHex(SelectionManager.hoverTile);
         }
 	}
 }
