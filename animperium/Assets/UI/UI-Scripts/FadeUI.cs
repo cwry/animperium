@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class FadeUI : MonoBehaviour {
 
     private CanvasRenderer[] renders;
-    public float fadeSpeed = 1;
+    public float fadeSpeed = 0.5f;
 
 	// Use this for initialization
 	void Start () {

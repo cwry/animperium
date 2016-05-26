@@ -24,6 +24,7 @@ public class ContextMenuArrange : MonoBehaviour {
     // Use this for initialization
     void Start () {
         panelTransform = gameObject.GetComponent<RectTransform>();
+        SetVariables();
         InstantiateButtons();
 	}
    
@@ -49,7 +50,6 @@ public class ContextMenuArrange : MonoBehaviour {
         if (GUIData.targetTile.GetComponent<TileInfo>().unit != null)
         {
             elementCount = 3;
-            SetVariables();
             firstButton = Instantiate(attackButton, transform.TransformPoint(firstPosition), Quaternion.identity) as GameObject;
             firstButton.transform.parent = gameObject.transform;
 
@@ -62,7 +62,6 @@ public class ContextMenuArrange : MonoBehaviour {
         else
         {
             elementCount = 2;
-            SetVariables();
             firstButton = Instantiate(moveButton, transform.TransformPoint(firstPosition), Quaternion.identity) as GameObject;
             firstButton.transform.parent = gameObject.transform;
 

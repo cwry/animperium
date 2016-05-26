@@ -33,7 +33,7 @@ public class PlayerTimer : MonoBehaviour {
             turn = TurnManager.turnID;
             StopAllCoroutines();
             playerTime = 0;
-            actualText.text = SecondToPlayerTime(playerTime);
+            actualText.text = PlayerTimeToString(playerTime);
 
             if (actualText == player1TimerText)
             {
@@ -47,7 +47,8 @@ public class PlayerTimer : MonoBehaviour {
             StartCoroutine(TimerStart());
         }
         
-        actualText.text = SecondToPlayerTime(playerTime);
+        actualText.text = PlayerTimeToString(playerTime);
+        GUIData.roundTime = playerTime;
        
 	}
 
@@ -55,13 +56,13 @@ public class PlayerTimer : MonoBehaviour {
     {
         for (int i = 0; i <= 900; i++ )
         {
-            yield return new WaitForSeconds(1f);
             playerTime = i;
+            yield return new WaitForSeconds(1f);
         }
         yield return 0;
     }
 
-    private string SecondToPlayerTime(int seconds)
+    private string PlayerTimeToString(int seconds)
     {
         int min = seconds / 60;
         int sec = seconds % 60;
