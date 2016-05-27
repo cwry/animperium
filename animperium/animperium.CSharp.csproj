@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -110,6 +104,7 @@
     <Compile Include="Assets\UI\UI-Scripts\ContextMenuSpawn.cs" />
     <Compile Include="Assets\UI\UI-Scripts\DisplayRound.cs" />
     <Compile Include="Assets\UI\UI-Scripts\EndTurn.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\EventSprite.cs" />
     <Compile Include="Assets\UI\UI-Scripts\FadeUI.cs" />
     <Compile Include="Assets\UI\UI-Scripts\GUIData.cs" />
     <Compile Include="Assets\UI\UI-Scripts\MoveUnitButton.cs" />

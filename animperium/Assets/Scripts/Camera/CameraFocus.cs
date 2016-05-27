@@ -33,7 +33,7 @@ public class CameraFocus : MonoBehaviour {
 
 	private void StartPosition()
 	{
-		isMainGrid = true;
+        isMainGrid = true;
 
 		CameraJumpInStageMiddle (isMainGrid);
 	}
