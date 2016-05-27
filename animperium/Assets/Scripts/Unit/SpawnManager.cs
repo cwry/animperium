@@ -50,7 +50,7 @@ public class SpawnManager : MonoBehaviour {
 
     public static void spawnUnit(GridManager grid, Vec2i pos, string unitType){
         ServerMessage.SpawnUnitMessage msg = new ServerMessage.SpawnUnitMessage();
-        msg.actionID = msg.actionID = ActionQueue.getInstance().actionID++;
+        msg.actionID = ActionQueue.getInstance().actionID++;
         msg.isMainGrid = grid.isMainGrid;
         msg.tileX = pos.x;
         msg.tileY = pos.y;

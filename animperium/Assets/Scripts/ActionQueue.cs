@@ -7,6 +7,7 @@ public class ActionQueue{
     static ActionQueue instance;
     Dictionary<int, Action> actions;
     public int actionID = 0;
+    int executionID = 0;
 
     private ActionQueue(){
         //SINGLETON
@@ -16,6 +17,7 @@ public class ActionQueue{
 
     public void reset(int turnID){
         actionID = 0;
+        executionID = 0;
         actions = new Dictionary<int, Action>();
     }
 
@@ -32,10 +34,9 @@ public class ActionQueue{
         }
     }
 
-    public Action pop(int i){
-        if (actions.ContainsKey(i)){
-            return actions[i];
+    public void execute(){
+        while (actions.ContainsKey(executionID)){
+            actions[executionID++]();
         }
-        return null;
     }
 }
