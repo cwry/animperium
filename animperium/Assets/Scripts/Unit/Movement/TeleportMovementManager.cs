@@ -34,7 +34,7 @@ public class TeleportMovementManager : MonoBehaviour
             msg.unitID = unit.unitID;
             NetworkData.client.netClient.Send((short)ServerMessage.Types.TELEPORT_UNIT, msg);
             onTeleportUnit(msg);
-            Camera.main.gameObject.GetComponent<CameraFocus>().CameraJump(end.grid.gridData[end.gridPosition.x, end.gridPosition.y]);
+            Camera.main.gameObject.transform.GetComponentInParent<CameraFocus>().CameraJump(end.grid.gridData[end.gridPosition.x, end.gridPosition.y]);
         }
 
     }
@@ -50,7 +50,7 @@ public class TeleportMovementManager : MonoBehaviour
             TeleportMovement.move(u, startGrid, startPosition, endGrid, endPosition, () => {
                 Unit unit = u.GetComponent<Unit>();
                 if(unit.playerID == Data.playerID){
-                    Camera.main.gameObject.GetComponent<CameraFocus>().CameraJump(endGrid.gridData[endPosition.x, endPosition.y]);
+                    Camera.main.gameObject.transform.GetComponentInParent<CameraFocus>().CameraJump(endGrid.gridData[endPosition.x, endPosition.y]);
                 }
                 done();
             });

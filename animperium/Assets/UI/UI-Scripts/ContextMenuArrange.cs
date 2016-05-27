@@ -21,11 +21,15 @@ public class ContextMenuArrange : MonoBehaviour {
     private GameObject secondButton;
     private GameObject thirdButton;
     
-    // Use this for initialization
-    void Start () {
+    void Awake()
+    {
         panelTransform = gameObject.GetComponent<RectTransform>();
         SetVariables();
         InstantiateButtons();
+    }
+    // Use this for initialization
+    void Start () {
+       
 	}
    
     private void SetVariables()
