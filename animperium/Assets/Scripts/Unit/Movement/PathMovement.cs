@@ -13,12 +13,7 @@ public class PathMovement : MonoBehaviour {
     float progress = 0;
 
 	void Update () {
-	    if(path != null && path.Length > 0 && grid != null){
-            if (init){
-                init = false;
-                TileInfo inf = grid.gridData[path[0].x, path[0].y].GetComponent<TileInfo>();
-                inf.detachUnit();
-            }
+	    if(path != null && path.Length > 1 && grid != null){
             if(progress < path.Length - 1){
                 int progI = (int) Mathf.Floor(progress);
                 Vec2i fromI = path[progI];
@@ -32,9 +27,7 @@ public class PathMovement : MonoBehaviour {
                 progress += Time.deltaTime * speed / dir.magnitude;
             }else{
                 Vec2i posI = path[path.Length - 1];
-                GameObject tile = grid.gridData[posI.x, posI.y];
-                transform.position = tile.transform.position;
-                tile.GetComponent<TileInfo>().attachUnit(gameObject);
+                transform.position = grid.gridData[posI.x, posI.y].transform.position;
                 if (callback != null) callback();
                 Destroy(this);
             }
@@ -46,6 +39,12 @@ public class PathMovement : MonoBehaviour {
         pm.grid = grid;
         pm.speed = speed;
         pm.path = path;
+        Vec2i start = path[0];
+        Vec2i end = path[path.Length - 1];
+        TileInfo startTile = grid.gridData[start.x, start.y].GetComponent<TileInfo>();
+        TileInfo endTile = grid.gridData[end.x, end.y].GetComponent<TileInfo>();
+        startTile.detachUnit();
+        endTile.attachUnit(go);
         if (callback != null){
             pm.callback = callback;
         }

@@ -3,8 +3,8 @@ using UnityEngine.Networking;
 
 namespace ServerMessage
 {
-    public class MoveUnitMessage : MessageBase
-    {
+    public class MoveUnitMessage : MessageBase{
+        public int actionID;
         public string unitID;
         public int startX;
         public int startY;

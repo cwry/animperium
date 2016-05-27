@@ -3,9 +3,7 @@ using System.Collections;
 using UnityEngine.Networking;
 using System;
 
-public class TeleportMovementManager : MonoBehaviour
-{
-
+public class TeleportMovementManager : MonoBehaviour{
     void Awake(){
         NetworkData.client.netClient.RegisterHandler((short)ServerMessage.Types.TELEPORT_UNIT, onTeleportUnitMessage);
     }
@@ -22,9 +20,9 @@ public class TeleportMovementManager : MonoBehaviour
         TileInfo start = unit.currentTile.GetComponent<TileInfo>();
         GridManager grid = (start.grid == Data.mainGrid) ? Data.subGrid : Data.mainGrid;
         TileInfo end = grid.gridData[start.gridPosition.x, start.gridPosition.y].GetComponent<TileInfo>();
-        if (Input.GetKeyDown("space"))
-        {
+        if (Input.GetKeyDown("space")){
             ServerMessage.TeleportUnitMessage msg = new ServerMessage.TeleportUnitMessage();
+            msg.actionID = ActionQueue.getInstance().actionID++;
             msg.startX = start.gridPosition.x;
             msg.startY = start.gridPosition.y;
             msg.endX = end.gridPosition.x;
@@ -34,26 +32,19 @@ public class TeleportMovementManager : MonoBehaviour
             msg.unitID = unit.unitID;
             NetworkData.client.netClient.Send((short)ServerMessage.Types.TELEPORT_UNIT, msg);
             onTeleportUnit(msg);
-            Camera.main.gameObject.transform.GetComponentInParent<CameraFocus>().CameraJump(end.grid.gridData[end.gridPosition.x, end.gridPosition.y]);
+            Camera.main.gameObject.GetComponent<CameraFocus>().CameraJump(end.grid.gridData[end.gridPosition.x, end.gridPosition.y]);
         }
-
     }
 
     void onTeleportUnit(ServerMessage.TeleportUnitMessage msg){
-        UnitActionQueue.getInstance().push(msg.unitID, (Action done) => {
+        ActionQueue.getInstance().push(msg.actionID, () => {
             GameObject u = Data.units[msg.unitID];
             GridManager startGrid = msg.isStartMainGrid ? Data.mainGrid : Data.subGrid;
             GridManager endGrid = msg.isEndMainGrid ? Data.mainGrid : Data.subGrid;
             Vec2i startPosition = new Vec2i(msg.startX, msg.startY);
             Vec2i endPosition = new Vec2i(msg.endX, msg.endY);
 
-            TeleportMovement.move(u, startGrid, startPosition, endGrid, endPosition, () => {
-                Unit unit = u.GetComponent<Unit>();
-                if(unit.playerID == Data.playerID){
-                    Camera.main.gameObject.transform.GetComponentInParent<CameraFocus>().CameraJump(endGrid.gridData[endPosition.x, endPosition.y]);
-                }
-                done();
-            });
+            TeleportMovement.move(u, startGrid, startPosition, endGrid, endPosition);
         });
     }
 

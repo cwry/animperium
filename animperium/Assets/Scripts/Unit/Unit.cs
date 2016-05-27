@@ -7,7 +7,7 @@ public class Unit : MonoBehaviour {
     public int playerID;
     public string unitID;
 
-    bool isExecutingAction = false;
+    /*bool isExecutingAction = false;
 
 	void Update () {
         if (isExecutingAction) return;
@@ -18,6 +18,6 @@ public class Unit : MonoBehaviour {
                 isExecutingAction = false;
             });
         }
-    }
+    }*/
     
 }
