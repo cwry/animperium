@@ -67,15 +67,10 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Map\MapGeneratorInit.cs" />
+    <Compile Include="Assets\Scripts\ActionQueue.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFocus.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraMoveOnRightclick.cs" />
     <Compile Include="Assets\Scripts\Data.cs" />
@@ -106,7 +101,6 @@
     <Compile Include="Assets\Scripts\Unit\Movement\TeleportMovementManager.cs" />
     <Compile Include="Assets\Scripts\Unit\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
-    <Compile Include="Assets\Scripts\Unit\UnitActionQueue.cs" />
     <Compile Include="Assets\Scripts\Util\GameEvent.cs" />
     <Compile Include="Assets\Scripts\Util\Vec2i.cs" />
     <Compile Include="Assets\UI\UI-Scripts\BreakButton.cs" />

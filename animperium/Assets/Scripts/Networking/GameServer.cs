@@ -27,7 +27,7 @@ public class GameServer{
 
     void onTeleportUnit(NetworkMessage netMsg){
         ServerMessage.TeleportUnitMessage msg = netMsg.ReadMessage<ServerMessage.TeleportUnitMessage>();
-        NetworkServer.SendToClient(NetworkServer.connections.IndexOf(netMsg.conn) == 1 ? 2 : 1, (short)ServerMessage.Types.TELEPORT_UNIT, msg);
+        NetworkServer.SendToClient(NetworkServer.connections.IndexOf(netMsg.conn) == 1 ? 2 : 1, netMsg.msgType, msg);
     }
 
     void onClientLoaded(NetworkMessage netMsg){
@@ -41,7 +41,7 @@ public class GameServer{
     void onSpawnUnit(NetworkMessage netMsg){
         ServerMessage.SpawnUnitMessage msg = netMsg.ReadMessage<ServerMessage.SpawnUnitMessage>();
         msg.unitID = Guid.NewGuid().ToString();
-        NetworkServer.SendToAll(netMsg.msgType, msg);
+        NetworkServer.SendToClient(NetworkServer.connections.IndexOf(netMsg.conn) == 1 ? 2 : 1, netMsg.msgType, msg);
     }
 
     void onMoveUnit(NetworkMessage netMsg) {
