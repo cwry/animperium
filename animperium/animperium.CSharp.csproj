@@ -61,6 +61,18 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Map\MapGeneratorInit.cs" />
@@ -89,6 +101,7 @@
     <Compile Include="Assets\Scripts\Networking\ServerMessages\TeleportUnitMessage.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
+    <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\DefaultUnit.cs" />
     <Compile Include="Assets\Scripts\Unit\Movement\PathMovement.cs" />
@@ -113,6 +126,7 @@
     <Compile Include="Assets\UI\UI-Scripts\PlayerTimer.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetOnGui.cs" />
     <Compile Include="Assets\UI\UI-Scripts\TurnBarBlinking.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\UISoundManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Map\UCLAGameLab\Wireframe\Shaders\UCLA GameLab Cutout Wireframe.shader" />

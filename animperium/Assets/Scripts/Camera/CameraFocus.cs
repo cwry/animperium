@@ -77,28 +77,28 @@ public class CameraFocus : MonoBehaviour {
 	private void MousePositionHandling()
 	{
 		Vector3 mousePosition = Input.mousePosition;
-		if (mousePosition.x >= Screen.width * 0.9f && mousePosition.y >= Screen.height * 0.9f) {
+		if (mousePosition.x >= Screen.width * 0.95f && mousePosition.y >= Screen.height * 0.95f) {
 			targetPosition = cam.transform.position + Vector3.right + Vector3.forward;
 			CameraMove (dampen);
-		} else if (mousePosition.x >= Screen.width * 0.9f && mousePosition.y <= Screen.height * 0.1f) {
+		} else if (mousePosition.x >= Screen.width * 0.95f && mousePosition.y <= Screen.height * 0.05f) {
 			targetPosition = cam.transform.position + Vector3.right + Vector3.back;
 			CameraMove (dampen);
-		} else if (mousePosition.x <= Screen.width * 0.1f && mousePosition.y <= Screen.height * 0.1f) {
+		} else if (mousePosition.x <= Screen.width * 0.05f && mousePosition.y <= Screen.height * 0.05f) {
 			targetPosition = cam.transform.position + Vector3.left + Vector3.back;
 			CameraMove (dampen);
-		} else if (mousePosition.x <= Screen.width * 0.1f && mousePosition.y >= Screen.height * 0.9f) {
+		} else if (mousePosition.x <= Screen.width * 0.05f && mousePosition.y >= Screen.height * 0.95f) {
 			targetPosition = cam.transform.position + Vector3.left + Vector3.forward;
 			CameraMove (dampen);
-		} else if (mousePosition.x >= Screen.width * 0.9f) {
+		} else if (mousePosition.x >= Screen.width * 0.99f) {
 			targetPosition = cam.transform.position + Vector3.right;
 			CameraMove (dampen);
-		} else if (mousePosition.x <= Screen.width * 0.1f) {
+		} else if (mousePosition.x <= Screen.width * 0.01f) {
 			targetPosition = cam.transform.position + Vector3.left;
 			CameraMove (dampen);
-		} else if (mousePosition.y >= Screen.height * 0.9f) {
+		} else if (mousePosition.y >= Screen.height * 0.99f) {
 			targetPosition = cam.transform.position + Vector3.forward;
 			CameraMove (dampen);
-		} else if (mousePosition.y <= Screen.height * 0.1f) {
+		} else if (mousePosition.y <= Screen.height * 0.01f) {
 			targetPosition = cam.transform.position + Vector3.back;
 			CameraMove (dampen);
 		}
