@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 
 public class PathFinding{
-    public static Vec2i[] findPath(GridManager grid, int startX, int startY, int goalX, int goalY, Func<Vec2i, bool> checkTraversable){
+    public static Vec2i[] findPath(GridManager grid, int startX, int startY, int goalX, int goalY, int maxSteps, Func<Vec2i, bool> checkTraversable){
         List<PathNode> reachable = new List<PathNode>();
         List<PathNode> visited = new List<PathNode>();
         reachable.Add(new PathNode(startX, startY, grid));
@@ -47,7 +47,7 @@ public class PathFinding{
                     if (!isReachable){
                         PathNode nNode = new PathNode(hex.x, hex.y, grid, goalX, goalY, cheapest);
                         if (hex.x == goalX && hex.y == goalY) return nNode.toPath();
-                        reachable.Add(nNode);
+                        if (nNode.g <= maxSteps) reachable.Add(nNode);
                     }
                 }
             }

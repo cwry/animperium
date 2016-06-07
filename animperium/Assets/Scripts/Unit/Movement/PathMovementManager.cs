@@ -14,7 +14,7 @@ public class PathMovementManager : MonoBehaviour {
         if (unit.currentTile != null){
             TileInfo end = endTile.GetComponent<TileInfo>();
             TileInfo start = unit.currentTile.GetComponent<TileInfo>();
-            Vec2i[] path = PathFinding.findPath(start.grid, start.gridPosition.x, start.gridPosition.y, end.gridPosition.x, end.gridPosition.y, (Vec2i hx) => {
+            Vec2i[] path = PathFinding.findPath(start.grid, start.gridPosition.x, start.gridPosition.y, end.gridPosition.x, end.gridPosition.y, unit.movementPoints, (Vec2i hx) => {
                 return start.grid.gridData[hx.x, hx.y].GetComponent<TileInfo>().traversable;
             });
             if (path != null && path.Length >= 2){
@@ -34,11 +34,13 @@ public class PathMovementManager : MonoBehaviour {
 
     static void onMoveUnit(ServerMessage.MoveUnitMessage msg){
         GridManager grid = msg.isMainGrid ? Data.mainGrid : Data.subGrid;
-        Vec2i[] path = PathFinding.findPath(grid, msg.startX, msg.startY, msg.endX, msg.endY, (Vec2i hx) => {
+        GameObject go = Data.units[msg.unitID];
+        Unit unit = go.GetComponent<Unit>();
+        Vec2i[] path = PathFinding.findPath(grid, msg.startX, msg.startY, msg.endX, msg.endY, unit.movementPoints, (Vec2i hx) => {
             return grid.gridData[hx.x, hx.y].GetComponent<TileInfo>().traversable;
         });
         ActionQueue.getInstance().push(msg.actionID, () => {
-            PathMovement.move(Data.units[msg.unitID], grid, path, 3);
+            PathMovement.move(go, grid, path, 3);
         });
     }
 
