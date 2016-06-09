@@ -10,6 +10,6 @@ public class NetworkInitializationManager : MonoBehaviour {
 
     void onAllLoaded(NetworkMessage netMsg){
         Debug.Log("[CLIENT] All Clients Loaded");
-        TurnManager.endTurn();
+        TurnManager.init();
     }
 }

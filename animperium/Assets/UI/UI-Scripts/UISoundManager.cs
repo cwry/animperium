@@ -22,7 +22,6 @@ public class UISoundManager: MonoBehaviour {
     {
         if (soundBible.ContainsKey(sound))
         {
-            Debug.Log("er sollte spielen");
             soundPlayer.clip = soundBible[sound];
             soundPlayer.Play();
         }
