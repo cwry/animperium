@@ -18,6 +18,7 @@ public class GameServer{
         NetworkServer.RegisterHandler((short)ServerMessage.Types.CLIENT_LOADED, onClientLoaded);
         NetworkServer.RegisterHandler((short)ServerMessage.Types.TELEPORT_UNIT, onTeleportUnit);
         NetworkServer.RegisterHandler((short)ServerMessage.Types.TURN_ENDED, onTurnEnded);
+        NetworkServer.RegisterHandler((short)ServerMessage.Types.UNIT_ABILITY, onUnitAbility);
     }
 
     void onTurnEnded(NetworkMessage netMsg){
@@ -27,6 +28,11 @@ public class GameServer{
 
     void onTeleportUnit(NetworkMessage netMsg){
         ServerMessage.TeleportUnitMessage msg = netMsg.ReadMessage<ServerMessage.TeleportUnitMessage>();
+        NetworkServer.SendToClient(NetworkServer.connections.IndexOf(netMsg.conn) == 1 ? 2 : 1, netMsg.msgType, msg);
+    }
+
+    void onUnitAbility(NetworkMessage netMsg){
+        ServerMessage.UnitAbilityMessage msg = netMsg.ReadMessage<ServerMessage.UnitAbilityMessage>();
         NetworkServer.SendToClient(NetworkServer.connections.IndexOf(netMsg.conn) == 1 ? 2 : 1, netMsg.msgType, msg);
     }
 

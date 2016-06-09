@@ -7,10 +7,7 @@ namespace ServerMessage{
         public int actionID;
         public int endX;
         public int endY;
-        public int startX;
-        public int startY;
         public bool isEndMainGrid;
-        public bool isStartMainGrid;
         public string unitID;
     }
 }

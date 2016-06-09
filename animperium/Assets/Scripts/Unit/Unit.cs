@@ -16,6 +16,9 @@ public class Unit : MonoBehaviour {
     public int maxMovementPoints;
     public int movementPoints;
 
+    public float maxHitPoints;
+    public float hitPoints;
+
     public float magicResist;
     public float meleeResist;
     public float rangedResist;
@@ -25,13 +28,20 @@ public class Unit : MonoBehaviour {
     void Awake(){
         onTurnBegin(-1);
         removeTurnBegin = TurnManager.onTurnBegin.add<int>(onTurnBegin);
+        hitPoints = maxHitPoints;
+    }
+
+    void OnDestroy(){
+        removeTurnBegin();
+        Data.units.Remove(unitID);
+        currentTile.GetComponent<TileInfo>().unit = null;
     }
 
     private void onTurnBegin(int turnID){
         movementPoints = maxMovementPoints;
     }
 
-    private void damage(float power, DamageType type){
+    public void damage(float power, DamageType type){
         float resist;
         switch (type){
             case DamageType.MAGIC:
@@ -47,5 +57,13 @@ public class Unit : MonoBehaviour {
                 return;
         }
         float damage = power / resist;
+        hitPoints -= damage;
+        Debug.Log("[BATTLE SYSTEM] Unit " + unitID + " took " + damage + " damage.");
+        if(hitPoints <= 0){
+            Debug.Log("[BATTLE SYSTEM] Unit " + unitID + " died.");
+            Destroy(gameObject);
+        }
     }
+
+
 }
