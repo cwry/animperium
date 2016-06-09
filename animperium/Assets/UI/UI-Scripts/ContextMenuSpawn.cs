@@ -35,7 +35,19 @@ public class ContextMenuSpawn : MonoBehaviour {
             }
             
             contextMenu = Instantiate(contextMenuPrefab, Camera.main.WorldToScreenPoint(GUIData.targetTile.transform.position), Quaternion.identity) as GameObject;
-            contextMenu.transform.parent = canvas.transform;
+            contextMenu.transform.SetParent(canvas.transform, false);
+        }
+
+        if(Input.GetMouseButtonDown(0) && !GUIData.pointerOnGUI)
+        {
+            GameObject[] arr = GameObject.FindGameObjectsWithTag("Ui");
+            foreach (GameObject g in arr)
+            {
+                if (g.name.Contains(contextMenuPrefab.name))
+                {
+                    Destroy(g);
+                }
+            }
         }
 
 	}

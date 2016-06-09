@@ -8,6 +8,8 @@ public class EventSprite : MonoBehaviour {
     public Sprite highlighted;
     public Sprite pressed;
     private Image image;
+    public Texture2D cursorTexture;
+    public Texture2D cursorBasicTexture;
 
     // Use this for initialization
     void Start () {
@@ -27,5 +29,16 @@ public class EventSprite : MonoBehaviour {
     public void SwitchToPressed()
     {
         image.sprite = pressed;
+    }
+
+    public void SwitchCursorToTexture()
+    {
+        Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
+    }
+
+    public void SwitchCursorBackToBasic()
+    {
+        Cursor.SetCursor(cursorBasicTexture, Vector2.zero, CursorMode.Auto);
+        
     }
 }

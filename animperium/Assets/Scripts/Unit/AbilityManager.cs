@@ -21,7 +21,7 @@ public class AbilityManager : MonoBehaviour {
         });
     }
 
-    static void useAbility(GameObject unit, int abilityID, Vec2i target, bool isTargetMainGrid){
+    public static void useAbility(GameObject unit, int abilityID, Vec2i target, bool isTargetMainGrid){
         ServerMessage.UnitAbilityMessage msg = new ServerMessage.UnitAbilityMessage();
         msg.unitID = unit.GetComponent<Unit>().unitID;
         msg.actionID = ActionQueue.getInstance().actionID++;
@@ -33,11 +33,7 @@ public class AbilityManager : MonoBehaviour {
         onUnitAbility(msg);
     }
 
-    void Update(){
-        if (Input.GetKeyDown(KeyCode.Q) && SelectionManager.selectedUnit != null && SelectionManager.hoverTile != null) {
-            TileInfo target = SelectionManager.hoverTile.GetComponent<TileInfo>();
-            useAbility(SelectionManager.selectedUnit, 0, target.gridPosition, target.grid.isMainGrid);
-        }
-    }
+  
+    
 
 }

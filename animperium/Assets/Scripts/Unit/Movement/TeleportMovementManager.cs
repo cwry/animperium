@@ -8,7 +8,7 @@ public class TeleportMovementManager : MonoBehaviour{
         NetworkData.client.netClient.RegisterHandler((short)ServerMessage.Types.TELEPORT_UNIT, onTeleportUnitMessage);
     }
 
-    static void dig(GameObject unit){
+    public static void dig(GameObject unit){
         Unit u = unit.GetComponent<Unit>();
         TileInfo start = u.currentTile.GetComponent<TileInfo>();
         GridManager endGrid = start.grid.isMainGrid ? Data.subGrid : Data.mainGrid;
