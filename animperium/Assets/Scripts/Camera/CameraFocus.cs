@@ -11,6 +11,7 @@ public class CameraFocus : MonoBehaviour {
 	}*/
 
     public GameObject cam;
+    public GameObject startingHex;
 
 	private float offSet = 20f;
 	private float dampen = 8f;
@@ -40,7 +41,9 @@ public class CameraFocus : MonoBehaviour {
 
 	public void CameraJumpInStageMiddle(bool mainGridBool)
 	{
-		int d1;
+        #region alter code
+        /*
+        int d1;
 		int d2;
 
 		if (mainGridBool) {
@@ -67,7 +70,10 @@ public class CameraFocus : MonoBehaviour {
 			GameObject hexMiddle = Data.subGrid.gridData [d1, d2];
 			CameraJump (hexMiddle);
 		}
-	}
+        */
+        #endregion
+        CameraJump(startingHex);
+    }
 	public void CameraJump(GameObject target)
 	{
         //cam.transform.position = new Vector3 (target.transform.position.x, offSet, target.transform.position.z - offSet);
