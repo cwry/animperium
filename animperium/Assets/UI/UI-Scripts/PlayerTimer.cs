@@ -9,7 +9,6 @@ public class PlayerTimer : MonoBehaviour {
     private Text actualText;
 
     private int playerTime;
-    private Coroutine timer;
     private int turn;
 
 
@@ -17,7 +16,7 @@ public class PlayerTimer : MonoBehaviour {
     void Start () {
         turn = TurnManager.turnID;
         actualText = player1TimerText;
-        timer = StartCoroutine(TimerStart());
+        StartCoroutine(TimerStart());
 	}
 	
 	// Update is called once per frame

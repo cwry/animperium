@@ -58,6 +58,5 @@ public class SpawnManager : MonoBehaviour {
         msg.playerID = Data.playerID;
 
         NetworkData.client.netClient.Send((short)ServerMessage.Types.SPAWN_UNIT, msg);
-        onSpawnUnit(msg);
     }
 }

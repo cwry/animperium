@@ -127,6 +127,7 @@
     <Compile Include="Assets\UI\UI-Scripts\PlayerTimer.cs" />
     <Compile Include="Assets\UI\UI-Scripts\RotateOnCreate.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetOnGui.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\SpawnButton.cs" />
     <Compile Include="Assets\UI\UI-Scripts\TurnBarBlinking.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UISoundManager.cs" />
     <Compile Include="Assets\UI\UI-Scripts\old scripts don&apos;t use\ContextMenuArrange.cs" />

@@ -8,10 +8,21 @@ public class HealthBar: MonoBehaviour
     private Unit unit;
     Vector3 localScale;
 
+    public Material player1;
+    public Material player2;
+
     void Start()
     {
         localScale = foreGround.transform.localScale;
         unit = unitObject.GetComponent<Unit>();
+        if(unit.playerID == 1)
+        {
+            foreGround.GetComponent<Renderer>().material = player1;
+        }
+        else
+        {
+            foreGround.GetComponent<Renderer>().material = player2;
+        }
     }
 
     void Update()

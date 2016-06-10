@@ -12,8 +12,7 @@ public class CameraFocus : MonoBehaviour {
 
     public GameObject cam;
     public GameObject startingHex;
-
-	private float offSet = 20f;
+	
 	private float dampen = 8f;
 	private float dampenFocus = 2f;
 
@@ -21,7 +20,6 @@ public class CameraFocus : MonoBehaviour {
 	private bool isMainGrid;
 
 	private Vector3 targetPosition;
-
 	// Use this for initialization
 	void Start () {
 		StartPosition ();
@@ -79,6 +77,8 @@ public class CameraFocus : MonoBehaviour {
         //cam.transform.position = new Vector3 (target.transform.position.x, offSet, target.transform.position.z - offSet);
         cam.transform.position = target.transform.position;
     }
+
+    
 
 	private void MousePositionHandling()
 	{

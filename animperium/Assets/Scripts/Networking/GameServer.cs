@@ -47,7 +47,7 @@ public class GameServer{
     void onSpawnUnit(NetworkMessage netMsg){
         ServerMessage.SpawnUnitMessage msg = netMsg.ReadMessage<ServerMessage.SpawnUnitMessage>();
         msg.unitID = Guid.NewGuid().ToString();
-        NetworkServer.SendToClient(NetworkServer.connections.IndexOf(netMsg.conn) == 1 ? 2 : 1, netMsg.msgType, msg);
+        NetworkServer.SendToAll(netMsg.msgType, msg);
     }
 
     void onMoveUnit(NetworkMessage netMsg) {
