@@ -25,23 +25,19 @@ public class EndTurn : MonoBehaviour {
 
     public void EndTurnExecute()
     {
-        if (IsEndTurnPossible())
+        if (Data.isEndTurnPossible())
         {
+            ContextMenuSpawn.DestroyContextMenu();
             TurnManager.endTurn();
         }
 
         
     }
 
-    bool IsEndTurnPossible()
-    {
-        return Data.playerID % 2 != TurnManager.turnID % 2;
-    }
-
     void OnTurnBegin(int turnID)
     {
-        eventTrigger.enabled = IsEndTurnPossible();
-        if(!IsEndTurnPossible())
+        eventTrigger.enabled = Data.isEndTurnPossible();
+        if(!Data.isEndTurnPossible())
         {
             image.sprite = disabledButton;
         }

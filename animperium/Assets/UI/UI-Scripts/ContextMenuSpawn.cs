@@ -16,7 +16,7 @@ public class ContextMenuSpawn : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(SelectionManager.hoverTile != null && Input.GetMouseButtonDown(1) && !GUIData.pointerOnGUI && SelectionManager.selectedUnit != null)
+	    if(SelectionManager.hoverTile != null && Input.GetMouseButtonDown(1) && !GUIData.pointerOnGUI && SelectionManager.selectedUnit != null && Data.isEndTurnPossible())
         {
             Unit unit = SelectionManager.selectedUnit.GetComponent<Unit>();
             if (unit.playerID != Data.playerID) return;
@@ -24,14 +24,7 @@ public class ContextMenuSpawn : MonoBehaviour {
             GUIData.targetTile = SelectionManager.hoverTile;
             if (contextMenu != null)
             {
-                GameObject [] arr =  GameObject.FindGameObjectsWithTag("Ui");
-                foreach (GameObject g in arr)
-                {
-                    if(g.name.Contains(contextMenuPrefab.name))
-                    {
-                        Destroy(g);
-                    }
-                }
+                DestroyContextMenu();
             }
             
             contextMenu = Instantiate(contextMenuPrefab, Camera.main.WorldToScreenPoint(GUIData.targetTile.transform.position), Quaternion.identity) as GameObject;
@@ -40,15 +33,20 @@ public class ContextMenuSpawn : MonoBehaviour {
 
         if(Input.GetMouseButtonDown(0) && !GUIData.pointerOnGUI)
         {
-            GameObject[] arr = GameObject.FindGameObjectsWithTag("Ui");
-            foreach (GameObject g in arr)
-            {
-                if (g.name.Contains(contextMenuPrefab.name))
-                {
-                    Destroy(g);
-                }
-            }
+            DestroyContextMenu();
         }
 
 	}
+
+    public static void DestroyContextMenu()
+    {
+        GameObject[] arr = GameObject.FindGameObjectsWithTag("Ui");
+        foreach (GameObject g in arr)
+        {
+            if (g.name.Contains("ContextMenu"))
+            {
+                Destroy(g);
+            }
+        }
+    }
 }
