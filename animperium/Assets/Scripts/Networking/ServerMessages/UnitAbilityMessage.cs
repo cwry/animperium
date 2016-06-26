@@ -6,7 +6,7 @@ namespace ServerMessage
 {
     public class UnitAbilityMessage : MessageBase{
         public int actionID;
-        public int abilityID;
+        public string abilityID;
         public string unitID;
         public int targetX;
         public int targetY;
