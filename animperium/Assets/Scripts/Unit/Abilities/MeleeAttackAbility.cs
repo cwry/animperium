@@ -4,25 +4,30 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
 
-public class MeleeAttackAbility : MonoBehaviour {
+public class MeleeAttackAbility : MonoBehaviour
+{
 
     public string abilityID = "melee";
     public int strength;
 
-    void executeAbility(ServerMessage.UnitAbilityMessage msg) {
+    void executeAbility(ServerMessage.UnitAbilityMessage msg)
+    {
         if (msg.abilityID != abilityID) return;
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         GameObject target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>().unit;
-        if(target != null){
+        if (target != null)
+        {
             target.GetComponent<Unit>().damage(strength, DamageType.MELEE);
         }
     }
 
-    void enumerateAbility(Action<string> enlist){
+    void enumerateAbility(Action<string> enlist)
+    {
         enlist(abilityID);
     }
 
-    void rangeCheckAbility(RangeCheckArgs rca){
+    void rangeCheckAbility(RangeCheckArgs rca)
+    {
         if (rca.abilityID != abilityID) return;
         rca.callback(gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().getAdjacent());
     }
