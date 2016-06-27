@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 public class TileInfo : MonoBehaviour {
     //hack for unity prefab serialization
@@ -98,4 +100,34 @@ public class TileInfo : MonoBehaviour {
         if (nw != null) adjacent.Add(nw);
         return adjacent.ToArray();
     }
+
+    public GameObject[] listTree(int depth, bool includeRoot = false, Func<TileInfo, bool> shouldInclude = null){
+        HashSet<GameObject> result = new HashSet<GameObject>();
+        List<GameObject> current = new List<GameObject>();
+        List<GameObject> next = new List<GameObject>();
+        current.Add(gameObject);
+        result.Add(gameObject);
+        if (shouldInclude == null) shouldInclude = (TileInfo ti) => { return true; };
+        while (depth > 0){
+            foreach(GameObject go in current){
+                GameObject[] adj = go.GetComponent<TileInfo>().getAdjacent();
+                foreach(GameObject nxt in adj){
+                    TileInfo nxtTi = nxt.GetComponent<TileInfo>();
+                    if (shouldInclude(nxtTi)){
+                        if (result.Add(nxt)){
+                            next.Add(nxt);
+                        }
+                    }
+                }
+            }
+            current = next;
+            next = new List<GameObject>();
+            depth--;
+        }
+        if (!includeRoot){
+            result.Remove(gameObject);
+        }
+        return result.ToArray();
+    }
+    
 }

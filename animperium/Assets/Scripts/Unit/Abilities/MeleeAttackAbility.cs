@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
 
-public class MeleeAttack : MonoBehaviour {
+public class MeleeAttackAbility : MonoBehaviour {
 
-    public string abilityID;
+    public string abilityID = "melee";
     public int strength;
 
     void executeAbility(ServerMessage.UnitAbilityMessage msg) {
