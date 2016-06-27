@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
 public class EventSprite : MonoBehaviour {
 
     public Sprite normal;
