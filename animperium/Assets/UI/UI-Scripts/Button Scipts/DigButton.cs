@@ -2,9 +2,9 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class DigButton : ButtonOnClick {
+public class DigButton : MonoBehaviour {
 
-    public override void OnClick(PointerEventData data)
+    public  void OnClick(PointerEventData data)
     {
         TeleportMovementManager.dig(SelectionManager.selectedUnit);
     }

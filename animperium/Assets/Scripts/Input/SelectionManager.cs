@@ -5,4 +5,5 @@ public class SelectionManager  {
     public static GameObject selectedTile;
     public static GameObject hoverTile;
     public static GameObject selectedUnit;
+    public static GameObject selectedTarget;
 }

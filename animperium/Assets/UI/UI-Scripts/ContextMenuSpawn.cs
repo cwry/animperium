@@ -6,37 +6,53 @@ using System;
 public class ContextMenuSpawn : MonoBehaviour {
 
     public GameObject contextMenuPrefab;
-    private GameObject contextMenu; 
+    private GameObject contextMenu = null; 
     public GameObject canvas;
+    public GameObject currentUnit = null;
+    public string[] abilities;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         GUIData.pointerOnGUI = false;
+        GUIData.canSelectTarget = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    if(SelectionManager.hoverTile != null && Input.GetMouseButtonDown(1) && !GUIData.pointerOnGUI && SelectionManager.selectedUnit != null && Data.isEndTurnPossible())
+       
+	    if( Input.GetMouseButtonDown(0) && SelectionManager.selectedUnit != currentUnit && !GUIData.pointerOnGUI && Data.isEndTurnPossible() && !GUIData.hasContextMenu && !GUIData.canSelectTarget)
         {
-            Unit unit = SelectionManager.selectedUnit.GetComponent<Unit>();
-            if (unit.playerID != Data.playerID) return;
-
-            GUIData.targetTile = SelectionManager.hoverTile;
-            if (contextMenu != null)
-            {
-                DestroyContextMenu();
-            }
-            
-            contextMenu = Instantiate(contextMenuPrefab, Camera.main.WorldToScreenPoint(GUIData.targetTile.transform.position), Quaternion.identity) as GameObject;
-            contextMenu.transform.SetParent(canvas.transform, false);
+            GUIData.targetTile = SelectionManager.selectedTile;
+            currentUnit = SelectionManager.selectedUnit;
+            SpawnContextMenu();
+            GUIData.hasContextMenu = true;
         }
-
-        if(Input.GetMouseButtonDown(0) && !GUIData.pointerOnGUI)
+        else if(Input.GetMouseButtonDown(0) && SelectionManager.selectedUnit == null && !GUIData.pointerOnGUI && Data.isEndTurnPossible() && GUIData.hasContextMenu && !GUIData.canSelectTarget)
         {
-            DestroyContextMenu();
+            currentUnit = null;
+            Destroy(contextMenu);
+            GUIData.hasContextMenu = false;
         }
+        //if(Input.GetMouseButtonDown(1) && !GUIData.pointerOnGUI && GUIData.hasContextMenu && GUIData.canSelectTarget && SelectionManager.hoverTile != null && Data.isEndTurnPossible())
+        //{
+        //    SelectionManager.selectedTarget = SelectionManager.hoverTile;
+        //    contextMenu.GetComponent<ContextMenuControl>().attackButton.GetComponent<ButtonComponent>().button.execute();
+        //}
+    }
 
-	}
+    private void SpawnContextMenu()
+    {
+        Unit unit = SelectionManager.selectedUnit.GetComponent<Unit>();
+        if (unit.playerID != Data.playerID) return;
+        contextMenu = Instantiate(contextMenuPrefab, Camera.main.WorldToScreenPoint(GUIData.targetTile.transform.position), Quaternion.identity) as GameObject;
+        contextMenu.transform.SetParent(canvas.transform, false);
+        abilities = AbilityManager.listAbilities(SelectionManager.selectedUnit);// returnt string array with ability ids
+        foreach (string ability in abilities){
+            Debug.Log(ability);
+            contextMenu.GetComponent<ContextMenuControl>().AddButton(ability);
+        }
+        //contextMenu.GetComponent<ContextMenuControl>().AddMoveButton();
+    }
 
     public static void DestroyContextMenu()
     {
@@ -48,5 +64,6 @@ public class ContextMenuSpawn : MonoBehaviour {
                 Destroy(g);
             }
         }
+        GUIData.hasContextMenu = false;
     }
 }

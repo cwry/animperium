@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RotateOnCreate : MonoBehaviour {
 
-    public float speed = 10;
+    public float speed = 100;
 
 	void Start () {
 	

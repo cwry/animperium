@@ -5,27 +5,14 @@ using UnityEngine.EventSystems;
 
 public class ButtonComponent : MonoBehaviour
 {
-    ButtonOnClick button;
+    public DynamicButton button;
     EventTrigger trigger;
+    public string ability;
     //EventSprite spriteEvent;
 
     void Start()
     {
-        //spriteEvent = GetComponent<EventSprite>();
-        switch (gameObject.name)
-        {
-            case "AttackButton":
-                button = new AttackButton();
-                break;
-            case "MoveButton":
-                button = new MoveUnitButton();
-                break;
-            case "DigButton":
-                button = new DigButton();
-                break;
-            default:
-                break;
-        }
+        button = gameObject.AddComponent<DynamicButton>();
         trigger = GetComponent<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerClick;
@@ -33,7 +20,22 @@ public class ButtonComponent : MonoBehaviour
         trigger.triggers.Add(entry);
     }
 }
-public abstract class ButtonOnClick : MonoBehaviour{
+public  class DynamicButton : MonoBehaviour{
+
     
-    public abstract void OnClick(PointerEventData data);
+    public Action execute;
+
+    
+    public  void OnClick(PointerEventData data)
+    {
+        GUIData.canSelectTarget = true;
+        GUIData.activeButton = gameObject;
+        //execute();
+    }
+
+    //public void SetFunction(Action v)
+    //{
+    //   execute = v;
+    //}
+    
 }

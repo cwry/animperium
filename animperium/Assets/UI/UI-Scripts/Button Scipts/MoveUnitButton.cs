@@ -2,9 +2,9 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class MoveUnitButton : ButtonOnClick {
+public class MoveUnitButton : MonoBehaviour {
     
-	public override void OnClick(PointerEventData data)
+	public  void OnClick(PointerEventData data)
     {
         //GameObject tile = gameObject.GetComponent<ContextMenuPosition>().tile;
         PathMovementManager.move(SelectionManager.selectedUnit, GUIData.targetTile);

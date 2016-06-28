@@ -2,9 +2,9 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class EndTurnButton : ButtonOnClick {
+public class EndTurnButton : MonoBehaviour {
 
-	public override void OnClick(PointerEventData data)
+	public void OnClick(PointerEventData data)
     {
 
     }
