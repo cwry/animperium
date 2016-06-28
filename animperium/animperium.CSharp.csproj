@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.4f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -60,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -86,6 +78,7 @@
     <Compile Include="Assets\Scripts\Data.cs" />
     <Compile Include="Assets\Scripts\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
+    <Compile Include="Assets\Scripts\Input\TargetingManager.cs" />
     <Compile Include="Assets\Scripts\InputFieldStandardValue.cs" />
     <Compile Include="Assets\Scripts\Map Editor\MapGridContainer.cs" />
     <Compile Include="Assets\Scripts\Map\GridManager.cs" />
@@ -110,6 +103,7 @@
     <Compile Include="Assets\Scripts\Unit\Abilities\MeleeAttackAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\MovementAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\AbilityManager.cs" />
+    <Compile Include="Assets\Scripts\Unit\BuildingFootprintCircle.cs" />
     <Compile Include="Assets\Scripts\Unit\DefaultUnit.cs" />
     <Compile Include="Assets\Scripts\Unit\Movement\PathMovement.cs" />
     <Compile Include="Assets\Scripts\Unit\Movement\PathMovementManager.cs" />
@@ -141,7 +135,7 @@
     <Compile Include="Assets\UI\UI-Scripts\SpawnButton.cs" />
     <Compile Include="Assets\UI\UI-Scripts\TurnBarBlinking.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UISoundManager.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\old scripts don't use\ContextMenuArrange.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\old scripts don&apos;t use\ContextMenuArrange.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Map\UCLAGameLab\Wireframe\Shaders\UCLA GameLab Cutout Wireframe.shader" />
