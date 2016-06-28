@@ -6,7 +6,6 @@ using System;
 
 public class MeleeAttackAbility : MonoBehaviour
 {
-
     public string abilityID = "melee";
     public int strength;
 
