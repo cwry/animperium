@@ -28,13 +28,13 @@ public  class DynamicButton : MonoBehaviour{
     
     public  void OnClick(PointerEventData data)
     {
+        string abilityID = GetComponent<ButtonComponent>().ability;
         TargetingManager.selectTarget(AbilityManager.checkRange(GUIData.ContextUnit, GetComponent<ButtonComponent>().ability), (GameObject target) => {   //select tile and execute callback
             TileInfo tile = target.GetComponent<TileInfo>();
-            AbilityManager.useAbility(GUIData.ContextUnit, GetComponent<ButtonComponent>().ability, tile.gridPosition, tile.grid.isMainGrid);});
+            AbilityManager.useAbility(GUIData.ContextUnit, abilityID, tile.gridPosition, tile.grid.isMainGrid);});
         GUIData.canSelectTarget = true;
         GUIData.activeButton = gameObject;
-        Debug.Log(SelectionManager.selectedUnit);
-        //execute();
+        ContextMenuSpawn.DestroyContextMenu();
     }
 
     //public void SetFunction(Action v)
