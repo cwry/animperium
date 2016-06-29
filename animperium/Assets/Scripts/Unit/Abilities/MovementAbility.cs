@@ -30,7 +30,7 @@ public class MovementAbility : MonoBehaviour {
 
     void rangeCheckAbility(RangeCheckArgs rca){
         if (rca.abilityID != abilityID) return;
-        GameObject[] inRange = unit.currentTile.GetComponent<TileInfo>().listTree(unit.movementPoints, false, (TileInfo ti) => {
+        GameObject[] inRange = unit.currentTile.GetComponent<TileInfo>().listTree(1, unit.movementPoints, (TileInfo ti) => {
             return ti.traversable && ti.unit == null;
         });
         if (inRange.Length == 0) inRange = null;

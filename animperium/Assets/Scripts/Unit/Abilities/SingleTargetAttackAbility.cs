@@ -4,19 +4,20 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
 
-public class MeleeAttackAbility : MonoBehaviour
+public class SingleTargetAttackAbility : MonoBehaviour
 {
     public string abilityID = "melee";
     public int strength;
+    public DamageType type = DamageType.MELEE;
+    public int minRange = 0;
+    public int maxRange = 2;
 
-    void executeAbility(ServerMessage.UnitAbilityMessage msg)
-    {
+    void executeAbility(ServerMessage.UnitAbilityMessage msg){
         if (msg.abilityID != abilityID) return;
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         GameObject target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>().unit;
-        if (target != null)
-        {
-            target.GetComponent<Unit>().damage(strength, DamageType.MELEE);
+        if (target != null){
+            target.GetComponent<Unit>().damage(strength, type);
         }
     }
 
@@ -29,10 +30,9 @@ public class MeleeAttackAbility : MonoBehaviour
     {
         if (rca.abilityID != abilityID) return;
         Unit u = gameObject.GetComponent<Unit>();
-        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().getAdjacent();
+        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange);
         List<GameObject> attackable = new List<GameObject>();
-        foreach (GameObject go in inRange)
-        {
+        foreach (GameObject go in inRange){
             TileInfo ti = go.GetComponent<TileInfo>();
             if (ti.unit == null) continue;
             int playerID = ti.unit.GetComponent<Unit>().playerID;
