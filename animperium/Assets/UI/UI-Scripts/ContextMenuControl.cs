@@ -44,10 +44,11 @@ class ContextMenuControl : MonoBehaviour
         Destroy(slots[slot]);
         slots[slot] = g;
         slots[slot].AddComponent<ButtonComponent>();
+        
     }
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) 
+        /*if(Input.GetMouseButtonDown(0) 
             && !GUIData.pointerOnGUI 
             && GUIData.canSelectTarget 
             && Data.isEndTurnPossible() 
@@ -81,6 +82,6 @@ class ContextMenuControl : MonoBehaviour
             GUIData.activeButton = null;
             GUIData.canSelectTarget = false;
         }
-
+*/
     }
 }

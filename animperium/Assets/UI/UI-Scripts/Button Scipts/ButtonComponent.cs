@@ -28,6 +28,9 @@ public  class DynamicButton : MonoBehaviour{
     
     public  void OnClick(PointerEventData data)
     {
+        TargetingManager.selectTarget(AbilityManager.checkRange(GUIData.ContextUnit, GetComponent<ButtonComponent>().ability), (GameObject target) => {   //select tile and execute callback
+            TileInfo tile = target.GetComponent<TileInfo>();
+            AbilityManager.useAbility(GUIData.ContextUnit, GetComponent<ButtonComponent>().ability, tile.gridPosition, tile.grid.isMainGrid);});
         GUIData.canSelectTarget = true;
         GUIData.activeButton = gameObject;
         //execute();

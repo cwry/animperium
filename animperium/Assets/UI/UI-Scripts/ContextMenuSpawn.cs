@@ -26,6 +26,7 @@ public class ContextMenuSpawn : MonoBehaviour {
             currentUnit = SelectionManager.selectedUnit;
             SpawnContextMenu();
             GUIData.hasContextMenu = true;
+            GUIData.ContextUnit = currentUnit;
         }
         else if(Input.GetMouseButtonDown(0) && SelectionManager.selectedUnit == null && !GUIData.pointerOnGUI && Data.isEndTurnPossible() && GUIData.hasContextMenu && !GUIData.canSelectTarget)
         {
@@ -51,7 +52,7 @@ public class ContextMenuSpawn : MonoBehaviour {
             Debug.Log(ability);
             contextMenu.GetComponent<ContextMenuControl>().AddButton(ability);
         }
-        //contextMenu.GetComponent<ContextMenuControl>().AddMoveButton();
+        
     }
 
     public static void DestroyContextMenu()
