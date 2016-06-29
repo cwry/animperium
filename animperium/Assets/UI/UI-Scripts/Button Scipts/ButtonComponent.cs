@@ -33,6 +33,7 @@ public  class DynamicButton : MonoBehaviour{
             AbilityManager.useAbility(GUIData.ContextUnit, GetComponent<ButtonComponent>().ability, tile.gridPosition, tile.grid.isMainGrid);});
         GUIData.canSelectTarget = true;
         GUIData.activeButton = gameObject;
+        Debug.Log(SelectionManager.selectedUnit);
         //execute();
     }
 

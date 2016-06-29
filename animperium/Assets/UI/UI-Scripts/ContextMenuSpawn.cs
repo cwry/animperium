@@ -20,7 +20,7 @@ public class ContextMenuSpawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
        
-	    if( Input.GetMouseButtonDown(0) && SelectionManager.selectedUnit != currentUnit && !GUIData.pointerOnGUI && Data.isEndTurnPossible() && !GUIData.hasContextMenu && !GUIData.canSelectTarget)
+	    if( Input.GetMouseButtonDown(0) && SelectionManager.selectedUnit != currentUnit && !GUIData.pointerOnGUI && Data.isEndTurnPossible() && !GUIData.hasContextMenu)
         {
             GUIData.targetTile = SelectionManager.selectedTile;
             currentUnit = SelectionManager.selectedUnit;
@@ -28,7 +28,7 @@ public class ContextMenuSpawn : MonoBehaviour {
             GUIData.hasContextMenu = true;
             GUIData.ContextUnit = currentUnit;
         }
-        else if(Input.GetMouseButtonDown(0) && SelectionManager.selectedUnit == null && !GUIData.pointerOnGUI && Data.isEndTurnPossible() && GUIData.hasContextMenu && !GUIData.canSelectTarget)
+        else if(Input.GetMouseButtonDown(0) && SelectionManager.selectedUnit == null && !GUIData.pointerOnGUI && Data.isEndTurnPossible() && GUIData.hasContextMenu)
         {
             currentUnit = null;
             Destroy(contextMenu);
