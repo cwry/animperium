@@ -20,9 +20,7 @@ class ContextMenuControl : MonoBehaviour
     }
     public void AddButton(string ability)// add button to existing points
     {
-       
-            GameObject[] list = AbilityManager.checkRange(SelectionManager.selectedUnit, ability);
-            if (list[0] != null && slot < slots.Length)
+            if (slot < slots.Length)
             {
                 Debug.Log("Sollte instanziert werden");
                 GameObject g = Instantiate(attackButton,slots[slot].GetComponent<Transform>().position, Quaternion.identity) as GameObject;
