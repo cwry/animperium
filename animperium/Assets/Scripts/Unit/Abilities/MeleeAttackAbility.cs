@@ -28,6 +28,19 @@ public class MeleeAttackAbility : MonoBehaviour
     void rangeCheckAbility(RangeCheckArgs rca)
     {
         if (rca.abilityID != abilityID) return;
-        rca.callback(gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().getAdjacent());
+        Unit u = gameObject.GetComponent<Unit>();
+        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().getAdjacent();
+        List<GameObject> attackable = new List<GameObject>();
+        foreach (GameObject go in inRange)
+        {
+            TileInfo ti = go.GetComponent<TileInfo>();
+            if (ti.unit == null) continue;
+            int playerID = ti.unit.GetComponent<Unit>().playerID;
+            if (playerID != 0 && playerID != u.playerID) attackable.Add(go);
+        }
+
+        GameObject[] res = attackable.Count == 0 ? null : attackable.ToArray();
+
+        rca.callback(res);
     }
 }
