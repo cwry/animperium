@@ -9,7 +9,7 @@ public class Data {
     public static GridManager subGrid;
     public static Dictionary<string, GameObject> units = new Dictionary<string, GameObject>();
 
-    public static bool isEndTurnPossible()
+    public static bool isActivePlayer()
     {
         return Data.playerID % 2 != TurnManager.turnID % 2;
     }

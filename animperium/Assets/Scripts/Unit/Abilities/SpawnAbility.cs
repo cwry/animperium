@@ -10,7 +10,7 @@ public class SpawnAbility : MonoBehaviour {
     public int maxRange = 2;
 
     void executeAbility(ServerMessage.UnitAbilityMessage msg){
-        if (abilityID != msg.abilityID || !Data.isEndTurnPossible()) return;
+        if (abilityID != msg.abilityID || !Data.isActivePlayer()) return;
         SpawnManager.spawnUnit(msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid, new Vec2i(msg.targetX, msg.targetY), prefab.GetComponent<Unit>().prefabID);
     }
 

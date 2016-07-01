@@ -22,7 +22,7 @@ public class PlayerTimer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (playerTime >= 300 && Data.isEndTurnPossible())
+        if (playerTime >= 300 && Data.isActivePlayer())
         {
             TurnManager.endTurn();
         }

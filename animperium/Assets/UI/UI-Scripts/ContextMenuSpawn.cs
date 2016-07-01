@@ -19,10 +19,9 @@ public class ContextMenuSpawn : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(TargetingManager.getActive());
 	    if( Input.GetMouseButtonDown(0) 
             && SelectionManager.selectedUnit != currentUnit 
-            && !GUIData.pointerOnGUI && Data.isEndTurnPossible() 
+            && !GUIData.pointerOnGUI && Data.isActivePlayer() 
             && !GUIData.hasContextMenu
             && SelectionManager.selectedUnit.GetComponent<Unit>().playerID == Data.playerID
             && !TargetingManager.getActive())
@@ -38,7 +37,7 @@ public class ContextMenuSpawn : MonoBehaviour {
         else if(Input.GetMouseButtonDown(0) 
             && SelectionManager.selectedUnit == null 
             && !GUIData.pointerOnGUI 
-            && Data.isEndTurnPossible() 
+            && Data.isActivePlayer() 
             && GUIData.hasContextMenu)
         {
             DestroyContextMenu();

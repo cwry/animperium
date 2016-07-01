@@ -5,7 +5,7 @@ public class SpawnButton : MonoBehaviour {
 
 	public void OnClick()
     {
-        if(Data.isEndTurnPossible())
+        if(Data.isActivePlayer())
         {
             Vec2i spawn;
             if(Data.playerID == 1)
