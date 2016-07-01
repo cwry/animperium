@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using System.Linq;
 
 public class TileInfo : MonoBehaviour {
     //hack for unity prefab serialization
@@ -101,31 +100,33 @@ public class TileInfo : MonoBehaviour {
         return adjacent.ToArray();
     }
 
-    public GameObject[] listTree(int depth, bool includeRoot = false, Func<TileInfo, bool> shouldInclude = null){
-        HashSet<GameObject> result = new HashSet<GameObject>();
+    public GameObject[] listTree(int minRange, int maxRange, Func <TileInfo, bool> shouldTraverse = null, Func<TileInfo, bool> shouldInclude = null){
+        if (shouldTraverse == null) shouldTraverse = (TileInfo ti) => { return true; };
+        if (shouldInclude == null) shouldInclude = (TileInfo ti) => { return true; };
+        HashSet<GameObject> visited = new HashSet<GameObject>();
+        List<GameObject> result = new List<GameObject>();
         List<GameObject> current = new List<GameObject>();
         List<GameObject> next = new List<GameObject>();
         current.Add(gameObject);
-        result.Add(gameObject);
-        if (shouldInclude == null) shouldInclude = (TileInfo ti) => { return true; };
-        while (depth > 0){
+        visited.Add(gameObject);
+        int currDepth = 1;
+        if (minRange == 0) result.Add(gameObject);
+        while (currDepth <= maxRange){
             foreach(GameObject go in current){
                 GameObject[] adj = go.GetComponent<TileInfo>().getAdjacent();
                 foreach(GameObject nxt in adj){
                     TileInfo nxtTi = nxt.GetComponent<TileInfo>();
-                    if (shouldInclude(nxtTi)){
-                        if (result.Add(nxt)){
+                    if (shouldTraverse(nxtTi)){
+                        if (visited.Add(nxt)){
                             next.Add(nxt);
+                            if(currDepth >= minRange && shouldInclude(nxtTi)) result.Add(nxt);
                         }
                     }
                 }
             }
             current = next;
             next = new List<GameObject>();
-            depth--;
-        }
-        if (!includeRoot){
-            result.Remove(gameObject);
+            currDepth++;
         }
         return result.ToArray();
     }

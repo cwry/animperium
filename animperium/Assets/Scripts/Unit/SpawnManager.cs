@@ -4,20 +4,14 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
 
-[Serializable]
-public struct NamedPrefab{
-    public string name;
-    public GameObject prefab;
-}
-
 public class SpawnManager : MonoBehaviour {
-    public NamedPrefab[] namedPrefabs;
+    public GameObject[] spawnablePrefabs;
     static Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
 
 
     void Awake () {
-        foreach(NamedPrefab nf in namedPrefabs){
-            prefabs.Add(nf.name, nf.prefab);
+        foreach(GameObject nf in spawnablePrefabs){
+            prefabs.Add(nf.GetComponent<Unit>().prefabID, nf);
         }
         NetworkData.client.netClient.RegisterHandler((short)ServerMessage.Types.SPAWN_UNIT, onSpawnUnitMessage);
     }
@@ -48,13 +42,13 @@ public class SpawnManager : MonoBehaviour {
         });
     }
 
-    public static void spawnUnit(GridManager grid, Vec2i pos, string unitType){
+    public static void spawnUnit(GridManager grid, Vec2i pos, string prefabID){
         ServerMessage.SpawnUnitMessage msg = new ServerMessage.SpawnUnitMessage();
         msg.actionID = ActionQueue.getInstance().actionID++;
         msg.isMainGrid = grid.isMainGrid;
         msg.tileX = pos.x;
         msg.tileY = pos.y;
-        msg.unitType = unitType;
+        msg.unitType = prefabID;
         msg.playerID = Data.playerID;
 
         NetworkData.client.netClient.Send((short)ServerMessage.Types.SPAWN_UNIT, msg);
