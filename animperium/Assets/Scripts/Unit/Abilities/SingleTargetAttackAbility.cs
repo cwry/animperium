@@ -21,26 +21,21 @@ public class SingleTargetAttackAbility : MonoBehaviour
         }
     }
 
-    void enumerateAbility(Action<string> enlist)
-    {
+    void enumerateAbility(Action<string> enlist){
         enlist(abilityID);
     }
 
-    void rangeCheckAbility(RangeCheckArgs rca)
-    {
+    void rangeCheckAbility(RangeCheckArgs rca){
         if (rca.abilityID != abilityID) return;
         Unit u = gameObject.GetComponent<Unit>();
-        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange);
-        List<GameObject> attackable = new List<GameObject>();
-        foreach (GameObject go in inRange){
-            TileInfo ti = go.GetComponent<TileInfo>();
-            if (ti.unit == null) continue;
+        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
+            if (ti.unit == null) return false;
             int playerID = ti.unit.GetComponent<Unit>().playerID;
-            if (playerID != 0 && playerID != u.playerID) attackable.Add(go);
-        }
+            if (playerID != 0 && playerID != u.playerID) return true;
+            return false;
+        });
 
-        GameObject[] res = attackable.Count == 0 ? null : attackable.ToArray();
-
-        rca.callback(res);
+        if (inRange.Length == 0) rca.callback(null);
+        rca.callback(inRange);
     }
 }

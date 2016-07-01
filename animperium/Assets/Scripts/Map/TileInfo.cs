@@ -100,7 +100,9 @@ public class TileInfo : MonoBehaviour {
         return adjacent.ToArray();
     }
 
-    public GameObject[] listTree(int minRange, int maxRange, Func<TileInfo, bool> shouldInclude = null){
+    public GameObject[] listTree(int minRange, int maxRange, Func <TileInfo, bool> shouldTraverse = null, Func<TileInfo, bool> shouldInclude = null){
+        if (shouldTraverse == null) shouldTraverse = (TileInfo ti) => { return true; };
+        if (shouldInclude == null) shouldInclude = (TileInfo ti) => { return true; };
         HashSet<GameObject> visited = new HashSet<GameObject>();
         List<GameObject> result = new List<GameObject>();
         List<GameObject> current = new List<GameObject>();
@@ -109,16 +111,15 @@ public class TileInfo : MonoBehaviour {
         visited.Add(gameObject);
         int currDepth = 1;
         if (minRange == 0) result.Add(gameObject);
-        if (shouldInclude == null) shouldInclude = (TileInfo ti) => { return true; };
         while (currDepth <= maxRange){
             foreach(GameObject go in current){
                 GameObject[] adj = go.GetComponent<TileInfo>().getAdjacent();
                 foreach(GameObject nxt in adj){
                     TileInfo nxtTi = nxt.GetComponent<TileInfo>();
-                    if (shouldInclude(nxtTi)){
+                    if (shouldTraverse(nxtTi)){
                         if (visited.Add(nxt)){
                             next.Add(nxt);
-                            if(currDepth >= minRange) result.Add(nxt);
+                            if(currDepth >= minRange && shouldInclude(nxtTi)) result.Add(nxt);
                         }
                     }
                 }

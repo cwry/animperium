@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
 
-struct RangeCheckArgs
-{
+struct RangeCheckArgs{
     public string abilityID;
     public Action<GameObject[]> callback;
 }

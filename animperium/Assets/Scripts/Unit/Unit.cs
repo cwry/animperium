@@ -9,6 +9,8 @@ public enum DamageType{
 }
 
 public class Unit : MonoBehaviour {
+    public string prefabID;
+
     public GameObject currentTile;
     public int playerID;
     public string unitID;

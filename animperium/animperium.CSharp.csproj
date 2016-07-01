@@ -96,8 +96,8 @@
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\MovementAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\SingleTargetAttackAbility.cs" />
+    <Compile Include="Assets\Scripts\Unit\Abilities\SpawnAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\AbilityManager.cs" />
-    <Compile Include="Assets\Scripts\Unit\BuildingFootprintCircle.cs" />
     <Compile Include="Assets\Scripts\Unit\DefaultUnit.cs" />
     <Compile Include="Assets\Scripts\Unit\Movement\PathMovement.cs" />
     <Compile Include="Assets\Scripts\Unit\Movement\PathMovementManager.cs" />
@@ -105,6 +105,7 @@
     <Compile Include="Assets\Scripts\Unit\Movement\TeleportMovementManager.cs" />
     <Compile Include="Assets\Scripts\Unit\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
+    <Compile Include="Assets\Scripts\Unit\UnitFootprint.cs" />
     <Compile Include="Assets\Scripts\Util\GameEvent.cs" />
     <Compile Include="Assets\Scripts\Util\Vec2i.cs" />
     <Compile Include="Assets\UI\UI-Scripts\Button Scipts\AttackButton.cs" />

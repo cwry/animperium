@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System;
 
 public class GameEvent {
-    private List<Action<object>> callbacks = new List<Action<object>>();
+    List<Action<object>> callbacks = new List<Action<object>>();
 
     public Action add<T1>(Action<T1> callback){
-        Action<object> boundCallBack = (data) => { callback((T1)data); };
+        Action<object> boundCallBack = (object data) => { callback((T1)data); };
         callbacks.Add(boundCallBack);
         return () => { callbacks.Remove(boundCallBack); };
     }
