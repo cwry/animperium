@@ -35,9 +35,13 @@ public class ContextMenuSpawn : MonoBehaviour {
             GUIData.hasContextMenu = true;
             GUIData.ContextUnit = currentUnit;
         }
-        else if(Input.GetMouseButtonDown(0) && SelectionManager.selectedUnit == null && !GUIData.pointerOnGUI && Data.isEndTurnPossible() && GUIData.hasContextMenu)
+        else if(Input.GetMouseButtonDown(0) 
+            && SelectionManager.selectedUnit == null 
+            && !GUIData.pointerOnGUI 
+            && Data.isEndTurnPossible() 
+            && GUIData.hasContextMenu)
         {
-           DestroyContextMenu();
+            DestroyContextMenu();
         }
         //if(Input.GetMouseButtonDown(1) && !GUIData.pointerOnGUI && GUIData.hasContextMenu && GUIData.canSelectTarget && SelectionManager.hoverTile != null && Data.isEndTurnPossible())
         //{

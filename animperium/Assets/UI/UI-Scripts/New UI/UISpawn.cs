@@ -9,7 +9,7 @@ public class UISpawn : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        canvas = gameObject;
 	}
 	
 	// Update is called once per frame
@@ -19,6 +19,6 @@ public class UISpawn : MonoBehaviour {
 
     public void Init()
     {
-
+       
     }
 }

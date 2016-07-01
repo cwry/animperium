@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Main Fritz.unity
+- path: Assets/network_lobby.unity
   isLoaded: 1
   isActive: 1
