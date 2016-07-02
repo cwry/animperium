@@ -19,7 +19,7 @@ class ContextMenuControl : MonoBehaviour
     {
         spawn = GameObject.FindObjectOfType<ContextMenuSpawn>();
     }
-    public void AddButton(string ability) {                                 // add button to existing points
+    public void AddButton(AbilityInfo ability) {                                 // add button to existing points
             if (slot < slots.Length){
                 GameObject g = Instantiate(attackButton,slots[slot].GetComponent<Transform>().position, Quaternion.identity) as GameObject;
                 g.transform.SetParent(slots[slot].transform.parent);

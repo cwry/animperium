@@ -9,7 +9,7 @@ public class ContextMenuSpawn : MonoBehaviour {
     public static  GameObject contextMenu = null; 
     public GameObject canvas;
     public static GameObject currentUnit = null;
-    public string[] abilities;
+    public AbilityInfo[] abilities;
 
     // Use this for initialization
     void Start () {
@@ -56,8 +56,7 @@ public class ContextMenuSpawn : MonoBehaviour {
         contextMenu = Instantiate(contextMenuPrefab, Camera.main.WorldToScreenPoint(GUIData.targetTile.transform.position), Quaternion.identity) as GameObject;
         contextMenu.transform.SetParent(canvas.transform, false);
         abilities = AbilityManager.listAbilities(SelectionManager.selectedUnit);// returnt string array with ability ids
-        foreach (string ability in abilities){
-            Debug.Log(ability);
+        foreach (AbilityInfo ability in abilities){
             contextMenu.GetComponent<ContextMenuControl>().AddButton(ability);
         }
         

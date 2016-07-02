@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 
 public struct BC_fields
 {
-    public string ability;
+    public AbilityInfo ability;
+    public GameObject[] targets;
     public GameObject descFieldPrefab;
     public string abilityDescription;
 }
@@ -17,15 +18,13 @@ public class ButtonComponent : MonoBehaviour
     public BC_fields fields;
     //EventSprite spriteEvent;
 
-    void Start()
+
+    public void Init(AbilityInfo abili, string abilityDesc, GameObject descrField)
     {
         
-    }
-
-    public void Init(string abili, string abilityDesc, GameObject descrField)
-    {
-        ;
         fields.ability = abili;
+        fields.ability.
+        fields.targets = abili.checkRange();
         fields.abilityDescription = abilityDesc;
         fields.descFieldPrefab = descrField; 
         AddListener();
@@ -63,11 +62,11 @@ public  class DynamicButton : MonoBehaviour{
         txt = fields.descFieldPrefab.GetComponentInChildren<Text>();
     }
     
-    public  void OnClick(PointerEventData data)
-    {
-        TargetingManager.selectTarget(AbilityManager.checkRange(GUIData.ContextUnit, fields.ability), (GameObject target) => {   //select tile and execute callback
+    public  void OnClick(PointerEventData data){
+        TargetingManager.selectTarget(fields.targets, (GameObject target) => {   //select tile and execute callback
             TileInfo tile = target.GetComponent<TileInfo>();
-            AbilityManager.useAbility(GUIData.ContextUnit, fields.ability, tile.gridPosition, tile.grid.isMainGrid);});
+            fields.ability.execute(tile.gridPosition, tile.grid.isMainGrid);
+        }, fields.ability.checkAoe);
         GUIData.canSelectTarget = true;
         GUIData.activeButton = gameObject;
         ContextMenuSpawn.DestroyContextMenu();
