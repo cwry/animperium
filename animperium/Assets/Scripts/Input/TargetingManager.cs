@@ -98,16 +98,9 @@ public class TargetingManager : MonoBehaviour
         return instance.isActive;
     }
 
-    public static void selectTarget(GameObject[] targets, Action<GameObject> callback, Func<TileInfo, GameObject[]> getCursor = null)
-    {
+    public static void selectTarget(GameObject[] targets, Action<GameObject> callback, Func<TileInfo, GameObject[]> getCursor = null){
         instance.isActive = true;
-        if(getCursor == null) {
-            getCursor = (TileInfo ti) =>{
-                GameObject[] res = new GameObject[1];
-                res[0] = ti.gameObject;
-                return res;
-            };
-        }
+        if (getCursor == null) getCursor = AoeChecks.dot;
         instance.getCursor = getCursor;
         instance.currentTargets = targets;
         instance.currentCallback = callback;

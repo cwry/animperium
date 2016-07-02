@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
+    <Compile Include="Assets\Scripts\Unit\Abilities\AoeChecks.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\MovementAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\SingleTargetAttackAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\SpawnAbility.cs" />
