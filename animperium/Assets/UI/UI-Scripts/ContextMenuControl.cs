@@ -26,7 +26,7 @@ class ContextMenuControl : MonoBehaviour
                 Destroy(slots[slot]);
                 slots[slot] = g;
                 slots[slot].AddComponent<ButtonComponent>();
-                slots[slot].GetComponent<ButtonComponent>().Init(ability, "", descField);
+                slots[slot].GetComponent<ButtonComponent>().Init(ability, descField);
         }
         slot++;
     }

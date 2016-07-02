@@ -19,13 +19,11 @@ public class ButtonComponent : MonoBehaviour
     //EventSprite spriteEvent;
 
 
-    public void Init(AbilityInfo abili, string abilityDesc, GameObject descrField)
+    public void Init(AbilityInfo abili, GameObject descrField)
     {
         
         fields.ability = abili;
-        fields.ability.
         fields.targets = abili.checkRange();
-        fields.abilityDescription = abilityDesc;
         fields.descFieldPrefab = descrField; 
         AddListener();
     }
@@ -75,7 +73,7 @@ public  class DynamicButton : MonoBehaviour{
     public void OnPointerEnter(PointerEventData data)
     {
         Debug.Log(txt.gameObject.name);
-        txt.text = fields.ability + "\n"+ fields.abilityDescription;
+        txt.text = fields.ability.name + "\n\n"+ fields.ability.description;
         descriptionField = Instantiate(fields.descFieldPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
         descriptionField.transform.SetParent(ContextMenuSpawn.contextMenu.transform);
     }
