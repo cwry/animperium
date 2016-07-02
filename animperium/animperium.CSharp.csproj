@@ -61,12 +61,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Map\MapEditorHelper.cs" />
@@ -91,10 +85,8 @@
     <Compile Include="Assets\Scripts\Networking\NetworkInitializationManager.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkLobbyInput.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\InitGameMessage.cs" />
-    <Compile Include="Assets\Scripts\Networking\ServerMessages\MoveUnitMessage.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\ServerMessageTypes.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\SpawnUnitMessage.cs" />
-    <Compile Include="Assets\Scripts\Networking\ServerMessages\TeleportUnitMessage.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\UnitAbilityMessage.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
@@ -108,20 +100,14 @@
     <Compile Include="Assets\Scripts\Unit\AbilityManager.cs" />
     <Compile Include="Assets\Scripts\Unit\DefaultUnit.cs" />
     <Compile Include="Assets\Scripts\Unit\Movement\PathMovement.cs" />
-    <Compile Include="Assets\Scripts\Unit\Movement\PathMovementManager.cs" />
-    <Compile Include="Assets\Scripts\Unit\Movement\TeleportMovement.cs" />
-    <Compile Include="Assets\Scripts\Unit\Movement\TeleportMovementManager.cs" />
     <Compile Include="Assets\Scripts\Unit\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
-    <Compile Include="Assets\Scripts\Unit\UnitFootprint.cs" />
     <Compile Include="Assets\Scripts\Util\GameEvent.cs" />
     <Compile Include="Assets\Scripts\Util\Vec2i.cs" />
     <Compile Include="Assets\UI\UI-Scripts\Button Scipts\AttackButton.cs" />
     <Compile Include="Assets\UI\UI-Scripts\Button Scipts\BreakButton.cs" />
     <Compile Include="Assets\UI\UI-Scripts\Button Scipts\ButtonComponent.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\Button Scipts\DigButton.cs" />
     <Compile Include="Assets\UI\UI-Scripts\Button Scipts\EndTurnButton.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\Button Scipts\MoveUnitButton.cs" />
     <Compile Include="Assets\UI\UI-Scripts\ContextMenuControl.cs" />
     <Compile Include="Assets\UI\UI-Scripts\ContextMenuPosition.cs" />
     <Compile Include="Assets\UI\UI-Scripts\ContextMenuSpawn.cs" />

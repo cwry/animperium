@@ -27,8 +27,7 @@ public class TargetingManager : MonoBehaviour
         if (!isActive) return;
         if (Input.GetMouseButtonDown(0)){
             GameObject target = null;
-            foreach (GameObject go in currentTargets)
-            {
+            foreach (GameObject go in currentTargets){
                 if (go == SelectionManager.hoverTile) target = go;
             }
             if (target == null) return;
@@ -41,7 +40,6 @@ public class TargetingManager : MonoBehaviour
                 if (go == SelectionManager.hoverTile) lastCursorTarget = go;
             }
             if(lastCursorTarget == SelectionManager.hoverTile){
-                Debug.Log("redrawing cursor");
                 redrawCursor(lastCursorTarget);
             }
         }
@@ -99,6 +97,7 @@ public class TargetingManager : MonoBehaviour
     }
 
     public static void selectTarget(GameObject[] targets, Action<GameObject> callback, Func<TileInfo, GameObject[]> getCursor = null){
+        if (targets == null) return;
         instance.isActive = true;
         if (getCursor == null) getCursor = AoeChecks.dot;
         instance.getCursor = getCursor;
