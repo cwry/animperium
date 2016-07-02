@@ -27,7 +27,7 @@ public class SpawnAbility : MonoBehaviour {
             GameObject[] fp = bf.getFootprint(ti);
             foreach (GameObject go in fp) {
                 TileInfo fpInfo = go.GetComponent<TileInfo>();
-                if(!fpInfo.traversable && fpInfo.unit != null){
+                if (!fpInfo.traversable || fpInfo.unit != null){
                     return false;
                 }
             }

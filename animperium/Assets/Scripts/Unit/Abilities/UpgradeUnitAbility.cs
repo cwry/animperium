@@ -1,24 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Networking;
 using System;
 
-public class SingleTargetAttackAbility : MonoBehaviour
-{
-    public string abilityID = "melee";
-    public int strength;
-    public DamageType type = DamageType.MELEE;
-    public int minRange = 1;
-    public int maxRange = 1;
+
+public class UpgradeUnitAbility : MonoBehaviour {
+    public string abilityID = "upgrade";
+    public string originPrefabID;
+    public GameObject prefab;
+    public int minRange = 2;
+    public int maxRange = 2;
 
     void executeAbility(ServerMessage.UnitAbilityMessage msg){
-        if (msg.abilityID != abilityID) return;
+        if (abilityID != msg.abilityID) return;
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
-        GameObject target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>().unit;
-        if (target != null){
-            target.GetComponent<Unit>().damage(strength, type);
-        }
+        GameObject unitObj = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>().unit;
+        Destroy(unitObj);
+        if (!Data.isActivePlayer()) return;
+        SpawnManager.spawnUnit(grid, new Vec2i(msg.targetX, msg.targetY), prefab.GetComponent<Unit>().prefabID);
     }
 
     void enumerateAbility(Action<string> enlist){
@@ -30,8 +28,8 @@ public class SingleTargetAttackAbility : MonoBehaviour
         Unit u = gameObject.GetComponent<Unit>();
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
             if (ti.unit == null) return false;
-            int playerID = ti.unit.GetComponent<Unit>().playerID;
-            return playerID != 0 && playerID != u.playerID;
+            Unit unit = ti.unit.GetComponent<Unit>();
+            return unit.prefabID == originPrefabID && unit.playerID == Data.playerID;
         });
 
         if (inRange.Length == 0) rca.callback(null);

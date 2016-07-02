@@ -22,6 +22,7 @@ public class TurnManager : MonoBehaviour {
     public static void endTurn(){
         NetworkData.client.netClient.Send((short)ServerMessage.Types.TURN_ENDED, new UnityEngine.Networking.NetworkSystem.EmptyMessage());
     } 
+
     public static void init()
     {
         Debug.Log("[TURN MANAGER] started");
