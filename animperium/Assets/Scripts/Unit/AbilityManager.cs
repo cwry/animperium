@@ -4,9 +4,15 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
 
-struct RangeCheckArgs{
+[System.Serializable]
+public struct AbilityInfo {
     public string abilityID;
-    public Action<GameObject[]> callback;
+    public string name;
+    public string description;
+    public GameObject button;
+    public Func<GameObject[]> checkRange;
+    public Func<TileInfo, GameObject[]> checkAoe;
+    public Action<Vec2i, bool> execute;
 }
 
 public class AbilityManager : MonoBehaviour {
@@ -39,23 +45,12 @@ public class AbilityManager : MonoBehaviour {
         onUnitAbility(msg);
     }
 
-    public static string[] listAbilities(GameObject unit){
-        List<string> list = new List<string>();
-        Action<string> enlist = (string name) =>{
-            list.Add(name);
+    public static AbilityInfo[] listAbilities(GameObject unit){
+        List<AbilityInfo> list = new List<AbilityInfo>();
+        Action<AbilityInfo> enlist = (AbilityInfo info) =>{
+            list.Add(info);
         };
-        unit.SendMessage("enumerateAbility", enlist);
+        unit.SendMessage("getAbilityInfo", enlist);
         return list.ToArray();
-    }
-
-    public static GameObject[] checkRange(GameObject unit, string abilityID){
-        GameObject[] result = null;
-        RangeCheckArgs args = new RangeCheckArgs();
-        args.abilityID = abilityID;
-        args.callback = (GameObject[] res) => {
-            result = res;
-        };
-        unit.SendMessage("rangeCheckAbility", args);
-        return result;
     }
 }

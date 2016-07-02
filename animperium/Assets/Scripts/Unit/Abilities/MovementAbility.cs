@@ -3,18 +3,22 @@ using System.Collections;
 using System;
 
 public class MovementAbility : MonoBehaviour {
-    public string abilityID = "move";
+    public AbilityInfo abilityInfo;
     public float animationSpeed = 3;
 
     private Unit unit; //just 4 cache
 
     void Awake(){
         unit = gameObject.GetComponent<Unit>();
+        abilityInfo.checkRange = checkRange;
+        abilityInfo.checkAoe = AoeChecks.dot;
+        abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
+            AbilityManager.useAbility(gameObject, abilityInfo.abilityID, target, isMainGrid);
+        };
     }
 
-
     void executeAbility(ServerMessage.UnitAbilityMessage msg){
-        if (msg.abilityID != abilityID) return;
+        if (msg.abilityID != abilityInfo.abilityID) return;
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         Vec2i currentPos = unit.currentTile.GetComponent<TileInfo>().gridPosition;
         Vec2i[] path = PathFinding.findPath(grid, currentPos.x, currentPos.y, msg.targetX, msg.targetY, unit.movementPoints, (Vec2i hx) => {
@@ -24,17 +28,15 @@ public class MovementAbility : MonoBehaviour {
         PathMovement.move(gameObject, grid, path, animationSpeed);
     }
 
-    void enumerateAbility(Action<string> enlist){
-        enlist(abilityID);
+    void getAbilityInfo(Action<AbilityInfo> enlist){
+        enlist(abilityInfo);
     }
 
-    void rangeCheckAbility(RangeCheckArgs rca){
-        if (rca.abilityID != abilityID) return;
+    GameObject[] checkRange(){
         GameObject[] inRange = unit.currentTile.GetComponent<TileInfo>().listTree(1, unit.movementPoints, (TileInfo ti) => {
             return ti.traversable && ti.unit == null;
         });
-        if (inRange.Length == 0) inRange = null;
-        rca.callback(inRange);
+        return inRange.Length == 0 ? null : inRange;
     }
 
 }

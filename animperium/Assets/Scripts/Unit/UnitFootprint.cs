@@ -41,12 +41,7 @@ public class UnitFootprint : MonoBehaviour {
     }
 
     GameObject[] getFootPrintCircle(TileInfo ti){
-        List<GameObject> res = new List<GameObject>();
-        res.Add(ti.gameObject);
-        foreach(GameObject go in ti.getAdjacent()){
-            res.Add(go);
-        }
-        return res.ToArray();
+        return ti.listTree(0, 1);
     }
 
     GameObject[] getFootPrintDot(TileInfo ti){

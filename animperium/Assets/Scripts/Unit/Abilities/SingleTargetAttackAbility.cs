@@ -4,16 +4,24 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
 
-public class SingleTargetAttackAbility : MonoBehaviour
-{
-    public string abilityID = "melee";
+public class SingleTargetAttackAbility : MonoBehaviour{
+    public AbilityInfo abilityInfo;
+
     public int strength;
     public DamageType type = DamageType.MELEE;
     public int minRange = 1;
     public int maxRange = 1;
 
+    void Awake(){
+        abilityInfo.checkRange = checkRange;
+        abilityInfo.checkAoe = AoeChecks.dot;
+        abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
+            AbilityManager.useAbility(gameObject, abilityInfo.abilityID, target, isMainGrid);
+        };
+    }
+
     void executeAbility(ServerMessage.UnitAbilityMessage msg){
-        if (msg.abilityID != abilityID) return;
+        if (msg.abilityID != abilityInfo.abilityID) return;
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         GameObject target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>().unit;
         if (target != null){
@@ -21,12 +29,11 @@ public class SingleTargetAttackAbility : MonoBehaviour
         }
     }
 
-    void enumerateAbility(Action<string> enlist){
-        enlist(abilityID);
+    void getAbilityInfo(Action<AbilityInfo> enlist){
+        enlist(abilityInfo);
     }
 
-    void rangeCheckAbility(RangeCheckArgs rca){
-        if (rca.abilityID != abilityID) return;
+    GameObject[] checkRange(){
         Unit u = gameObject.GetComponent<Unit>();
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
             if (ti.unit == null) return false;
@@ -34,7 +41,6 @@ public class SingleTargetAttackAbility : MonoBehaviour
             return playerID != 0 && playerID != u.playerID;
         });
 
-        if (inRange.Length == 0) rca.callback(null);
-        rca.callback(inRange);
+        return inRange.Length == 0 ? null : inRange;
     }
 }
