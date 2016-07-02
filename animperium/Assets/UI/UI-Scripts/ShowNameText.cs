@@ -5,7 +5,6 @@ using System.Collections;
 public class ShowNameText : MonoBehaviour {
 
     Text txt;
-    string prefabID;
     GameObject currentUnit;
 	// Use this for initialization
 	void Start () {
@@ -16,11 +15,13 @@ public class ShowNameText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (SelectionManager.selectedUnit == null && SelectionManager.selectedUnit != currentUnit)
+            txt.text = "";
         if (SelectionManager.selectedUnit != currentUnit) { 
             currentUnit = SelectionManager.selectedUnit;
+            if(currentUnit != null)
             txt.text = currentUnit.GetComponent<Unit>().prefabID;
         }
-        else if(SelectionManager.selectedUnit == null)
-            txt.text = "";
+        else { }
 	}
 }

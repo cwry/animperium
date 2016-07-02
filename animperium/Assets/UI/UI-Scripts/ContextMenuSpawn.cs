@@ -27,7 +27,6 @@ public class ContextMenuSpawn : MonoBehaviour {
             && !TargetingManager.getActive())
         {
             DestroyContextMenu();
-            Debug.Log("Should Spawn");
             GUIData.targetTile = SelectionManager.selectedTile;
             currentUnit = SelectionManager.selectedUnit;
             SpawnContextMenu();

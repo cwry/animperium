@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -146,6 +140,7 @@
     <Compile Include="Assets\UI\UI-Scripts\SpawnButton.cs" />
     <Compile Include="Assets\UI\UI-Scripts\TurnBarBlinking.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UISoundManager.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\UnitInfoGui.cs" />
     <Compile Include="Assets\UI\UI-Scripts\old scripts don&apos;t use\ContextMenuArrange.cs" />
   </ItemGroup>
   <ItemGroup>

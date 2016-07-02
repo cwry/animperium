@@ -72,7 +72,6 @@ public  class DynamicButton : MonoBehaviour{
 
     public void OnPointerEnter(PointerEventData data)
     {
-        Debug.Log(txt.gameObject.name);
         txt.text = fields.ability.name + "\n\n"+ fields.ability.description;
         descriptionField = Instantiate(fields.descFieldPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
         descriptionField.transform.SetParent(ContextMenuSpawn.contextMenu.transform);
