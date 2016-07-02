@@ -12,6 +12,7 @@ class ContextMenuControl : MonoBehaviour
     public GameObject moveButton;
     public GameObject digButton;
     public ContextMenuSpawn spawn;
+    public GameObject descField;
     // public System.Collections.Generic.Dictionary<GameObject, GameObject> buttonDic;
 
     void Start()
@@ -25,8 +26,8 @@ class ContextMenuControl : MonoBehaviour
                 Destroy(slots[slot]);
                 slots[slot] = g;
                 slots[slot].AddComponent<ButtonComponent>();
-                slots[slot].GetComponent<ButtonComponent>().ability = ability;
-            }
+                slots[slot].GetComponent<ButtonComponent>().Init(ability, "", descField);
+        }
         slot++;
     }
 

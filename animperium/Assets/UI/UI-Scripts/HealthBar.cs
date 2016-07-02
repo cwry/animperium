@@ -15,7 +15,7 @@ public class HealthBar: MonoBehaviour
     {
         localScale = foreGround.transform.localScale;
         unit = unitObject.GetComponent<Unit>();
-        if(unit.playerID == 1)
+        if(unit.playerID == Data.playerID)
         {
             foreGround.GetComponent<Renderer>().material = player1;
         }
