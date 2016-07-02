@@ -12,7 +12,7 @@ public class SpawnAbility : MonoBehaviour {
 
     void Awake(){
         abilityInfo.checkRange = checkRange;
-        abilityInfo.checkAoe = prefab.GetComponent<UnitFootprint>().getFootprint;
+        abilityInfo.checkAoe = prefab.GetComponent<Unit>().getFootprint;
         abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
             AbilityManager.useAbility(gameObject, abilityInfo.abilityID, target, isMainGrid);
         };

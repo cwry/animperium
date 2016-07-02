@@ -8,6 +8,11 @@ public enum DamageType{
     RANGED
 }
 
+public enum UnitFootprintType{
+    DOT,
+    CIRCLE
+}
+
 public class Unit : MonoBehaviour {
     public string prefabID;
 
@@ -24,7 +29,9 @@ public class Unit : MonoBehaviour {
     public float magicResist;
     public float meleeResist;
     public float rangedResist;
-    
+
+    public UnitFootprintType footprintType;
+
     Action removeTurnBegin;
 
     void Awake(){
@@ -37,6 +44,17 @@ public class Unit : MonoBehaviour {
         removeTurnBegin();
         Data.units.Remove(unitID);
         currentTile.GetComponent<TileInfo>().unit = null;
+    }
+
+    public GameObject[] getFootprint(TileInfo ti){
+        switch (footprintType){
+            case UnitFootprintType.DOT:
+                return AoeChecks.dot(ti);
+            case UnitFootprintType.CIRCLE:
+                return AoeChecks.circle(ti);
+            default:
+                return null;
+        }
     }
 
     private void onTurnBegin(int turnID){

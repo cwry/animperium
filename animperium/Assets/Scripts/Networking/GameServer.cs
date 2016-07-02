@@ -13,10 +13,8 @@ public class GameServer{
         NetworkServer.Listen(port);
         NetworkServer.RegisterHandler(MsgType.Connect, onConnected);
         NetworkServer.RegisterHandler(MsgType.Disconnect, onDisconnected);
-        NetworkServer.RegisterHandler((short)ServerMessage.Types.MOVE_UNIT, onMoveUnit);
         NetworkServer.RegisterHandler((short)ServerMessage.Types.SPAWN_UNIT, onSpawnUnit);
         NetworkServer.RegisterHandler((short)ServerMessage.Types.CLIENT_LOADED, onClientLoaded);
-        NetworkServer.RegisterHandler((short)ServerMessage.Types.TELEPORT_UNIT, onTeleportUnit);
         NetworkServer.RegisterHandler((short)ServerMessage.Types.TURN_ENDED, onTurnEnded);
         NetworkServer.RegisterHandler((short)ServerMessage.Types.UNIT_ABILITY, onUnitAbility);
     }
@@ -24,11 +22,6 @@ public class GameServer{
     void onTurnEnded(NetworkMessage netMsg){
         UnityEngine.Networking.NetworkSystem.EmptyMessage msg = new UnityEngine.Networking.NetworkSystem.EmptyMessage();
         NetworkServer.SendToAll(netMsg.msgType, msg);
-    }
-
-    void onTeleportUnit(NetworkMessage netMsg){
-        ServerMessage.TeleportUnitMessage msg = netMsg.ReadMessage<ServerMessage.TeleportUnitMessage>();
-        NetworkServer.SendToClient(NetworkServer.connections.IndexOf(netMsg.conn) == 1 ? 2 : 1, netMsg.msgType, msg);
     }
 
     void onUnitAbility(NetworkMessage netMsg){
@@ -48,10 +41,6 @@ public class GameServer{
         ServerMessage.SpawnUnitMessage msg = netMsg.ReadMessage<ServerMessage.SpawnUnitMessage>();
         msg.unitID = Guid.NewGuid().ToString();
         NetworkServer.SendToAll(netMsg.msgType, msg);
-    }
-
-    void onMoveUnit(NetworkMessage netMsg) {
-        NetworkServer.SendToClient(NetworkServer.connections.IndexOf(netMsg.conn) == 1 ? 2 : 1, netMsg.msgType, netMsg.ReadMessage<ServerMessage.MoveUnitMessage>());
     }
 
     void onConnected(NetworkMessage netMsg){
