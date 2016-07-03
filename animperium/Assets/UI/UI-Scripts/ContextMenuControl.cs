@@ -21,7 +21,8 @@ class ContextMenuControl : MonoBehaviour
     }
     public void AddButton(AbilityInfo ability) {                                 // add button to existing points
         if (slot < slots.Length){
-            GameObject g = Instantiate(attackButton,slots[slot].GetComponent<Transform>().position, Quaternion.identity) as GameObject;
+            GameObject button = GetButton(ability.abilityID);
+            GameObject g = Instantiate(button,slots[slot].GetComponent<Transform>().position, Quaternion.identity) as GameObject;
             g.transform.SetParent(slots[slot].transform.parent);
             Destroy(slots[slot]);
             slots[slot] = g;
@@ -31,5 +32,13 @@ class ContextMenuControl : MonoBehaviour
         slot++;
     }
 
+    public GameObject GetButton(string abilityID)
+    {
+        if(abilityID == "move")
+        {
+            return moveButton;
+        }
+        return attackButton;
+    }
     
 }

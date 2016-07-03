@@ -34,11 +34,13 @@ public class ButtonComponent : MonoBehaviour
     {
         button = gameObject.AddComponent<DynamicButton>();
         trigger = GetComponent<EventTrigger>();
-        //Debug.Log(gameObject.name + " " + fields.targets[0]);
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerClick;
-        entry.callback.AddListener((data) => { button.OnClick((PointerEventData)data); });
-        trigger.triggers.Add(entry);
+        if (fields.targets != null)
+        {
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerClick;
+            entry.callback.AddListener((data) => { button.OnClick((PointerEventData)data); });
+            trigger.triggers.Add(entry);
+        }
         EventTrigger.Entry entry2 = new EventTrigger.Entry();
         entry2.eventID = EventTriggerType.PointerEnter;
         entry2.callback.AddListener((data) => { button.OnPointerEnter((PointerEventData)data); });
