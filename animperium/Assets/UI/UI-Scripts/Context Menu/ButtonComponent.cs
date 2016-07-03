@@ -36,19 +36,20 @@ public class ButtonComponent : MonoBehaviour
         trigger = GetComponent<EventTrigger>();
         if (fields.targets != null)
         {
-            EventTrigger.Entry entry = new EventTrigger.Entry();
-            entry.eventID = EventTriggerType.PointerClick;
-            entry.callback.AddListener((data) => { button.OnClick((PointerEventData)data); });
-            trigger.triggers.Add(entry);
+            EventTrigger.Entry entryClick = new EventTrigger.Entry();
+            entryClick.eventID = EventTriggerType.PointerClick;
+            entryClick.callback.AddListener((data) => { button.OnClick((PointerEventData)data); });
+            trigger.triggers.Add(entryClick);
         }
-        EventTrigger.Entry entry2 = new EventTrigger.Entry();
-        entry2.eventID = EventTriggerType.PointerEnter;
-        entry2.callback.AddListener((data) => { button.OnPointerEnter((PointerEventData)data); });
-        trigger.triggers.Add(entry2);
-        EventTrigger.Entry entry3 = new EventTrigger.Entry();
-        entry3.eventID = EventTriggerType.PointerExit;
-        entry3.callback.AddListener((data) => { button.OnPointerExit((PointerEventData)data); });
-        trigger.triggers.Add(entry3);
+        EventTrigger.Entry entryEnter = new EventTrigger.Entry();
+        entryEnter.eventID = EventTriggerType.PointerEnter;
+        entryEnter.callback.AddListener((data) => { button.OnPointerEnter((PointerEventData)data); });
+        trigger.triggers.Add(entryEnter);
+        EventTrigger.Entry entryExit = new EventTrigger.Entry();
+        entryExit.eventID = EventTriggerType.PointerExit;
+        entryExit.callback.AddListener((data) => { button.OnPointerExit((PointerEventData)data); });
+        trigger.triggers.Add(entryExit);
+        
         if(fields.targets == null)
         {
             EventSprite e = GetComponent<EventSprite>();

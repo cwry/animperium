@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -122,16 +116,13 @@
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
     <Compile Include="Assets\Scripts\Util\GameEvent.cs" />
     <Compile Include="Assets\Scripts\Util\Vec2i.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\Button Scipts\AttackButton.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\Button Scipts\BreakButton.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\Button Scipts\ButtonComponent.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\Button Scipts\EndTurnButton.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\ContextMenuControl.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\ContextMenuPosition.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\ContextMenuSpawn.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\Context Menu\ButtonComponent.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\Context Menu\ContextMenuControl.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\Context Menu\ContextMenuPosition.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\Context Menu\ContextMenuSpawn.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\Context Menu\EventSprite.cs" />
     <Compile Include="Assets\UI\UI-Scripts\DisplayRound.cs" />
     <Compile Include="Assets\UI\UI-Scripts\EndTurn.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\EventSprite.cs" />
     <Compile Include="Assets\UI\UI-Scripts\FadeUI.cs" />
     <Compile Include="Assets\UI\UI-Scripts\GUIData.cs" />
     <Compile Include="Assets\UI\UI-Scripts\HealthBar.cs" />
@@ -142,10 +133,8 @@
     <Compile Include="Assets\UI\UI-Scripts\SetOnGui.cs" />
     <Compile Include="Assets\UI\UI-Scripts\ShowNameText.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SpawnButton.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\TurnBarBlinking.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UISoundManager.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UnitInfoGui.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\old scripts don&apos;t use\ContextMenuArrange.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Map\UCLAGameLab\Wireframe\Shaders\UCLA GameLab Cutout Wireframe.shader" />
