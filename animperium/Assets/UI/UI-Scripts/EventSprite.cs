@@ -6,6 +6,7 @@ public class EventSprite : MonoBehaviour {
     public Sprite normal;
     public Sprite highlighted;
     public Sprite pressed;
+    public Sprite deactivated;
     private Image image;
     public Texture2D cursorTexture;
     public Texture2D cursorBasicTexture;
@@ -28,6 +29,11 @@ public class EventSprite : MonoBehaviour {
     public void SwitchToPressed()
     {
         image.sprite = pressed;
+    }
+
+    public void SwitchToDeactivated()
+    {
+        image.sprite = deactivated;
     }
 
     public void SwitchCursorToTexture()

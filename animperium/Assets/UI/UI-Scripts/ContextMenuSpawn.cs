@@ -56,7 +56,7 @@ public class ContextMenuSpawn : MonoBehaviour {
         contextMenu.transform.SetParent(canvas.transform, false);
         abilities = AbilityManager.listAbilities(SelectionManager.selectedUnit);// returnt string array with ability ids
         foreach (AbilityInfo ability in abilities){
-            contextMenu.GetComponent<ContextMenuControl>().AddButton(ability);
+           contextMenu.GetComponent<ContextMenuControl>().AddButton(ability);
         }
         
     }

@@ -10,18 +10,19 @@ public struct BC_fields
     public GameObject[] targets;
     public GameObject descFieldPrefab;
     public string abilityDescription;
+    public bool isActivated;
 }
 public class ButtonComponent : MonoBehaviour
 {
-    EventTrigger trigger;
+    public EventTrigger trigger;
     public DynamicButton button;
     public BC_fields fields;
+   
     //EventSprite spriteEvent;
 
 
     public void Init(AbilityInfo abili, GameObject descrField)
     {
-        
         fields.ability = abili;
         fields.targets = abili.checkRange();
         fields.descFieldPrefab = descrField; 
@@ -32,6 +33,7 @@ public class ButtonComponent : MonoBehaviour
     {
         button = gameObject.AddComponent<DynamicButton>();
         trigger = GetComponent<EventTrigger>();
+        //Debug.Log(gameObject.name + " " + fields.targets[0]);
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerClick;
         entry.callback.AddListener((data) => { button.OnClick((PointerEventData)data); });
@@ -44,8 +46,18 @@ public class ButtonComponent : MonoBehaviour
         entry3.eventID = EventTriggerType.PointerExit;
         entry3.callback.AddListener((data) => { button.OnPointerExit((PointerEventData)data); });
         trigger.triggers.Add(entry3);
+        if(fields.targets == null)
+        {
+            EventSprite e = GetComponent<EventSprite>();
+            e.normal = e.deactivated;
+            e.highlighted = e.deactivated;
+            e.pressed = e.deactivated;
+            GetComponent<Image>().sprite = e.deactivated;
+            fields.isActivated = false;
+        }
     }
 
+    
 }
 public  class DynamicButton : MonoBehaviour{
 
