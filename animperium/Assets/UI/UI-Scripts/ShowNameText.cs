@@ -22,6 +22,5 @@ public class ShowNameText : MonoBehaviour {
             if(currentUnit != null)
             txt.text = currentUnit.GetComponent<Unit>().prefabID;
         }
-        else { }
 	}
 }
