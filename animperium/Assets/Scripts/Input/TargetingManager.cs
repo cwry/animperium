@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class TargetingManager : MonoBehaviour
-{
+public class TargetingManager : MonoBehaviour {
 
     static TargetingManager instance;
 
@@ -22,8 +21,7 @@ public class TargetingManager : MonoBehaviour
         instance = this;
     }
 
-    void Update()
-    {
+    void Update(){
         if (!isActive) return;
         if (Input.GetMouseButtonDown(0)){
             GameObject target = null;
@@ -41,6 +39,9 @@ public class TargetingManager : MonoBehaviour
             }
             if(lastCursorTarget == SelectionManager.hoverTile){
                 redrawCursor(lastCursorTarget);
+            }else{
+                deactivateCursors();
+                lastCursorTarget = SelectionManager.hoverTile;
             }
         }
     }
@@ -81,12 +82,19 @@ public class TargetingManager : MonoBehaviour
         }
     }
 
-    void deactivate()
-    {
+    void deactivate(){
         isActive = false;
+        deactivateCursors();
+        deactivateMarkers();
+    }
+
+    void deactivateMarkers(){
         foreach (GameObject go in markers){
             go.SetActive(false);
         }
+    }
+
+    void deactivateCursors(){
         foreach (GameObject go in cursors){
             go.SetActive(false);
         }
