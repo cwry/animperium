@@ -11,7 +11,6 @@ class ContextMenuControl : MonoBehaviour
     public GameObject[] slots;
     public GameObject attackButton;
     public GameObject moveButton;
-    public GameObject digButton;
     public ContextMenuSpawn spawn;
     public GameObject descField;
     public int slotNumber = 10;
@@ -28,10 +27,9 @@ class ContextMenuControl : MonoBehaviour
     }
     public void AddButton(AbilityInfo ability) {                                 // add button to existing points
         if (slot < buttonSlotPositions.Length){
-            GameObject button = GetButtonPrefab(ability.abilityID);
             Vector3 position = middle.position + buttonSlotPositions[slot] * distance;
             //GameObject g = Instantiate(button,slots[slot].GetComponent<Transform>().position, button.transform.localRotation) as GameObject;
-            GameObject g = Instantiate(button, position, button.transform.localRotation) as GameObject;
+            GameObject g = Instantiate(ability.button, position, ability.button.transform.localRotation) as GameObject;
             g.transform.SetParent(middle.transform.parent);
             slots[slot] = g;
             slots[slot].AddComponent<EventTrigger>();
@@ -41,19 +39,6 @@ class ContextMenuControl : MonoBehaviour
             bc.Init(ability, descField);
         }
         slot++;
-    }
-
-    public GameObject GetButtonPrefab(string abilityID)
-    {
-        if(abilityID == "move")
-        {
-            return moveButton;
-        }
-        if (abilityID == "melee")
-        {
-            return attackButton;
-        }
-        return attackButton;
     }
     
     void GenerateButtonPositions()
