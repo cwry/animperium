@@ -31,15 +31,21 @@ public class ContextMenuSpawn : MonoBehaviour {
             && SelectionManager.selectedUnit != currentUnit 
             && !GUIData.pointerOnGUI && Data.isActivePlayer() 
             && !GUIData.hasContextMenu
-            && SelectionManager.selectedUnit.GetComponent<Unit>().playerID == Data.playerID
             && !TargetingManager.getActive())
         {
+            
             DestroyContextMenu();
             GUIData.targetTile = SelectionManager.selectedTile;
             currentUnit = SelectionManager.selectedUnit;
-            SpawnContextMenu();
-            GUIData.hasContextMenu = true;
-            GUIData.ContextUnit = currentUnit;
+            if (currentUnit != null)
+            {
+                if (currentUnit.GetComponent<Unit>().playerID == Data.playerID)
+                {
+                    SpawnContextMenu();
+                    GUIData.hasContextMenu = true;
+                    GUIData.ContextUnit = currentUnit;
+                }
+            }
         }
     }
 
@@ -50,8 +56,9 @@ public class ContextMenuSpawn : MonoBehaviour {
         contextMenu = Instantiate(contextMenuPrefab, Camera.main.WorldToScreenPoint(GUIData.targetTile.transform.position), Quaternion.identity) as GameObject;
         contextMenu.transform.SetParent(canvas.transform, false);
         abilities = AbilityManager.listAbilities(SelectionManager.selectedUnit);// returns string array with ability ids
+        contextMenu.GetComponent<ContextMenuControl>().SetSlotNumber(abilities.Length);
         foreach (AbilityInfo ability in abilities){
-           contextMenu.GetComponent<ContextMenuControl>().AddButton(ability);
+            contextMenu.GetComponent<ContextMenuControl>().AddButton(ability);
         }
         
     }

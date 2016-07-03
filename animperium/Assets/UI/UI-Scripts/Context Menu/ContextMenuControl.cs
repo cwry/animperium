@@ -8,26 +8,31 @@ using UnityEngine.EventSystems;
 class ContextMenuControl : MonoBehaviour
 {
     int slot = 0;
-    public GameObject[] slots = new  GameObject[5];
+    public GameObject[] slots;
     public GameObject attackButton;
     public GameObject moveButton;
     public GameObject digButton;
     public ContextMenuSpawn spawn;
     public GameObject descField;
+    public int slotNumber = 10;
+    public float angle;
+    float distance = 55;
+    public Transform middle;
+    Vector3[] buttonSlotPositions;
     
     // public System.Collections.Generic.Dictionary<GameObject, GameObject> buttonDic;
 
-    void Start()
+    void Awake()
     {
-        
         spawn = GameObject.FindObjectOfType<ContextMenuSpawn>();
     }
     public void AddButton(AbilityInfo ability) {                                 // add button to existing points
-        if (slot < slots.Length){
+        if (slot < buttonSlotPositions.Length){
             GameObject button = GetButtonPrefab(ability.abilityID);
-            GameObject g = Instantiate(button,slots[slot].GetComponent<Transform>().position, button.transform.localRotation) as GameObject;
-            g.transform.SetParent(slots[slot].transform.parent);
-            Destroy(slots[slot]);
+            Vector3 position = middle.position + buttonSlotPositions[slot] * distance;
+            //GameObject g = Instantiate(button,slots[slot].GetComponent<Transform>().position, button.transform.localRotation) as GameObject;
+            GameObject g = Instantiate(button, position, button.transform.localRotation) as GameObject;
+            g.transform.SetParent(middle.transform.parent);
             slots[slot] = g;
             slots[slot].AddComponent<EventTrigger>();
             slots[slot].AddComponent<SetOnGui>();
@@ -51,4 +56,20 @@ class ContextMenuControl : MonoBehaviour
         return attackButton;
     }
     
+    void GenerateButtonPositions()
+    {
+        for (int i = 0; i < buttonSlotPositions.Length; i++)
+        { 
+            buttonSlotPositions[i] = new Vector3(Mathf.Cos(i * angle), -Mathf.Sin(i * angle),0);
+        }
+    }
+
+    public void SetSlotNumber(int slotN)
+    {
+        slotNumber = slotN;
+        slots = new GameObject[slotNumber];
+        angle = 180 / slotNumber;
+        buttonSlotPositions = new Vector3[slotNumber];
+        GenerateButtonPositions();
+    }
 }
