@@ -14,7 +14,7 @@ class ContextMenuControl : MonoBehaviour
     public ContextMenuSpawn spawn;
     public GameObject descField;
     public int slotNumber = 10;
-    public float angle;
+    float angle;
     float distance = 55;
     public Transform middle;
     Vector3[] buttonSlotPositions;
@@ -43,17 +43,21 @@ class ContextMenuControl : MonoBehaviour
     
     void GenerateButtonPositions()
     {
+        Debug.Log(buttonSlotPositions.Length);
+        Debug.Log(angle);
         for (int i = 0; i < buttonSlotPositions.Length; i++)
-        { 
-            buttonSlotPositions[i] = new Vector3(Mathf.Cos(i * angle), -Mathf.Sin(i * angle),0);
+        {
+            float currentAngle = Mathf.Deg2Rad *i * angle;
+            buttonSlotPositions[i] = new Vector3(Mathf.Cos(currentAngle), -Mathf.Sin(currentAngle),0);
         }
+
     }
 
     public void SetSlotNumber(int slotN)
     {
         slotNumber = slotN;
         slots = new GameObject[slotNumber];
-        angle = 180 / slotNumber;
+        angle = 180f / (slotNumber - 1);
         buttonSlotPositions = new Vector3[slotNumber];
         GenerateButtonPositions();
     }
