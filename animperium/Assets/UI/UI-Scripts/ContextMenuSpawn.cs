@@ -19,7 +19,15 @@ public class ContextMenuSpawn : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if( Input.GetMouseButtonDown(0) 
+        if (Input.GetMouseButtonDown(0)
+            && SelectionManager.selectedUnit != currentUnit
+            && !GUIData.pointerOnGUI
+            && Data.isActivePlayer()
+            && GUIData.hasContextMenu)
+        {
+            DestroyContextMenu();
+        }
+        if ( Input.GetMouseButtonDown(0) 
             && SelectionManager.selectedUnit != currentUnit 
             && !GUIData.pointerOnGUI && Data.isActivePlayer() 
             && !GUIData.hasContextMenu
@@ -33,19 +41,6 @@ public class ContextMenuSpawn : MonoBehaviour {
             GUIData.hasContextMenu = true;
             GUIData.ContextUnit = currentUnit;
         }
-        else if(Input.GetMouseButtonDown(0) 
-            && SelectionManager.selectedUnit == null 
-            && !GUIData.pointerOnGUI 
-            && Data.isActivePlayer() 
-            && GUIData.hasContextMenu)
-        {
-            DestroyContextMenu();
-        }
-        //if(Input.GetMouseButtonDown(1) && !GUIData.pointerOnGUI && GUIData.hasContextMenu && GUIData.canSelectTarget && SelectionManager.hoverTile != null && Data.isEndTurnPossible())
-        //{
-        //    SelectionManager.selectedTarget = SelectionManager.hoverTile;
-        //    contextMenu.GetComponent<ContextMenuControl>().attackButton.GetComponent<ButtonComponent>().button.execute();
-        //}
     }
 
     private void SpawnContextMenu()
@@ -54,7 +49,7 @@ public class ContextMenuSpawn : MonoBehaviour {
         Unit unit = SelectionManager.selectedUnit.GetComponent<Unit>();
         contextMenu = Instantiate(contextMenuPrefab, Camera.main.WorldToScreenPoint(GUIData.targetTile.transform.position), Quaternion.identity) as GameObject;
         contextMenu.transform.SetParent(canvas.transform, false);
-        abilities = AbilityManager.listAbilities(SelectionManager.selectedUnit);// returnt string array with ability ids
+        abilities = AbilityManager.listAbilities(SelectionManager.selectedUnit);// returns string array with ability ids
         foreach (AbilityInfo ability in abilities){
            contextMenu.GetComponent<ContextMenuControl>().AddButton(ability);
         }

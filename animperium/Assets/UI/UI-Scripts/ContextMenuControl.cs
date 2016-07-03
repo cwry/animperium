@@ -13,16 +13,18 @@ class ContextMenuControl : MonoBehaviour
     public GameObject digButton;
     public ContextMenuSpawn spawn;
     public GameObject descField;
+    
     // public System.Collections.Generic.Dictionary<GameObject, GameObject> buttonDic;
 
     void Start()
     {
+        
         spawn = GameObject.FindObjectOfType<ContextMenuSpawn>();
     }
     public void AddButton(AbilityInfo ability) {                                 // add button to existing points
         if (slot < slots.Length){
             GameObject button = GetButton(ability.abilityID);
-            GameObject g = Instantiate(button,slots[slot].GetComponent<Transform>().position, Quaternion.identity) as GameObject;
+            GameObject g = Instantiate(button,slots[slot].GetComponent<Transform>().position, button.transform.localRotation) as GameObject;
             g.transform.SetParent(slots[slot].transform.parent);
             Destroy(slots[slot]);
             slots[slot] = g;
