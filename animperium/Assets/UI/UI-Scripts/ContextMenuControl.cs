@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 //AbilityManager.listAbilities(Selected unit);// returnt string array with ability ids
 //AbilityManager.checkRange(unit, "Melee"); //gameobject array with all possible targets
@@ -28,6 +29,9 @@ class ContextMenuControl : MonoBehaviour
             g.transform.SetParent(slots[slot].transform.parent);
             Destroy(slots[slot]);
             slots[slot] = g;
+            slots[slot].AddComponent<EventTrigger>();
+            slots[slot].AddComponent<SetOnGui>();
+            slots[slot].AddComponent<ButtonComponent>();
             ButtonComponent bc = slots[slot].GetComponent<ButtonComponent>();
             bc.Init(ability, descField);
         }
