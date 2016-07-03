@@ -25,7 +25,8 @@ public class ButtonComponent : MonoBehaviour
     {
         fields.ability = abili;
         fields.targets = abili.checkRange();
-        fields.descFieldPrefab = descrField; 
+        fields.descFieldPrefab = descrField;
+        fields.isActivated = true;
         AddListener();
     }
 
