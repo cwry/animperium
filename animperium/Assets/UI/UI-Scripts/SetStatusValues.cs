@@ -15,13 +15,16 @@ public class SetStatusValues : MonoBehaviour {
 	
 	}
 
-    public void SetText()
+    public void SetText(GameObject unit)
     {
+       
         Text text = GetComponent<Text>();
-        Unit currentUnit = SelectionManager.selectedUnit.GetComponent<Unit>();
+        Unit currentUnit = unit.GetComponent<Unit>();
+        MovementAbility movementAbility = currentUnit.GetComponent<MovementAbility>();
         text.text = String.Format(
             "{0} / {1}\n {2} / {3}\n {4}\n {5}\n {6}"
-            , currentUnit.movementPoints, currentUnit.maxMovementPoints
+            , (movementAbility != null) ? 10 : 0 
+            , (movementAbility != null) ? 10 : 0
             , currentUnit.hitPoints, currentUnit.maxHitPoints
             , currentUnit.magicResist
             , currentUnit.meleeResist

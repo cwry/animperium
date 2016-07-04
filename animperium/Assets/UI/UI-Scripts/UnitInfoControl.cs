@@ -6,7 +6,7 @@ public class UnitInfoControl : MonoBehaviour {
     
     public GameObject unitInfo;
     GameObject currentUnit;
-    public GameObject valueText;
+    public SetStatusValues valueText;
     // Use this for initialization
     void Start()
     {
@@ -23,7 +23,7 @@ public class UnitInfoControl : MonoBehaviour {
             if (currentUnit != null)
             {
                 unitInfo.SetActive(true);
-                valueText.GetComponent<SetStatusValues>().SetText();
+                valueText.SetText(currentUnit);
             }
             else
             {
