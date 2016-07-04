@@ -25,6 +25,7 @@ public class Unit : MonoBehaviour {
     public int actionPoints;
 
     public float maxHitPoints;
+    [HideInInspector]
     public float hitPoints;
 
     public float magicResist;

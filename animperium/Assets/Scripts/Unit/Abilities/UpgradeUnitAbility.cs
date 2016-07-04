@@ -9,14 +9,17 @@ public class UpgradeUnitAbility : MonoBehaviour {
     public GameObject prefab;
     public int minRange = 2;
     public int maxRange = 2;
-    public int apCost = 12;
+
+    void getAbilityInfo(Action<AbilityInfo> enlist) {
+        enlist(abilityInfo);
+    }
 
     void Awake(){
+        abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.dot;
         abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
-            gameObject.GetComponent<Unit>().actionPoints -= apCost;
-            AbilityManager.useAbility(gameObject, abilityInfo.abilityID, target, isMainGrid);
+            AbilityManager.useAbility(abilityInfo, target, isMainGrid);
         };
     }
 
@@ -29,13 +32,9 @@ public class UpgradeUnitAbility : MonoBehaviour {
         SpawnManager.spawnUnit(grid, new Vec2i(msg.targetX, msg.targetY), prefab.GetComponent<Unit>().prefabID);
     }
 
-    void getAbilityInfo(Action<AbilityInfo> enlist){
-        enlist(abilityInfo);
-    }
-
     GameObject[] checkRange(){
         Unit u = gameObject.GetComponent<Unit>();
-        if (u.actionPoints < apCost) return null; 
+        if (u.actionPoints < abilityInfo.apCost) return null;
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
             if (ti.unit == null) return false;
             Unit unit = ti.unit.GetComponent<Unit>();

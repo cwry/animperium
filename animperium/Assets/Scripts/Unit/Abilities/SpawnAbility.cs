@@ -9,14 +9,17 @@ public class SpawnAbility : MonoBehaviour {
     public GameObject prefab;
     public int minRange = 1;
     public int maxRange = 2;
-    public int apCost = 12;
+
+    void getAbilityInfo(Action<AbilityInfo> enlist) {
+        enlist(abilityInfo);
+    }
 
     void Awake(){
+        abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = prefab.GetComponent<Unit>().getFootprint;
         abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
-            gameObject.GetComponent<Unit>().actionPoints -= apCost;
-            AbilityManager.useAbility(gameObject, abilityInfo.abilityID, target, isMainGrid);
+            AbilityManager.useAbility(abilityInfo, target, isMainGrid);
         };
     }
 
@@ -25,13 +28,9 @@ public class SpawnAbility : MonoBehaviour {
         SpawnManager.spawnUnit(msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid, new Vec2i(msg.targetX, msg.targetY), prefab.GetComponent<Unit>().prefabID);
     }
 
-    void getAbilityInfo(Action<AbilityInfo> enlist){
-        enlist(abilityInfo);
-    }
-
     GameObject[] checkRange(){
         Unit u = gameObject.GetComponent<Unit>();
-        if (u.actionPoints < apCost) return null;
+        if (u.actionPoints < abilityInfo.apCost) return null;
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
             GameObject[] fp = abilityInfo.checkAoe(ti);
             foreach (GameObject go in fp) {

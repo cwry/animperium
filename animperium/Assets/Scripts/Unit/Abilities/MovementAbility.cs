@@ -12,13 +12,18 @@ public class MovementAbility : MonoBehaviour {
 
     Action removeTurnBegin;
 
+    void getAbilityInfo(Action<AbilityInfo> enlist) {
+        enlist(abilityInfo);
+    }
+
     void Awake(){
         movementPoints = maxMovementPoints;
         removeTurnBegin = TurnManager.onTurnBegin.add<int>(onTurnBegin);
+        abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.dot;
         abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
-            AbilityManager.useAbility(gameObject, abilityInfo.abilityID, target, isMainGrid);
+            AbilityManager.useAbility(abilityInfo, target, isMainGrid);
         };
     }
 
@@ -42,12 +47,12 @@ public class MovementAbility : MonoBehaviour {
         PathMovement.move(gameObject, grid, path, animationSpeed);
     }
 
-    void getAbilityInfo(Action<AbilityInfo> enlist){
-        enlist(abilityInfo);
-    }
+ 
 
     GameObject[] checkRange(){
-        GameObject[] inRange = gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, (TileInfo ti) => {
+        Unit u = gameObject.GetComponent<Unit>();
+        if (u.actionPoints < abilityInfo.apCost) return null;
+        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, (TileInfo ti) => {
             return ti.traversable && ti.unit == null;
         });
         return inRange.Length == 0 ? null : inRange;

@@ -5,11 +5,14 @@ using UnityEngine.Networking;
 using System;
 
 [System.Serializable]
-public class AbilityInfo {
+public struct AbilityInfo {
     public string abilityID;
     public string name;
     public string description;
     public GameObject button;
+    public int apCost;
+    [HideInInspector]
+    public GameObject owner;
     public Func<GameObject[]> checkRange;
     public Func<TileInfo, GameObject[]> checkAoe;
     public Action<Vec2i, bool> execute;
@@ -33,11 +36,13 @@ public class AbilityManager : MonoBehaviour {
         });
     }
 
-    public static void useAbility(GameObject unit, string abilityID, Vec2i target, bool isTargetMainGrid){
+    public static void useAbility(AbilityInfo abilityInfo, Vec2i target, bool isTargetMainGrid){
+        Unit u = abilityInfo.owner.GetComponent<Unit>();
+        u.actionPoints -= abilityInfo.apCost;
         ServerMessage.UnitAbilityMessage msg = new ServerMessage.UnitAbilityMessage();
-        msg.unitID = unit.GetComponent<Unit>().unitID;
+        msg.unitID = u.unitID;
         msg.actionID = ActionQueue.getInstance().actionID++;
-        msg.abilityID = abilityID;
+        msg.abilityID = abilityInfo.abilityID;
         msg.targetX = target.x;
         msg.targetY = target.y;
         msg.isTargetMainGrid = isTargetMainGrid;
