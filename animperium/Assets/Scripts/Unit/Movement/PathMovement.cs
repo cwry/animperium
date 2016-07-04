@@ -45,7 +45,6 @@ public class PathMovement : MonoBehaviour {
         TileInfo endTile = grid.gridData[end.x, end.y].GetComponent<TileInfo>();
         startTile.detachUnit();
         endTile.attachUnit(go);
-        go.GetComponent<Unit>().movementPoints -= path.Length - 1;
         if (callback != null){
             pm.callback = callback;
         }
