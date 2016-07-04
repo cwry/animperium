@@ -17,6 +17,7 @@ class ContextMenuControl : MonoBehaviour
     float angle;
     float distance = 55;
     public Transform middle;
+    public Transform costumPivot;
     Vector3[] buttonSlotPositions;
     
     // public System.Collections.Generic.Dictionary<GameObject, GameObject> buttonDic;
@@ -29,7 +30,7 @@ class ContextMenuControl : MonoBehaviour
         if (slot < buttonSlotPositions.Length){
             Vector3 position = middle.position + buttonSlotPositions[slot] * distance;
             //GameObject g = Instantiate(button,slots[slot].GetComponent<Transform>().position, button.transform.localRotation) as GameObject;
-            GameObject g = Instantiate(ability.button, position, ability.button.transform.localRotation) as GameObject;
+            GameObject g = Instantiate(ability.button, position, costumPivot.transform.localRotation) as GameObject;
             g.transform.SetParent(middle.transform.parent);
             slots[slot] = g;
             slots[slot].AddComponent<EventTrigger>();
