@@ -20,9 +20,6 @@ public class Unit : MonoBehaviour {
     public int playerID;
     public string unitID;
 
-    public int maxMovementPoints;
-    public int movementPoints;
-
     public float maxHitPoints;
     public float hitPoints;
 
@@ -32,16 +29,11 @@ public class Unit : MonoBehaviour {
 
     public UnitFootprintType footprintType;
 
-    Action removeTurnBegin;
-
     void Awake(){
-        onTurnBegin(-1);
-        removeTurnBegin = TurnManager.onTurnBegin.add<int>(onTurnBegin);
         hitPoints = maxHitPoints;
     }
 
     void OnDestroy(){
-        removeTurnBegin();
         Data.units.Remove(unitID);
         currentTile.GetComponent<TileInfo>().unit = null;
     }
@@ -55,10 +47,6 @@ public class Unit : MonoBehaviour {
             default:
                 return null;
         }
-    }
-
-    private void onTurnBegin(int turnID){
-        movementPoints = maxMovementPoints;
     }
 
     public void damage(float power, DamageType type){

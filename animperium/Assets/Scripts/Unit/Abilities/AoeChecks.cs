@@ -1,7 +1,23 @@
 ﻿using UnityEngine;
 using System;
 
+public enum AoeType{
+    DOT, CIRCLE, BIG_CIRCLE 
+}
+
 public class AoeChecks{
+
+    public static Func<TileInfo, GameObject[]> getAoeByType(AoeType t) {
+        switch (t) {
+            case AoeType.DOT:
+                return dot;
+            case AoeType.CIRCLE:
+                return circle;
+            case AoeType.BIG_CIRCLE:
+                return getCircle(2, 0);
+        }
+        return dot;
+    }
     
     public static GameObject[] dot(TileInfo ti){
         GameObject[] res = new GameObject[1];
@@ -18,5 +34,4 @@ public class AoeChecks{
             return ti.listTree(cutout, size);
         };
     }
-
 }
