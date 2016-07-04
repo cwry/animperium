@@ -12,11 +12,13 @@ public class AttackAbility : MonoBehaviour{
     public int minRange = 1;
     public int maxRange = 1;
     public AoeType aoeType = AoeType.DOT;
+    public int apCost = 12;
 
     void Awake(){
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.getAoeByType(aoeType);
         abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
+            gameObject.GetComponent<Unit>().actionPoints -= apCost;
             AbilityManager.useAbility(gameObject, abilityInfo.abilityID, target, isMainGrid);
         };
     }
@@ -47,6 +49,7 @@ public class AttackAbility : MonoBehaviour{
 
     GameObject[] checkRange(){
         Unit u = gameObject.GetComponent<Unit>();
+        if (u.actionPoints < apCost) return null;
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
             GameObject[] aoe = abilityInfo.checkAoe(ti);
             foreach (GameObject go in aoe) {

@@ -33,11 +33,11 @@ public class SpawnManager : MonoBehaviour {
             GameObject obj = Instantiate(prefab);
             obj.transform.position = tile.transform.position;
             TileInfo ti = tile.GetComponent<TileInfo>();
-            ti.unit = obj;
+            ti.attachUnit(obj);
             Unit u = obj.GetComponent<Unit>();
             u.playerID = msg.playerID;
             u.unitID = msg.unitID;
-            u.currentTile = tile;
+            u.attach(ti);
             Data.units.Add(msg.unitID, obj);
         });
     }

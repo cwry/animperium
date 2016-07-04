@@ -20,6 +20,10 @@ public class Unit : MonoBehaviour {
     public int playerID;
     public string unitID;
 
+    public int maxActionPoints = 12;
+    [HideInInspector]
+    public int actionPoints;
+
     public float maxHitPoints;
     public float hitPoints;
 
@@ -29,13 +33,35 @@ public class Unit : MonoBehaviour {
 
     public UnitFootprintType footprintType;
 
+    Action removeTurnBegin;
+
     void Awake(){
+        removeTurnBegin = TurnManager.onTurnBegin.add<int>(onTurnBegin);
         hitPoints = maxHitPoints;
+        actionPoints = maxActionPoints;
+    }
+
+    public void attach(TileInfo ti) {
+        GameObject[] footprint = getFootprint(ti);
+        foreach (GameObject go in footprint) {
+            go.GetComponent<TileInfo>().unit = gameObject;
+        }
+    }
+
+    public void detach() {
+        GameObject[] footprint = getFootprint(gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>());
+        foreach (GameObject go in footprint) {
+            go.GetComponent<TileInfo>().unit = null;
+        }
+    }
+
+    void onTurnBegin(int turnID) {
+        actionPoints = maxActionPoints;
     }
 
     void OnDestroy(){
+        detach();
         Data.units.Remove(unitID);
-        currentTile.GetComponent<TileInfo>().unit = null;
     }
 
     public GameObject[] getFootprint(TileInfo ti){
@@ -44,9 +70,8 @@ public class Unit : MonoBehaviour {
                 return AoeChecks.dot(ti);
             case UnitFootprintType.CIRCLE:
                 return AoeChecks.circle(ti);
-            default:
-                return null;
         }
+        return AoeChecks.dot(ti);
     }
 
     public void damage(float power, DamageType type){

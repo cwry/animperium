@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using System;
 
 [System.Serializable]
-public struct AbilityInfo {
+public class AbilityInfo {
     public string abilityID;
     public string name;
     public string description;
