@@ -53,7 +53,8 @@ public class ContextMenuSpawn : MonoBehaviour {
     {
         
         Unit unit = SelectionManager.selectedUnit.GetComponent<Unit>();
-        contextMenu = Instantiate(contextMenuPrefab, Camera.main.WorldToScreenPoint(GUIData.targetTile.transform.position), Quaternion.identity) as GameObject;
+        Vector3 initPosition = GUIData.targetTile.transform.position;
+        contextMenu = Instantiate(contextMenuPrefab, Camera.main.WorldToScreenPoint(initPosition), Quaternion.identity) as GameObject;
         contextMenu.transform.SetParent(canvas.transform, false);
         abilities = AbilityManager.listAbilities(SelectionManager.selectedUnit);// returns string array with ability ids
         contextMenu.GetComponent<ContextMenuControl>().SetSlotNumber(abilities.Length);
