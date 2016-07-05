@@ -11,7 +11,8 @@ public enum DamageType{
 
 public enum UnitFootprintType{
     DOT,
-    CIRCLE
+    CIRCLE,
+    BIGCIRCLE
 }
 
 public class Unit : MonoBehaviour {
@@ -79,6 +80,10 @@ public class Unit : MonoBehaviour {
                 return AoeChecks.dot(ti);
             case UnitFootprintType.CIRCLE:
                 return AoeChecks.circle(ti);
+            case UnitFootprintType.BIGCIRCLE:
+                return AoeChecks.getCircle(2, 0)(ti);
+
+
         }
         return AoeChecks.dot(ti);
     }

@@ -29,6 +29,7 @@ class ContextMenuControl : MonoBehaviour
     public void AddButton(AbilityInfo ability) {                                 // add button to existing points
         if (slot < buttonSlotPositions.Length){
             Vector3 position = middle.position + buttonSlotPositions[slot] * distance;
+            Debug.Log("Middle: " + middle.position + "buttonposition+ distance: " + buttonSlotPositions[slot] * distance);
             //GameObject g = Instantiate(button,slots[slot].GetComponent<Transform>().position, button.transform.localRotation) as GameObject;
             GameObject g = Instantiate(ability.button, position, costumPivot.transform.localRotation) as GameObject;
             g.transform.SetParent(middle.transform.parent);
