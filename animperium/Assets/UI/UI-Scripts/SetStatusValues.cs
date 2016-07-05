@@ -22,9 +22,9 @@ public class SetStatusValues : MonoBehaviour {
         Unit currentUnit = unit.GetComponent<Unit>();
         MovementAbility movementAbility = currentUnit.GetComponent<MovementAbility>();
         text.text = String.Format(
-            "{0} / {1}\n {2} / {3}\n {4}\n {5}\n {6}"
-            , (movementAbility != null) ? 10 : 0 
-            , (movementAbility != null) ? 10 : 0
+            "{0}/{1}\n {2}/{3}\n {4}\n {5}\n {6}"
+            , (movementAbility != null) ? movementAbility.movementPoints : 0 
+            , (movementAbility != null) ? movementAbility.maxMovementPoints : 0
             , currentUnit.hitPoints, currentUnit.maxHitPoints
             , currentUnit.magicResist
             , currentUnit.meleeResist
