@@ -14,7 +14,7 @@ public class MineAbility : MonoBehaviour {
     void Awake() {
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
-        abilityInfo.checkAoe = AoeChecks.getAoeByType(aoeType);
+        abilityInfo.checkAoe = AoeChecks.dot;
         abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
             AbilityManager.useAbility(abilityInfo, target, isMainGrid);
         };
