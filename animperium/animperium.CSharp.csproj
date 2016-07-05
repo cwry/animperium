@@ -106,11 +106,13 @@
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\AoeChecks.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\AttackAbility.cs" />
+    <Compile Include="Assets\Scripts\Unit\Abilities\MineAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\MovementAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\SpawnAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\UpgradeUnitAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\AbilityManager.cs" />
     <Compile Include="Assets\Scripts\Unit\DefaultUnit.cs" />
+    <Compile Include="Assets\Scripts\Unit\Minable.cs" />
     <Compile Include="Assets\Scripts\Unit\Movement\PathMovement.cs" />
     <Compile Include="Assets\Scripts\Unit\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
