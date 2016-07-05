@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 public enum DamageType{
@@ -34,12 +35,19 @@ public class Unit : MonoBehaviour {
 
     public UnitFootprintType footprintType;
 
+    public List<AbilityInfo> abilities = new List<AbilityInfo>();
+
     Action removeTurnBegin;
 
     void Awake(){
         removeTurnBegin = TurnManager.onTurnBegin.add<int>(onTurnBegin);
         hitPoints = maxHitPoints;
         actionPoints = maxActionPoints;
+    }
+
+    public int addAbility(AbilityInfo ai) {
+        abilities.Add(ai);
+        return abilities.Count - 1;
     }
 
     public void attach(TileInfo ti) {

@@ -12,10 +12,6 @@ public class MovementAbility : MonoBehaviour {
 
     Action removeTurnBegin;
 
-    void getAbilityInfo(Action<AbilityInfo> enlist) {
-        enlist(abilityInfo);
-    }
-
     void Awake(){
         movementPoints = maxMovementPoints;
         removeTurnBegin = TurnManager.onTurnBegin.add<int>(onTurnBegin);
@@ -25,6 +21,8 @@ public class MovementAbility : MonoBehaviour {
         abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
             AbilityManager.useAbility(abilityInfo, target, isMainGrid);
         };
+        abilityInfo.onExecution = executeAbility;
+        abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
     }
 
     void OnDestroy() {
@@ -36,7 +34,6 @@ public class MovementAbility : MonoBehaviour {
     }
 
     void executeAbility(ServerMessage.UnitAbilityMessage msg){
-        if (msg.abilityID != abilityInfo.abilityID) return;
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         Vec2i currentPos = gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().gridPosition;
         Vec2i[] path = PathFinding.findPath(grid, currentPos.x, currentPos.y, msg.targetX, msg.targetY, movementPoints, (Vec2i hx) => {

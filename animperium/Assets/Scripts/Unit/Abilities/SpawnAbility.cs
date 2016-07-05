@@ -10,10 +10,6 @@ public class SpawnAbility : MonoBehaviour {
     public int minRange = 1;
     public int maxRange = 2;
 
-    void getAbilityInfo(Action<AbilityInfo> enlist) {
-        enlist(abilityInfo);
-    }
-
     void Awake(){
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
@@ -21,10 +17,11 @@ public class SpawnAbility : MonoBehaviour {
         abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
             AbilityManager.useAbility(abilityInfo, target, isMainGrid);
         };
+        abilityInfo.onExecution = executeAbility;
+        abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
     }
 
     void executeAbility(ServerMessage.UnitAbilityMessage msg){
-        if (abilityInfo.abilityID != msg.abilityID || !Data.isActivePlayer()) return;
         SpawnManager.spawnUnit(msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid, new Vec2i(msg.targetX, msg.targetY), prefab.GetComponent<Unit>().prefabID);
     }
 

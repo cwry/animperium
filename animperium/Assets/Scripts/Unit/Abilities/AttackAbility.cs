@@ -13,10 +13,6 @@ public class AttackAbility : MonoBehaviour{
     public int maxRange = 1;
     public AoeType aoeType = AoeType.DOT;
 
-    void getAbilityInfo(Action<AbilityInfo> enlist) {
-        enlist(abilityInfo);
-    }
-
     void Awake(){
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
@@ -24,10 +20,11 @@ public class AttackAbility : MonoBehaviour{
         abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
             AbilityManager.useAbility(abilityInfo, target, isMainGrid);
         };
+        abilityInfo.onExecution = executeAbility;
+        abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
     }
 
     void executeAbility(ServerMessage.UnitAbilityMessage msg){
-        if (msg.abilityID != abilityInfo.abilityID) return;
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
         GameObject[] aoeTargets = abilityInfo.checkAoe(target);

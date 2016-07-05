@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 
@@ -9,7 +10,7 @@ public class ContextMenuSpawn : MonoBehaviour {
     public static  GameObject contextMenu = null; 
     public GameObject canvas;
     public static GameObject currentUnit = null;
-    public AbilityInfo[] abilities;
+    public List<AbilityInfo> abilities;
 
     // Use this for initialization
     void Start () {
@@ -56,16 +57,15 @@ public class ContextMenuSpawn : MonoBehaviour {
         Vector3 initPosition = GUIData.targetTile.transform.position;
         contextMenu = Instantiate(contextMenuPrefab, Camera.main.WorldToScreenPoint(initPosition), Quaternion.identity) as GameObject;
         contextMenu.transform.SetParent(canvas.transform, false);
-        abilities = AbilityManager.listAbilities(SelectionManager.selectedUnit);// returns string array with ability ids
-        contextMenu.GetComponent<ContextMenuControl>().SetSlotNumber(abilities.Length);
+        abilities = unit.abilities;
+        contextMenu.GetComponent<ContextMenuControl>().SetSlotNumber(abilities.Count);
         foreach (AbilityInfo ability in abilities){
             contextMenu.GetComponent<ContextMenuControl>().AddButton(ability);
         }
         
     }
 
-    public static void DestroyContextMenu()
-    {
+    public static void DestroyContextMenu(){
         currentUnit = null;
         GUIData.pointerOnGUI = false;
         GUIData.hasContextMenu = false;

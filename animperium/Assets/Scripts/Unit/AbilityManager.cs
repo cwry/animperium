@@ -6,7 +6,8 @@ using System;
 
 [System.Serializable]
 public struct AbilityInfo {
-    public string abilityID;
+    [HideInInspector]
+    public int abilityID;
     public string name;
     public string description;
     public GameObject button;
@@ -16,6 +17,7 @@ public struct AbilityInfo {
     public Func<GameObject[]> checkRange;
     public Func<TileInfo, GameObject[]> checkAoe;
     public Action<Vec2i, bool> execute;
+    public Action<ServerMessage.UnitAbilityMessage> onExecution;
 }
 
 public class AbilityManager : MonoBehaviour {
@@ -30,9 +32,9 @@ public class AbilityManager : MonoBehaviour {
     }
 
     private static void onUnitAbility(ServerMessage.UnitAbilityMessage msg){
-        GameObject go = Data.units[msg.unitID];
+        Unit u = Data.units[msg.unitID].GetComponent<Unit>();
         ActionQueue.getInstance().push(msg.actionID, () => {
-            go.SendMessage("executeAbility", msg);
+            u.abilities[msg.abilityID].onExecution(msg);
         });
     }
 
@@ -48,14 +50,5 @@ public class AbilityManager : MonoBehaviour {
         msg.isTargetMainGrid = isTargetMainGrid;
         NetworkData.client.netClient.Send((short)ServerMessage.Types.UNIT_ABILITY, msg);
         onUnitAbility(msg);
-    }
-
-    public static AbilityInfo[] listAbilities(GameObject unit){
-        List<AbilityInfo> list = new List<AbilityInfo>();
-        Action<AbilityInfo> enlist = (AbilityInfo info) =>{
-            list.Add(info);
-        };
-        unit.SendMessage("getAbilityInfo", enlist);
-        return list.ToArray();
     }
 }
