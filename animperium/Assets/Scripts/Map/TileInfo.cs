@@ -11,6 +11,8 @@ public class TileInfo : MonoBehaviour {
     public Vec2i gridPosition;
     public GridManager grid;
     public bool traversable;
+    [HideInInspector]
+    public bool isHole = false;
     public GameObject unit;
     public GameEvent onUnitDetached = new GameEvent();
     public GameEvent onUnitAttached = new GameEvent();
@@ -31,6 +33,33 @@ public class TileInfo : MonoBehaviour {
                 u.currentTile = gameObject;
             }
         });
+    }
+
+    public Action removeHole = () => { };
+    public void makeHole(){
+        if (isHole) removeHole();
+        isHole = true;
+
+        Action<GameObject> addDigAbility = (GameObject go) => {
+            go.AddComponent<UseHoleAbility>();
+        };
+
+        if (unit != null) addDigAbility(unit);
+
+        Action removeAtt = onUnitAttached.add<GameObject>(addDigAbility);
+
+        Action<GameObject> removeDigAbility = (GameObject go) => {
+            Destroy(go.GetComponent<UseHoleAbility>());
+        };
+
+        Action removeDet = onUnitDetached.add<GameObject>(removeDigAbility);
+
+        this.removeHole = () => {
+            removeAtt();
+            if (unit != null) removeDigAbility(unit);
+            removeDet();
+            isHole = false;
+        };
     }
 
     public void detachUnit(){

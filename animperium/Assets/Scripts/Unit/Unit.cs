@@ -64,7 +64,8 @@ public class Unit : MonoBehaviour {
     public void detach() {
         GameObject[] footprint = getFootprint(gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>());
         foreach (GameObject go in footprint) {
-            go.GetComponent<TileInfo>().unit = null;
+            TileInfo ti = go.GetComponent<TileInfo>();
+            ti.unit = null;
         }
     }
 

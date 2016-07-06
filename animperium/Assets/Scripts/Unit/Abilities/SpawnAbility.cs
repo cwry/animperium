@@ -28,11 +28,13 @@ public class SpawnAbility : MonoBehaviour {
     GameObject[] checkRange(){
         Unit u = gameObject.GetComponent<Unit>();
         if (u.actionPoints < abilityInfo.apCost) return null;
-        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
+        TileInfo tile = u.currentTile.GetComponent<TileInfo>();
+        if (!tile.grid.isMainGrid) return null;
+        GameObject[] inRange = tile.listTree(minRange, maxRange, null, (TileInfo ti) => {
             GameObject[] fp = abilityInfo.checkAoe(ti);
             foreach (GameObject go in fp) {
                 TileInfo fpInfo = go.GetComponent<TileInfo>();
-                if (!fpInfo.traversable || fpInfo.unit != null){
+                if (!fpInfo.traversable || fpInfo.unit != null || fpInfo.isHole){
                     return false;
                 }
             }

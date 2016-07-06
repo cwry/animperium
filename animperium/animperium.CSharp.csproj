@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -100,10 +94,12 @@
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\AoeChecks.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\AttackAbility.cs" />
+    <Compile Include="Assets\Scripts\Unit\Abilities\DigHoleAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\MineAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\MovementAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\SpawnAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\UpgradeUnitAbility.cs" />
+    <Compile Include="Assets\Scripts\Unit\Abilities\UseHoleAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\AbilityManager.cs" />
     <Compile Include="Assets\Scripts\Unit\DefaultUnit.cs" />
     <Compile Include="Assets\Scripts\Unit\Minable.cs" />
