@@ -33,8 +33,10 @@ public class AbilityManager : MonoBehaviour {
 
     private static void onUnitAbility(ServerMessage.UnitAbilityMessage msg){
         Unit u = Data.units[msg.unitID].GetComponent<Unit>();
+        AbilityInfo ai = u.abilities[msg.abilityID];
         ActionQueue.getInstance().push(msg.actionID, () => {
-            u.abilities[msg.abilityID].onExecution(msg);
+            u.onUseAbility.fire(ai);
+            ai.onExecution(msg);
         });
     }
 
