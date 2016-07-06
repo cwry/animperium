@@ -36,7 +36,10 @@ public class Unit : MonoBehaviour {
 
     public UnitFootprintType footprintType;
 
+    [HideInInspector]
     public List<AbilityInfo> abilities = new List<AbilityInfo>();
+
+    public GameEvent onUseAbility = new GameEvent();
 
     Action removeTurnBegin;
 
@@ -82,8 +85,6 @@ public class Unit : MonoBehaviour {
                 return AoeChecks.circle(ti);
             case UnitFootprintType.BIGCIRCLE:
                 return AoeChecks.getCircle(2, 0)(ti);
-
-
         }
         return AoeChecks.dot(ti);
     }
