@@ -49,7 +49,6 @@ public class MovementAbility : MonoBehaviour {
 
     GameObject[] checkRange(){
         Unit u = gameObject.GetComponent<Unit>();
-        if (u.actionPoints < abilityInfo.apCost) return null;
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, (TileInfo ti) => {
             return ti.traversable && ti.unit == null;
         });

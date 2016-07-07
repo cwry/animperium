@@ -50,6 +50,42 @@ public class Unit : MonoBehaviour {
     }
 
     public int addAbility(AbilityInfo ai) {
+        Func<GameObject[]> checkRange = ai.checkRange;
+        Func<GameObject[]> checkCost = () => {
+            if (
+            ai.apCost > actionPoints ||
+            ai.woodCost > Data.wood + Data.gold ||
+            ai.ironCost > Data.iron + Data.gold ||
+            ai.stoneCost > Data.stone + Data.gold
+            ){
+                return null;
+            }
+            return checkRange();
+        };
+        ai.checkRange = checkCost;
+
+        Action<ServerMessage.UnitAbilityMessage> onExecution = ai.onExecution;
+        Action<ServerMessage.UnitAbilityMessage> handleCost = (ServerMessage.UnitAbilityMessage msg) => {
+            actionPoints -= ai.apCost;
+            Data.wood -= ai.woodCost;
+            if (Data.wood < 0) {
+                Data.gold += Data.wood;
+                Data.wood = 0;
+            }
+            Data.iron -= ai.ironCost;
+            if (Data.iron < 0) {
+                Data.gold += Data.iron;
+                Data.iron = 0;
+            }
+            Data.stone -= ai.stoneCost;
+            if (Data.stone < 0) {
+                Data.gold += Data.stone;
+                Data.stone = 0;
+            }
+            onExecution(msg);
+        };
+        ai.onExecution = handleCost;
+
         abilities.Add(ai);
         return abilities.Count - 1;
     }

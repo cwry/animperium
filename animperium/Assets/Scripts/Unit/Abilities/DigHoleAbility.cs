@@ -46,7 +46,6 @@ public class DigHoleAbility : MonoBehaviour {
 
     GameObject[] checkRange() {
         Unit u = gameObject.GetComponent<Unit>();
-        if (u.actionPoints < abilityInfo.apCost) return null;
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, (TileInfo ti) => {
             GridManager otherGrid = ti.grid.isMainGrid ? Data.subGrid : Data.mainGrid;
             TileInfo otherTile = otherGrid.gridData[ti.gridPosition.x, ti.gridPosition.y].GetComponent<TileInfo>();

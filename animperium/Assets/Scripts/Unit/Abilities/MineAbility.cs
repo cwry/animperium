@@ -54,7 +54,6 @@ public class MineAbility : MonoBehaviour {
 
     GameObject[] checkRange() {
         Unit u = gameObject.GetComponent<Unit>();
-        if (u.actionPoints < abilityInfo.apCost) return null;
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
             if (ti.unit == null) return false;
             Minable mine = ti.unit.GetComponent<Minable>();

@@ -27,7 +27,6 @@ public class SpawnAbility : MonoBehaviour {
 
     GameObject[] checkRange(){
         Unit u = gameObject.GetComponent<Unit>();
-        if (u.actionPoints < abilityInfo.apCost) return null;
         TileInfo tile = u.currentTile.GetComponent<TileInfo>();
         if (!tile.grid.isMainGrid) return null;
         GameObject[] inRange = tile.listTree(minRange, maxRange, null, (TileInfo ti) => {

@@ -29,7 +29,6 @@ public class UseHoleAbility : MonoBehaviour {
 
     GameObject[] checkRange() {
         Unit u = gameObject.GetComponent<Unit>();
-        if (u.actionPoints < abilityInfo.apCost) return null;
         TileInfo ti = u.currentTile.GetComponent<TileInfo>();
         GridManager otherGrid = ti.grid.isMainGrid ? Data.subGrid : Data.mainGrid;
         TileInfo otherTi = otherGrid.gridData[ti.gridPosition.x, ti.gridPosition.y].GetComponent<TileInfo>();
