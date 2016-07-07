@@ -6,4 +6,5 @@ public class SelectionManager  {
     public static GameObject hoverTile;
     public static GameObject selectedUnit;
     public static GameObject selectedTarget;
+    public static GameEvent onSelectedUnitChanged = new GameEvent();
 }

@@ -11,15 +11,23 @@ public class ContextMenuSpawn : MonoBehaviour {
     public GameObject canvas;
     public static GameObject currentUnit = null;
     public List<AbilityInfo> abilities;
+    bool isButtonSpawning = false;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
+        SelectionManager.onSelectedUnitChanged.add<GameObject>(onSelectionChanged);
         GUIData.pointerOnGUI = false;
         GUIData.canSelectTarget = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+    }
+
+    void onSelectionChanged(GameObject g)
+    {
+
         if (Input.GetMouseButtonDown(0)
             && SelectionManager.selectedUnit != currentUnit
             && !GUIData.pointerOnGUI
@@ -28,13 +36,14 @@ public class ContextMenuSpawn : MonoBehaviour {
         {
             DestroyContextMenu();
         }
-        if ( Input.GetMouseButtonDown(0) 
-            && SelectionManager.selectedUnit != currentUnit 
-            && !GUIData.pointerOnGUI && Data.isActivePlayer() 
+        if (Input.GetMouseButtonDown(0)
+            && SelectionManager.selectedUnit != currentUnit
+            && !GUIData.pointerOnGUI
+            && Data.isActivePlayer()
             && !GUIData.hasContextMenu
             && !TargetingManager.getActive())
         {
-            
+
             DestroyContextMenu();
             GUIData.targetTile = SelectionManager.selectedTile;
             currentUnit = SelectionManager.selectedUnit;
@@ -49,7 +58,6 @@ public class ContextMenuSpawn : MonoBehaviour {
             }
         }
     }
-
     private void SpawnContextMenu()
     {
         

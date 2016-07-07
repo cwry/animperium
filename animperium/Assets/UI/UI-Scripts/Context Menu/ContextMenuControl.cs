@@ -13,26 +13,29 @@ class ContextMenuControl : MonoBehaviour
     public GameObject moveButton;
     public ContextMenuSpawn spawn;
     public GameObject descField;
+    public GameObject radius;
     public int slotNumber = 10;
     float angle;
-    float distance = 55;
-    public Transform middle;
-    public Transform costumPivot;
+    float distance;
+   
+    public GameObject middle;
+    public GameObject costumPivot;
     Vector3[] buttonSlotPositions;
     
     // public System.Collections.Generic.Dictionary<GameObject, GameObject> buttonDic;
 
     void Awake()
     {
+        GUIData.screenHeightRatio = (float) Screen.height / 1080f;
+        distance = Vector3.Distance(middle.transform.position, radius.transform.position) * GUIData.screenHeightRatio;
         spawn = GameObject.FindObjectOfType<ContextMenuSpawn>();
     }
     public void AddButton(AbilityInfo ability) {                                 // add button to existing points
         if (slot < buttonSlotPositions.Length){
-            Vector3 position = middle.position + buttonSlotPositions[slot] * distance;
-            Debug.Log("Middle: " + middle.position + "buttonposition+ distance: " + buttonSlotPositions[slot] * distance);
-            //GameObject g = Instantiate(button,slots[slot].GetComponent<Transform>().position, button.transform.localRotation) as GameObject;
+            Vector3 position = middle.transform.position + (buttonSlotPositions[slot] * distance);
             GameObject g = Instantiate(ability.button, position, costumPivot.transform.localRotation) as GameObject;
             g.transform.SetParent(middle.transform.parent);
+            g.transform.localScale *= GUIData.screenHeightRatio;
             slots[slot] = g;
             slots[slot].AddComponent<EventTrigger>();
             slots[slot].AddComponent<SetOnGui>();

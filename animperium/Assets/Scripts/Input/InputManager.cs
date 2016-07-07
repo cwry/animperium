@@ -2,9 +2,8 @@
 using System.Collections;
 
 public class InputManager : MonoBehaviour {
-
     
-	
+    GameObject oldSelectedUnit;
 	void Update () {
         GameObject tileHover = getTileHover();
         SelectionManager.hoverTile = tileHover;
@@ -27,6 +26,11 @@ public class InputManager : MonoBehaviour {
             SelectionManager.selectedTile = hover;
             if (hover == null) return;
             SelectionManager.selectedUnit = hover.GetComponent<TileInfo>().unit;
+            if (oldSelectedUnit != SelectionManager.selectedUnit)
+            {
+                SelectionManager.onSelectedUnitChanged.fire(SelectionManager.selectedUnit);
+                oldSelectedUnit = SelectionManager.selectedUnit;
+            }
         }
     }
 
