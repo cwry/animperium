@@ -11,6 +11,9 @@ public class TileInfo : MonoBehaviour {
     public Vec2i gridPosition;
     public GridManager grid;
     public bool traversable;
+    [HideInInspector]
+    public bool isHole = false;
+    public Action removeHole = () => { };
     public GameObject unit;
     public GameEvent onUnitDetached = new GameEvent();
     public GameEvent onUnitAttached = new GameEvent();

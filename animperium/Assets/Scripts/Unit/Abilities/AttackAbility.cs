@@ -45,7 +45,6 @@ public class AttackAbility : MonoBehaviour{
 
     GameObject[] checkRange(){
         Unit u = gameObject.GetComponent<Unit>();
-        if (u.actionPoints < abilityInfo.apCost) return null;
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
             GameObject[] aoe = abilityInfo.checkAoe(ti);
             foreach (GameObject go in aoe) {

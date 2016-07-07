@@ -12,6 +12,9 @@ public struct AbilityInfo {
     public string description;
     public GameObject button;
     public int apCost;
+    public float woodCost;
+    public float ironCost;
+    public float stoneCost;
     [HideInInspector]
     public GameObject owner;
     public Func<GameObject[]> checkRange;
@@ -42,7 +45,6 @@ public class AbilityManager : MonoBehaviour {
 
     public static void useAbility(AbilityInfo abilityInfo, Vec2i target, bool isTargetMainGrid){
         Unit u = abilityInfo.owner.GetComponent<Unit>();
-        u.actionPoints -= abilityInfo.apCost;
         ServerMessage.UnitAbilityMessage msg = new ServerMessage.UnitAbilityMessage();
         msg.unitID = u.unitID;
         msg.actionID = ActionQueue.getInstance().actionID++;

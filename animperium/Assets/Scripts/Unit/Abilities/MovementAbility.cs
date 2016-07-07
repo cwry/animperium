@@ -5,6 +5,7 @@ using System;
 public class MovementAbility : MonoBehaviour {
     public AbilityInfo abilityInfo;
     public float animationSpeed = 3;
+    public float jumpHeight = 0.1f;
 
     public int maxMovementPoints;
     [HideInInspector]
@@ -41,14 +42,13 @@ public class MovementAbility : MonoBehaviour {
             return ti.traversable && ti.unit == null;
         });
         movementPoints -= path.Length - 1;
-        PathMovement.move(gameObject, grid, path, animationSpeed);
+        PathMovement.move(gameObject, grid, path, animationSpeed, jumpHeight);
     }
 
  
 
     GameObject[] checkRange(){
         Unit u = gameObject.GetComponent<Unit>();
-        if (u.actionPoints < abilityInfo.apCost) return null;
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, (TileInfo ti) => {
             return ti.traversable && ti.unit == null;
         });

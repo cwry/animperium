@@ -7,6 +7,7 @@ public class PathMovement : MonoBehaviour {
 	public Vec2i[] path;
     public GridManager grid;
     public float speed;
+    public float jumpHeight;
     public bool init = true;
     Action callback;
 
@@ -21,8 +22,11 @@ public class PathMovement : MonoBehaviour {
                 Vector3 from = grid.gridData[fromI.x, fromI.y].transform.position;
                 Vector3 to = grid.gridData[toI.x, toI.y].transform.position;
                 Vector3 dir = to - from;
-                Vector3 delta = dir * (progress - progI);
-                Vector3 pos = from + delta;
+                float delta = progress - progI;
+                Vector3 deltaV = dir * delta;
+                float deltaSin = Mathf.Sin(delta * Mathf.PI);
+                deltaV.y += deltaSin * jumpHeight;
+                Vector3 pos = from + deltaV;
                 transform.position = pos;
                 progress += Time.deltaTime * speed / dir.magnitude;
             }else{
@@ -34,19 +38,18 @@ public class PathMovement : MonoBehaviour {
         }
 	}
 
-    public static void move(GameObject go, GridManager grid, Vec2i[] path, float speed, Action callback = null){
+    public static void move(GameObject go, GridManager grid, Vec2i[] path, float speed, float jumpHeight, Action callback = null){
         PathMovement pm = go.AddComponent<PathMovement>();
         pm.grid = grid;
         pm.speed = speed;
         pm.path = path;
+        pm.jumpHeight = jumpHeight;
+        pm.callback = callback;
         Vec2i start = path[0];
         Vec2i end = path[path.Length - 1];
         TileInfo startTile = grid.gridData[start.x, start.y].GetComponent<TileInfo>();
         TileInfo endTile = grid.gridData[end.x, end.y].GetComponent<TileInfo>();
         startTile.detachUnit();
         endTile.attachUnit(go);
-        if (callback != null){
-            pm.callback = callback;
-        }
     }
 }
