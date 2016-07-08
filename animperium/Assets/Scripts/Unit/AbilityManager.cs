@@ -11,6 +11,7 @@ public struct AbilityInfo {
     public string name;
     public string description;
     public GameObject button;
+    public GameObject targetParticle;
     public int apCost;
     public float woodCost;
     public float ironCost;

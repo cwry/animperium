@@ -31,7 +31,7 @@ public class DigHoleAbility : MonoBehaviour {
         GridManager otherGrid = msg.isTargetMainGrid ? Data.subGrid : Data.mainGrid;
         TileInfo otherTile = otherGrid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
         GameObject targetModel = Instantiate(target.grid.isMainGrid ? holeModel : holeModelUngerground, target.transform.position, Quaternion.identity) as GameObject;
-        GameObject otherTargetModel = Instantiate(otherTile.grid.isMainGrid ? holeModel : holeModelUngerground, target.transform.position, Quaternion.identity) as GameObject;
+        GameObject otherTargetModel = Instantiate(otherTile.grid.isMainGrid ? holeModel : holeModelUngerground, otherTile.transform.position, Quaternion.identity) as GameObject;
         target.isHole = true;
         otherTile.isHole = true;
         Action removeHoles = () => {

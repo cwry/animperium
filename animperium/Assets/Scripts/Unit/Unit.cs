@@ -83,6 +83,19 @@ public class Unit : MonoBehaviour {
                 Data.gold += Data.stone;
                 Data.stone = 0;
             }
+
+            /// auslagern! (particle stuff)
+
+            if(ai.targetParticle != null) {
+                GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
+                TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
+                GameObject[] aoe = ai.checkAoe(target);
+                foreach(GameObject go in aoe) {
+                    Instantiate(ai.targetParticle, go.transform.position, Quaternion.identity);
+                }
+            }
+
+
             onExecution(msg);
         };
         ai.onExecution = handleCost;

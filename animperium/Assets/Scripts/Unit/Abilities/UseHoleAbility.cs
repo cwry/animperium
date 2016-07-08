@@ -11,6 +11,11 @@ public class UseHoleAbility : MonoBehaviour {
         abilityInfo.checkAoe = AoeChecks.dot;
         abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
             AbilityManager.useAbility(abilityInfo, target, isMainGrid);
+            Unit u = gameObject.GetComponent<Unit>();
+            TileInfo ti = u.currentTile.GetComponent<TileInfo>();
+            GridManager otherGrid = ti.grid.isMainGrid ? Data.subGrid : Data.mainGrid;
+            TileInfo otherTi = otherGrid.gridData[ti.gridPosition.x, ti.gridPosition.y].GetComponent<TileInfo>();
+            Camera.main.GetComponent<CameraFocus>().CameraJump(otherTi.gameObject);
         };
         abilityInfo.onExecution = executeAbility;
         abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
