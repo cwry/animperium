@@ -35,10 +35,10 @@ public class AttackAbility : MonoBehaviour{
                 continue;
             }
             Unit unit = tInfo.unit.GetComponent<Unit>();
-            if (unit.playerID != 0 && unit.playerID != Data.playerID) targetUnits.Add(unit);
+            if (unit.playerID != 0 && unit.playerID != gameObject.GetComponent<Unit>().playerID) targetUnits.Add(unit);
         }
-
-        foreach(Unit unit in targetUnits) {
+        Debug.Log(targetUnits.Count);
+        foreach (Unit unit in targetUnits) {
             unit.damage(strength, type);
         }
     }
