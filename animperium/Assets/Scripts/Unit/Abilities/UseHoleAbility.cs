@@ -29,7 +29,6 @@ public class UseHoleAbility : MonoBehaviour {
         ti.detachUnit();
         otherTi.attachUnit(gameObject);
         transform.position = otherTi.transform.position;
-        Camera.main.GetComponent<CameraFocus>().CameraJump(otherTi.gameObject);
     }
 
     GameObject[] checkRange() {
