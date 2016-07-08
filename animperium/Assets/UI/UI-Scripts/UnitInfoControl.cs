@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class UnitInfoControl : MonoBehaviour {
@@ -6,7 +7,9 @@ public class UnitInfoControl : MonoBehaviour {
     
     public GameObject unitInfo;
     GameObject currentUnit;
-    public SetStatusValues valueText;
+    public SetDescriptionStats valueText;
+    public SetDescriptionStats statusText;
+    public Image icon;
     // Use this for initialization
     void Start()
     {
@@ -23,7 +26,8 @@ public class UnitInfoControl : MonoBehaviour {
             if (currentUnit != null)
             {
                 unitInfo.SetActive(true);
-                valueText.SetText(currentUnit);
+                valueText.SetValueText(currentUnit);
+                statusText.SetDescriptionText(currentUnit);
             }
             else
             {

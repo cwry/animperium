@@ -39,42 +39,10 @@ public class CameraFocus : MonoBehaviour {
 
 	public void CameraJumpInStageMiddle(bool mainGridBool)
 	{
-        #region alter code
-        /*
-        int d1;
-		int d2;
-
-		if (mainGridBool) {
-			if (Data.mainGrid.gridWidthInHexes % 2 == 0)
-				d1 = Data.mainGrid.gridWidthInHexes / 2;
-			else
-				d1 = (Data.mainGrid.gridWidthInHexes - 1) / 2;
-			if (Data.mainGrid.gridWidthInHexes % 2 == 0)
-				d2 = Data.mainGrid.gridWidthInHexes / 2;
-			else
-				d2 = (Data.mainGrid.gridWidthInHexes - 1) / 2;
-			GameObject hexMiddle = Data.mainGrid.gridData [d1, d2];
-			CameraJump (hexMiddle);
-		}
-		else{
-			if (Data.subGrid.gridWidthInHexes % 2 == 0)
-				d1 = Data.subGrid.gridWidthInHexes / 2;
-			else
-				d1 = (Data.subGrid.gridWidthInHexes - 1) / 2;
-			if (Data.subGrid.gridWidthInHexes % 2 == 0)
-				d2 = Data.subGrid.gridWidthInHexes / 2;
-			else
-				d2 = (Data.subGrid.gridWidthInHexes - 1) / 2;
-			GameObject hexMiddle = Data.subGrid.gridData [d1, d2];
-			CameraJump (hexMiddle);
-		}
-        */
-        #endregion
         CameraJump(startingHex);
     }
 	public void CameraJump(GameObject target)
 	{
-        //cam.transform.position = new Vector3 (target.transform.position.x, offSet, target.transform.position.z - offSet);
         cam.transform.position = target.transform.position;
     }
 
