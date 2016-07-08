@@ -17,6 +17,7 @@ public enum UnitFootprintType{
 
 public class Unit : MonoBehaviour {
     public string prefabID;
+    public Sprite icon;
 
     public GameObject currentTile;
     public int playerID;
