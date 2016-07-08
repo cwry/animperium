@@ -96,6 +96,7 @@
     <Compile Include="Assets\Scripts\Unit\Abilities\AoeChecks.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\AttackAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\DigHoleAbility.cs" />
+    <Compile Include="Assets\Scripts\Unit\Abilities\HealAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\MineAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\MovementAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\SpawnAbility.cs" />
