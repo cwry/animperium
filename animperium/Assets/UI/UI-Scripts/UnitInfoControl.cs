@@ -28,6 +28,7 @@ public class UnitInfoControl : MonoBehaviour {
                 unitInfo.SetActive(true);
                 valueText.SetValueText(currentUnit);
                 statusText.SetDescriptionText(currentUnit);
+                icon.sprite = currentUnit.GetComponent<Unit>().icon;
             }
             else
             {
