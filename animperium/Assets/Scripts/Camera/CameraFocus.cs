@@ -19,10 +19,13 @@ public class CameraFocus : MonoBehaviour {
 	private bool focusLock = false;
 	private bool isMainGrid;
 
+    private Vector3 offsetSub;
+
 	private Vector3 targetPosition;
 	// Use this for initialization
 	void Start () {
 		StartPosition ();
+        offsetSub = GetMiddle(false).transform.position - GetMiddle(true).transform.position;
 	}
 	
 	// Update is called once per frame
@@ -91,7 +94,16 @@ public class CameraFocus : MonoBehaviour {
 		}
         if(Input.GetKeyDown(KeyCode.Space) && SelectionManager.selectedTile != null)
         {
-            
+            if(isMainGrid)
+            {
+                isMainGrid = false;
+                cam.transform.position += offsetSub;
+            }
+            else
+            {
+                isMainGrid = true;
+                cam.transform.position -= offsetSub;
+            }
            
         }
 	}
@@ -133,4 +145,37 @@ public class CameraFocus : MonoBehaviour {
         targetPosition = hex.transform.position;
 	}
 
+
+    public GameObject GetMiddle(bool mainGridBool)
+    {
+        int d1;
+        int d2;
+
+        if (mainGridBool)
+        {
+            if (Data.mainGrid.gridWidthInHexes % 2 == 0)
+                d1 = Data.mainGrid.gridWidthInHexes / 2;
+            else
+                d1 = (Data.mainGrid.gridWidthInHexes - 1) / 2;
+            if (Data.mainGrid.gridWidthInHexes % 2 == 0)
+                d2 = Data.mainGrid.gridWidthInHexes / 2;
+            else
+                d2 = (Data.mainGrid.gridWidthInHexes - 1) / 2;
+            GameObject hexMiddle = Data.mainGrid.gridData[d1, d2];
+            return hexMiddle;
+        }
+        else
+        {
+            if (Data.subGrid.gridWidthInHexes % 2 == 0)
+                d1 = Data.subGrid.gridWidthInHexes / 2;
+            else
+                d1 = (Data.subGrid.gridWidthInHexes - 1) / 2;
+            if (Data.subGrid.gridWidthInHexes % 2 == 0)
+                d2 = Data.subGrid.gridWidthInHexes / 2;
+            else
+                d2 = (Data.subGrid.gridWidthInHexes - 1) / 2;
+            GameObject hexMiddle = Data.subGrid.gridData[d1, d2];
+            return hexMiddle;
+        }
+    }
 }
