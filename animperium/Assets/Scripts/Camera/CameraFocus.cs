@@ -89,6 +89,11 @@ public class CameraFocus : MonoBehaviour {
 				CameraJumpInStageMiddle (isMainGrid);
 			}
 		}
+        if(Input.GetKeyDown(KeyCode.Space) && SelectionManager.selectedTile != null)
+        {
+            
+           
+        }
 	}
 
 	private void CameraHandling()
