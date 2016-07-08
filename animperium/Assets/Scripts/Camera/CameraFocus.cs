@@ -20,13 +20,16 @@ public class CameraFocus : MonoBehaviour {
 	private bool isMainGrid;
 
     private Vector3 offsetSub;
+    private Vector3 offsetMain;
 
 	private Vector3 targetPosition;
 	// Use this for initialization
 	void Start () {
 		StartPosition ();
         offsetSub = GetMiddle(false).transform.position - GetMiddle(true).transform.position;
-	}
+        offsetMain = GetMiddle(true).transform.position - GetMiddle(false).transform.position;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -94,15 +97,15 @@ public class CameraFocus : MonoBehaviour {
 		}
         if(Input.GetKeyDown(KeyCode.Space) && SelectionManager.selectedTile != null)
         {
-            if(isMainGrid)
+            if(Data.isCameraOnMainGrid)
             {
-                isMainGrid = false;
-                cam.transform.position += offsetSub;
+                Data.isCameraOnMainGrid = false;
+                cam.transform.position -= offsetSub;
             }
             else
             {
-                isMainGrid = true;
-                cam.transform.position -= offsetSub;
+                Data.isCameraOnMainGrid = true;
+                cam.transform.position += offsetSub;
             }
            
         }
