@@ -12,6 +12,7 @@ public class Data {
     public static float stone = 5000;
     public static float iron = 5000;
     public static float gold = 5000;
+    public static bool isCameraOnMainGrid;
 
     public static bool isActivePlayer(){
         return Data.playerID % 2 != TurnManager.turnID % 2;

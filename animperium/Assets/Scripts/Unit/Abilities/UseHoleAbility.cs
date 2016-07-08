@@ -16,6 +16,7 @@ public class UseHoleAbility : MonoBehaviour {
             GridManager otherGrid = ti.grid.isMainGrid ? Data.subGrid : Data.mainGrid;
             TileInfo otherTi = otherGrid.gridData[ti.gridPosition.x, ti.gridPosition.y].GetComponent<TileInfo>();
             Camera.main.GetComponent<CameraFocus>().CameraJump(otherTi.gameObject);
+            Data.isCameraOnMainGrid = !Data.isCameraOnMainGrid;
         };
         abilityInfo.onExecution = executeAbility;
         abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
@@ -29,7 +30,6 @@ public class UseHoleAbility : MonoBehaviour {
         ti.detachUnit();
         otherTi.attachUnit(gameObject);
         transform.position = otherTi.transform.position;
-        Camera.main.GetComponent<CameraFocus>().CameraJump(otherTi.gameObject);
     }
 
     GameObject[] checkRange() {
