@@ -48,9 +48,13 @@ class ContextMenuControl : MonoBehaviour
     
     void GenerateButtonPositions()
     {
-        Debug.Log(buttonSlotPositions.Length);
-        Debug.Log(angle);
-        if (slotNumber == 2 || slotNumber == 3)
+        if(slotNumber == 1)
+        {
+            float currentAngle = Mathf.Deg2Rad * 90f;
+            buttonSlotPositions[0] = new Vector3(Mathf.Cos(currentAngle), -Mathf.Sin(currentAngle), 0);
+
+        }
+        else if (slotNumber == 2 || slotNumber == 3)
         {
             angle = 180f / slotNumber;
             float offset = angle / 2;
