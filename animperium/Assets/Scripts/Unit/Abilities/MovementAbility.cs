@@ -5,7 +5,7 @@ using System;
 public class MovementAbility : MonoBehaviour {
     public AbilityInfo abilityInfo;
     public float animationSpeed = 3;
-    public float jumpHeight = 0.1f;
+    public float jumpHeight = 0.5f;
 
     public int maxMovementPoints;
     [HideInInspector]
