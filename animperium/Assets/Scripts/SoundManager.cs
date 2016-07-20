@@ -1,24 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour {
 
-    public AudioClip music1;
-    private AudioSource player;
 
-	// Use this for initialization
-	void Start () {
-        player = gameObject.AddComponent<AudioSource>();
-        player.volume = 1f;
-        player.clip = music1;
-        player.Play();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    if(!player.isPlaying)
-        {
-            player.Play();
+    public AudioClip musicMenu;
+    public AudioClip musicGame;
+    CoroutineManager coroutineManager;
+    private int currentSceneIndex;
+    private AudioSource musicPlayer;
+    
+    void Awake() {
+        DontDestroyOnLoad(gameObject);  //we need this object in every scene
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex; 
+        musicPlayer = new AudioSource();
+        coroutineManager = gameObject.AddComponent<CoroutineManager>();
+        coroutineManager.Add(StartCoroutine(PlaySound(musicMenu)), "playMainMusic");
+    }
+    //is true when the scene has been changed
+    public bool IsSceneChanged(){
+        if(SceneManager.GetActiveScene().buildIndex != currentSceneIndex){
+            currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            return true;
         }
-	}
+        return false;
+    }
+   
+    //Enum playing an audio clip and stays alive for its length in seconds
+    public IEnumerator PlaySound(AudioClip c){
+        AudioSource s = new AudioSource();
+        s.clip = c;
+        s.Play();
+        yield return new WaitForSeconds(s.clip.length);
+        yield return null;
+    }
 }
