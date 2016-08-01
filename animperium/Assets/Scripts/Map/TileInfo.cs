@@ -44,6 +44,28 @@ public class TileInfo : MonoBehaviour {
         onUnitAttached.fire(go);
     }
 
+    public GameObject continuePathStructure(int dirDelta, GameObject origin) {
+        TileInfo originTi = origin.GetComponent<TileInfo>();
+        Func<GameObject>[] of = new Func<GameObject>[6];
+        of[0] = originTi.getNE;
+        of[1] = originTi.getE;
+        of[2] = originTi.getSE;
+        of[3] = originTi.getSW;
+        of[4] = originTi.getW;
+        of[5] = originTi.getNW;
+        Func<GameObject>[] tf = new Func<GameObject>[6];
+        tf[0] = getNE;
+        tf[1] = getE;
+        tf[2] = getSE;
+        tf[3] = getSW;
+        tf[4] = getW;
+        tf[5] = getNW;
+        for(int i = 0; i < 6; i++) {
+            if (of[i]() == gameObject) return tf[(i + dirDelta) % 6]();
+        }
+        return null;
+    }
+
     private bool isInBounds(int x, int y){
         var maxW = grid.gridWidthInHexes;
         var maxH = grid.gridHeightInHexes;

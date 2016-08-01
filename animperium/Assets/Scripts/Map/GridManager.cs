@@ -47,6 +47,10 @@ public class GridManager
         }
     }
 
+    public bool isInBounds(int x, int y) {
+        return x >= 0 && x < gridWidthInHexes && y >= 0 && y < gridHeightInHexes;
+    }
+
     //Method to initialise Hexagon width and height
     void setSizes(){
 		//renderer component attached to the Hex prefab is used to get the current width and height

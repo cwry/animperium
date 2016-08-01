@@ -68,6 +68,7 @@ public class Unit : MonoBehaviour {
         Action<ServerMessage.UnitAbilityMessage> onExecution = ai.onExecution;
         Action<ServerMessage.UnitAbilityMessage> handleCost = (ServerMessage.UnitAbilityMessage msg) => {
             actionPoints -= ai.apCost;
+            if (playerID != Data.playerID) return;
             Data.wood -= ai.woodCost;
             if (Data.wood < 0) {
                 Data.gold += Data.wood;
@@ -83,22 +84,26 @@ public class Unit : MonoBehaviour {
                 Data.gold += Data.stone;
                 Data.stone = 0;
             }
+        };
 
-            /// auslagern! (particle stuff)
-
-            if(ai.targetParticle != null) {
+        Action<ServerMessage.UnitAbilityMessage> handleParticles = (ServerMessage.UnitAbilityMessage msg) => {
+            if (ai.targetParticle != null) {
                 GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
                 TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
                 GameObject[] aoe = ai.checkAoe(target);
-                foreach(GameObject go in aoe) {
+                foreach (GameObject go in aoe) {
                     Instantiate(ai.targetParticle, go.transform.position, Quaternion.identity);
                 }
             }
+        };
 
-
+        Action<ServerMessage.UnitAbilityMessage> executionAction = (ServerMessage.UnitAbilityMessage msg) => {
+            handleCost(msg);
+            handleParticles(msg);
             onExecution(msg);
         };
-        ai.onExecution = handleCost;
+
+        ai.onExecution = executionAction;
 
         abilities.Add(ai);
         return abilities.Count - 1;
