@@ -14,8 +14,8 @@ public class SpawnAbility : MonoBehaviour {
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = prefab.GetComponent<Unit>().getFootprint;
-        abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
-            AbilityManager.useAbility(abilityInfo, target, isMainGrid);
+        abilityInfo.execute = (Vec2i target, bool isMainGrid, Action callback) => {
+            AbilityManager.useAbility(abilityInfo, target, isMainGrid, callback);
         };
         abilityInfo.onExecution = executeAbility;
         abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);

@@ -20,7 +20,7 @@ public struct AbilityInfo {
     public GameObject owner;
     public Func<GameObject[]> checkRange;
     public Func<TileInfo, GameObject[]> checkAoe;
-    public Action<Vec2i, bool> execute;
+    public Action<Vec2i, bool, Action> execute;
     public Action<ServerMessage.UnitAbilityMessage> onExecution;
 }
 
