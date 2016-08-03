@@ -15,7 +15,7 @@ public class HealAbility : MonoBehaviour {
     void Awake() {
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
-        abilityInfo.checkAoe = AoeChecks.getAoeByType(aoeType);
+        abilityInfo.checkAoe = AoeChecks.getAoeByType(aoeType, gameObject.GetComponent<Unit>());
         abilityInfo.execute = (Vec2i target, bool isMainGrid) => {
             AbilityManager.useAbility(abilityInfo, target, isMainGrid);
         };
