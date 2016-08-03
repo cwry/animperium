@@ -72,8 +72,7 @@ public  class DynamicButton : MonoBehaviour{
     Text txt;
     SetOnGui setOnGui;
     EventSprite eventSprite;
-    void Start()
-    {
+    void Start(){
         eventSprite = GetComponent<EventSprite>(); // prefab needs this component
         eventSprite.SwitchToNormal();
         setOnGui = GetComponent<SetOnGui>();
@@ -86,14 +85,13 @@ public  class DynamicButton : MonoBehaviour{
         TargetingManager.selectTarget(fields.targets, (GameObject target) => {   //select tile and execute callback
             TileInfo tile = target.GetComponent<TileInfo>();
             fields.ability.execute(tile.gridPosition, tile.grid.isMainGrid);
+            ContextMenuSpawn.SpawnContextMenu(GUIData.ContextUnit);
         }, fields.ability.checkAoe);
         GUIData.canSelectTarget = true;
         GUIData.activeButton = gameObject;
-        ContextMenuSpawn.DestroyContextMenu();
     }
 
-    public void OnPointerEnter(PointerEventData data)
-    {
+    public void OnPointerEnter(PointerEventData data){
         eventSprite.SwitchToHighlighted();
         setOnGui.SetOnGUITrue();
         txt.text = fields.ability.name + "\n\n"+ fields.ability.description;
@@ -101,8 +99,7 @@ public  class DynamicButton : MonoBehaviour{
         descriptionField.transform.SetParent(ContextMenuSpawn.contextMenu.transform);
     }
 
-    public void OnPointerExit(PointerEventData data)
-    {
+    public void OnPointerExit(PointerEventData data){
         eventSprite.SwitchToNormal();
         setOnGui.SetOnGUIFalse();
         Destroy(descriptionField);

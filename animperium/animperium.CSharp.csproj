@@ -61,6 +61,12 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Map\MapEditorHelper.cs" />
@@ -115,6 +121,7 @@
     <Compile Include="Assets\UI\UI-Scripts\Context Menu\ContextMenuControl.cs" />
     <Compile Include="Assets\UI\UI-Scripts\Context Menu\ContextMenuPosition.cs" />
     <Compile Include="Assets\UI\UI-Scripts\Context Menu\ContextMenuSpawn.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\Context Menu\DestroyContextMenu.cs" />
     <Compile Include="Assets\UI\UI-Scripts\Context Menu\EventSprite.cs" />
     <Compile Include="Assets\UI\UI-Scripts\DisplayRound.cs" />
     <Compile Include="Assets\UI\UI-Scripts\EndTurn.cs" />

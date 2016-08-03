@@ -6,18 +6,19 @@ using System;
 
 public class ContextMenuSpawn : MonoBehaviour {
 
-    public GameObject contextMenuPrefab;
+    public  GameObject contextMenuPrefab;
     public static  GameObject contextMenu = null; 
-    public GameObject canvas;
-    public static GameObject currentUnit = null;
-    public List<AbilityInfo> abilities;
-    bool isButtonSpawning = false;
-
+    public  GameObject canvas;
+    public static GameObject unit = null;
+    public static GameObject m_prefab;
+    public static GameObject m_canvas;
     // Use this for initialization
     void Awake () {
-        SelectionManager.onSelectedUnitChanged.add<GameObject>(onSelectionChanged);
+        SelectionManager.onSelectedUnitChanged.add<GameObject>(SpawnContextMenu);
         GUIData.pointerOnGUI = false;
         GUIData.canSelectTarget = false;
+        m_prefab = contextMenuPrefab;
+        m_canvas = canvas; 
 	}
 	
 	// Update is called once per frame
@@ -25,56 +26,41 @@ public class ContextMenuSpawn : MonoBehaviour {
 
     }
 
-    void onSelectionChanged(GameObject g)
+    //target new unit => spawn menu
+    //button click => despawn => targeting => respawn on old unit
+    //
+
+
+    public static void SpawnContextMenu(GameObject unit)
     {
-
-        if (Input.GetMouseButtonDown(0)
-            && SelectionManager.selectedUnit != currentUnit
-            && !GUIData.pointerOnGUI
-            && Data.isActivePlayer()
-            && GUIData.hasContextMenu)
+        if (unit != null)
         {
             DestroyContextMenu();
-        }
-        if (Input.GetMouseButtonDown(0)
-            && SelectionManager.selectedUnit != currentUnit
-            && !GUIData.pointerOnGUI
-            && Data.isActivePlayer()
-            && !GUIData.hasContextMenu
-            && !TargetingManager.getActive())
-        {
-
-            DestroyContextMenu();
-            GUIData.targetTile = SelectionManager.selectedTile;
-            currentUnit = SelectionManager.selectedUnit;
-            if (currentUnit != null)
+            if (Data.isActivePlayer() && unit.GetComponent<Unit>() != null)
             {
-                if (currentUnit.GetComponent<Unit>().playerID == Data.playerID)
+                if (unit.GetComponent<Unit>().playerID == Data.playerID)
                 {
-                    SpawnContextMenu();
+                    List<AbilityInfo> abilities;
+                    Unit m_unit = unit.GetComponent<Unit>();
+                    Vector3 initPosition = unit.transform.position;
+                    contextMenu = Instantiate(m_prefab, Camera.main.WorldToScreenPoint(initPosition), Quaternion.identity) as GameObject;
+                    contextMenu.transform.SetParent(m_canvas.transform, false);
+                    //contextMenu.GetComponent<ContextMenuPosition>().Init(unit);
+                    abilities = m_unit.abilities;
+                    contextMenu.GetComponent<ContextMenuControl>().SetSlotNumber(abilities.Count);
+                    foreach (AbilityInfo ability in abilities)
+                    {
+                        contextMenu.GetComponent<ContextMenuControl>().AddButton(ability);
+                    }
                     GUIData.hasContextMenu = true;
-                    GUIData.ContextUnit = currentUnit;
                 }
             }
         }
     }
-    private void SpawnContextMenu()
-    {
-        
-        Unit unit = SelectionManager.selectedUnit.GetComponent<Unit>();
-        Vector3 initPosition = GUIData.targetTile.transform.position;
-        contextMenu = Instantiate(contextMenuPrefab, Camera.main.WorldToScreenPoint(initPosition), Quaternion.identity) as GameObject;
-        contextMenu.transform.SetParent(canvas.transform, false);
-        abilities = unit.abilities;
-        contextMenu.GetComponent<ContextMenuControl>().SetSlotNumber(abilities.Count);
-        foreach (AbilityInfo ability in abilities){
-            contextMenu.GetComponent<ContextMenuControl>().AddButton(ability);
-        }
-        
-    }
+    
 
     public static void DestroyContextMenu(){
-        currentUnit = null;
+        unit = null;
         GUIData.pointerOnGUI = false;
         GUIData.hasContextMenu = false;
         Destroy(contextMenu);

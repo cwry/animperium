@@ -3,7 +3,7 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
     
-    GameObject oldSelectedUnit;
+    public static GameObject oldSelectedUnit;
 	void Update () {
         GameObject tileHover = getTileHover();
         SelectionManager.hoverTile = tileHover;
@@ -26,7 +26,8 @@ public class InputManager : MonoBehaviour {
             SelectionManager.selectedTile = hover;
             if (hover == null) return;
             SelectionManager.selectedUnit = hover.GetComponent<TileInfo>().unit;
-            SelectionManager.onSelectedUnitChanged.fire(SelectionManager.selectedUnit);
+            GUIData.ContextUnit = (SelectionManager.selectedUnit != null) ? SelectionManager.selectedUnit : GUIData.ContextUnit;
+            SelectionManager.onSelectedUnitChanged.fire(GUIData.ContextUnit);
             oldSelectedUnit = SelectionManager.selectedUnit;
         }
     }
