@@ -18,6 +18,7 @@ public class MineAbility : MonoBehaviour {
     Action removeOnUseAbility;
 
     void Awake() {
+        abilityInfo.getRangeIndicator = getRangeIndicator;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.dot;
@@ -62,5 +63,9 @@ public class MineAbility : MonoBehaviour {
         });
 
         return inRange.Length == 0 ? null : inRange;
+    }
+
+    GameObject[] getRangeIndicator() {
+        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange);
     }
 }

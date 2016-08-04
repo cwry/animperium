@@ -63,19 +63,17 @@ public class Unit : MonoBehaviour {
     }
 
     public int addAbility(AbilityInfo ai) {
-        Func<GameObject[]> checkRange = ai.checkRange;
-        Func<GameObject[]> checkCost = () => {
+        ai.checkCost = () => {
             if (
             ai.apCost > actionPoints ||
             ai.woodCost > Data.wood + Data.gold ||
             ai.ironCost > Data.iron + Data.gold ||
             ai.stoneCost > Data.stone + Data.gold
             ){
-                return null;
+                return false;
             }
-            return checkRange();
+            return true;
         };
-        ai.checkRange = checkCost;
 
         Action<ServerMessage.UnitAbilityMessage> onExecution = ai.onExecution;
         Action<ServerMessage.UnitAbilityMessage> handleCost = (ServerMessage.UnitAbilityMessage msg) => {

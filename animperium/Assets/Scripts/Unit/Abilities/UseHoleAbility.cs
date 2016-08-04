@@ -7,6 +7,7 @@ public class UseHoleAbility : MonoBehaviour {
     public AbilityInfo abilityInfo;
 
     void Awake() {
+        abilityInfo.selfCast = true;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.dot;

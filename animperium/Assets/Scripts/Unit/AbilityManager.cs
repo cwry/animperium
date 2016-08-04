@@ -17,8 +17,12 @@ public struct AbilityInfo {
     public float ironCost;
     public float stoneCost;
     [HideInInspector]
+    public bool selfCast;
+    [HideInInspector]
     public GameObject owner;
+    public Func<GameObject[]> getRangeIndicator;
     public Func<GameObject[]> checkRange;
+    public Func<bool> checkCost;
     public Func<TileInfo, GameObject[]> checkAoe;
     public Action<Vec2i, bool, Action> execute;
     public Action<ServerMessage.UnitAbilityMessage> onExecution;
