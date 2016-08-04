@@ -35,6 +35,18 @@ public class Unit : MonoBehaviour {
     public float meleeResist;
     public float rangedResist;
 
+
+    [HideInInspector]
+    public float magicResistBuff = 0;
+    [HideInInspector]
+    public float meleeResistBuff = 0;
+    [HideInInspector]
+    public float rangedResistBuff = 0;
+    private int resistBuffEndTurn;
+
+    [HideInInspector]
+    public float attackMultiplier = 1f;
+
     public UnitFootprintType footprintType;
 
     [HideInInspector]
@@ -116,6 +128,10 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    public float getHPPercentage() {
+        return hitPoints / maxHitPoints; 
+    }
+
     public void detach() {
         GameObject[] footprint = getFootprint(gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>());
         foreach (GameObject go in footprint) {
@@ -126,6 +142,7 @@ public class Unit : MonoBehaviour {
 
     void onTurnBegin(int turnID) {
         actionPoints = maxActionPoints;
+        resetResistBuff(turnID);
     }
 
     void OnDestroy(){
@@ -145,22 +162,22 @@ public class Unit : MonoBehaviour {
         return AoeChecks.dot(ti);
     }
 
-    public void damage(float power, DamageType type){
+    public void damage(float multiplier, float power, DamageType type){
         float resist;
         switch (type){
             case DamageType.MAGIC:
-                resist = magicResist;
+                resist = magicResist + magicResistBuff;
                 break;
             case DamageType.MELEE:
-                resist = meleeResist;
+                resist = meleeResist + meleeResistBuff;
                 break;
             case DamageType.RANGED:
-                resist = rangedResist;
+                resist = rangedResist + rangedResistBuff;
                 break;
             default:
                 return;
         }
-        float damage = power / resist;
+        float damage = power / resist * multiplier;
         hitPoints -= damage;
         Debug.Log("[BATTLE SYSTEM] Unit " + unitID + " took " + damage + " damage.");
         if(hitPoints <= 0){
@@ -169,5 +186,18 @@ public class Unit : MonoBehaviour {
         }
     }
 
+    void resetResistBuff(int turnID){
+        if(turnID == resistBuffEndTurn) {
+            meleeResistBuff = 0;
+            rangedResistBuff = 0;
+            magicResistBuff = 0;
+        }
+    }
 
+    void buffResistance(float melee, float ranged, float magic) {
+        meleeResistBuff = melee;
+        rangedResistBuff = ranged;
+        magicResistBuff = magic;
+        resistBuffEndTurn = TurnManager.turnID + 2;
+    }
 }
