@@ -46,7 +46,7 @@ public class MineAbility : MonoBehaviour {
             return;
         }
         if (!Data.isActivePlayer()) return;
-        currentMine.mine(amount);
+        currentMine.mine(amount, gameObject);
     }
 
     void onUseAbility(AbilityInfo ai) {
