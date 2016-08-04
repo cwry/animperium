@@ -10,10 +10,14 @@ public class TargetingManager : MonoBehaviour {
     bool isActive = false;
     public GameObject markerPrefab;
     public GameObject cursorPrefab;
+    public GameObject rangePrefab;
     List<GameObject> markers = new List<GameObject>();
     List<GameObject> cursors = new List<GameObject>();
+    List<GameObject> ranges = new List<GameObject>();
     GameObject[] currentTargets;
+    GameObject[] currentRanges;
     Action<GameObject> currentCallback;
+    Action currentCancelledCallback;
     GameObject lastCursorTarget = null;
     Func<TileInfo, GameObject[]> getCursor;
 
@@ -28,11 +32,13 @@ public class TargetingManager : MonoBehaviour {
             foreach (GameObject go in currentTargets){
                 if (go == SelectionManager.hoverTile) target = go;
             }
-            if (target == null) return;
-            currentCallback(target);
-            deactivate();
+            if (target != null) {
+                currentCallback(target);
+                deactivate();
+            }
         }else if (Input.GetMouseButtonDown(1)){
             deactivate();
+            currentCancelledCallback();
         }else if (lastCursorTarget != SelectionManager.hoverTile){
             foreach (GameObject go in currentTargets){
                 if (go == SelectionManager.hoverTile) lastCursorTarget = go;
@@ -80,16 +86,38 @@ public class TargetingManager : MonoBehaviour {
             markers[i].SetActive(true);
             markers[i].transform.position = currentTargets[i].transform.position;
         }
+
+        for(int i = 0; i < currentRanges.Length || i < ranges.Count; i++) {
+            if (i >= currentRanges.Length) {
+                ranges[i].SetActive(false);
+                continue;
+            }
+
+            if (i >= ranges.Count) {
+                GameObject go = Instantiate(rangePrefab, Vector3.zero, Quaternion.identity) as GameObject;
+                go.transform.SetParent(transform);
+                ranges.Add(go);
+            }
+            ranges[i].SetActive(true);
+            ranges[i].transform.position = currentRanges[i].transform.position;
+        }
     }
 
     void deactivate(){
         isActive = false;
         deactivateCursors();
         deactivateMarkers();
+        deactivateRanges();
     }
 
     void deactivateMarkers(){
         foreach (GameObject go in markers){
+            go.SetActive(false);
+        }
+    }
+
+    void deactivateRanges() {
+        foreach (GameObject go in ranges) {
             go.SetActive(false);
         }
     }
@@ -104,13 +132,15 @@ public class TargetingManager : MonoBehaviour {
         return instance.isActive;
     }
 
-    public static void selectTarget(GameObject[] targets, Action<GameObject> callback, Func<TileInfo, GameObject[]> getCursor = null){
+    public static void selectTarget(GameObject[] targets, GameObject[] ranges, Action<GameObject> callback, Action cancelledCallback, Func<TileInfo, GameObject[]> getCursor = null){
         if (targets == null) return;
         instance.isActive = true;
         if (getCursor == null) getCursor = AoeChecks.dot;
         instance.getCursor = getCursor;
         instance.currentTargets = targets;
+        instance.currentRanges = ranges;
         instance.currentCallback = callback;
+        instance.currentCancelledCallback = cancelledCallback;
         instance.redraw();
     }
 

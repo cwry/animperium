@@ -11,6 +11,7 @@ public class UpgradeUnitAbility : MonoBehaviour {
     public int maxRange = 2;
 
     void Awake(){
+        abilityInfo.getRangeIndicator = getRangeIndicator;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.dot;
@@ -37,5 +38,9 @@ public class UpgradeUnitAbility : MonoBehaviour {
             return unit.prefabID == originPrefabID && unit.playerID == Data.playerID;
         });
         return inRange.Length == 0 ? null : inRange;
+    }
+
+    GameObject[] getRangeIndicator() {
+        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange);
     }
 }

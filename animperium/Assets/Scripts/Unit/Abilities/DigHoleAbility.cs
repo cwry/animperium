@@ -6,10 +6,17 @@ public class DigHoleAbility : MonoBehaviour {
     public AbilityInfo abilityInfo;
     public GameObject holeModel;
     public GameObject holeModelUngerground;
+    public bool selfCast = true;
     public int minRange = 1;
     public int maxRange = 1;
 
     void Awake() {
+        if (selfCast) {
+            minRange = 1;
+            maxRange = 1;
+        }
+        abilityInfo.selfCast = selfCast;
+        abilityInfo.getRangeIndicator = getRangeIndicator;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.dot;
@@ -46,11 +53,15 @@ public class DigHoleAbility : MonoBehaviour {
 
     GameObject[] checkRange() {
         Unit u = gameObject.GetComponent<Unit>();
-        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, (TileInfo ti) => {
+        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
             GridManager otherGrid = ti.grid.isMainGrid ? Data.subGrid : Data.mainGrid;
             TileInfo otherTile = otherGrid.gridData[ti.gridPosition.x, ti.gridPosition.y].GetComponent<TileInfo>();
             return ti.traversable && otherTile.traversable && !ti.isHole && !otherTile.isHole;
         });
         return inRange.Length == 0 ? null : inRange;
+    }
+
+    GameObject[] getRangeIndicator() {
+        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange);
     }
 }

@@ -10,9 +10,16 @@ public class HealAbility : MonoBehaviour {
     public float amt;
     public int minRange = 0;
     public int maxRange = 3;
+    public bool selfCast = true;
     public AoeType aoeType = AoeType.DOT;
 
     void Awake() {
+        if (selfCast) {
+            minRange = 1;
+            maxRange = 1;
+        }
+        abilityInfo.selfCast = selfCast;
+        abilityInfo.getRangeIndicator = getRangeIndicator;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.getAoeByType(aoeType, gameObject.GetComponent<Unit>());
@@ -59,6 +66,10 @@ public class HealAbility : MonoBehaviour {
         });
 
         return inRange.Length == 0 ? null : inRange;
+    }
+
+    GameObject[] getRangeIndicator() {
+        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange);
     }
 }
 

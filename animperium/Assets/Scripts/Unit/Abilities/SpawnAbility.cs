@@ -11,6 +11,7 @@ public class SpawnAbility : MonoBehaviour {
     public int maxRange = 2;
 
     void Awake(){
+        abilityInfo.getRangeIndicator = getRangeIndicator;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = prefab.GetComponent<Unit>().getFootprint;
@@ -41,5 +42,11 @@ public class SpawnAbility : MonoBehaviour {
         });
 
         return inRange.Length == 0 ? null : inRange;
+    }
+
+    GameObject[] getRangeIndicator(){
+        TileInfo tile = gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>();
+        if (!tile.grid.isMainGrid) return null;
+        return tile.listTree(minRange, maxRange);
     }
 }

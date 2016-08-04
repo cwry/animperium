@@ -16,6 +16,7 @@ public class AttackAbility : MonoBehaviour{
     public AoeType aoeType = AoeType.DOT;
 
     void Awake(){
+        abilityInfo.getRangeIndicator = getRangeIndicator;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.getAoeByType(aoeType, gameObject.GetComponent<Unit>());
@@ -64,5 +65,9 @@ public class AttackAbility : MonoBehaviour{
         });
 
         return inRange.Length == 0 ? null : inRange;
+    }
+
+    GameObject[] getRangeIndicator(){
+        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange);
     }
 }
