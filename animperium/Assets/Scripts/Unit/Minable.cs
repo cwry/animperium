@@ -9,7 +9,8 @@ public class Minable : MonoBehaviour {
     public float amt;
     public Resource type;
 
-    public void mine(float mineAmount) {
+    public void mine(float mineAmount, GameObject unit) {
+        if (Data.playerID != unit.GetComponent<Unit>().playerID) return;
         amt -= mineAmount;
         if (amt <= 0) mineAmount += amt;
         switch (type) {
