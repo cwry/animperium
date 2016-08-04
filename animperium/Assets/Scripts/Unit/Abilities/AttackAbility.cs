@@ -8,6 +8,8 @@ public class AttackAbility : MonoBehaviour{
     public AbilityInfo abilityInfo;
 
     public int strength;
+    public float mortalBlowPercentage = 0;
+    public float mortalBlowMultiplier = 1;
     public DamageType type = DamageType.MELEE;
     public int minRange = 1;
     public int maxRange = 1;
@@ -37,10 +39,13 @@ public class AttackAbility : MonoBehaviour{
             Unit unit = tInfo.unit.GetComponent<Unit>();
             if (unit.playerID != 0 && unit.playerID != gameObject.GetComponent<Unit>().playerID) targetUnits.Add(unit);
         }
-        Debug.Log(targetUnits.Count);
+        Unit thisUnit = gameObject.GetComponent<Unit>();
         foreach (Unit unit in targetUnits) {
-            unit.damage(strength, type);
+            float multiplier = thisUnit.attackMultiplier;
+            if(unit.getHPPercentage() <= mortalBlowPercentage) multiplier *= mortalBlowMultiplier;
+            unit.damage(multiplier, strength, type);
         }
+        thisUnit.attackMultiplier = 1;
     }
 
     GameObject[] checkRange(){
