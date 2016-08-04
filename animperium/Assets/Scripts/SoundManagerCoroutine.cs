@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
-public class SoundManager : MonoBehaviour {
+public class SoundManagerCoroutine: MonoBehaviour {
 
 
     public AudioClip musicMenu;

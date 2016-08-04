@@ -9,9 +9,6 @@ class ContextMenuControl : MonoBehaviour
 {
     int slot = 0;
     public GameObject[] slots;
-    public GameObject attackButton;
-    public GameObject moveButton;
-    public ContextMenuSpawn spawn;
     public GameObject descField;
     public GameObject radius;
     public int slotNumber = 10;
@@ -28,7 +25,6 @@ class ContextMenuControl : MonoBehaviour
     {
         GUIData.screenHeightRatio = (float) Screen.height / 1080f;
         distance = Vector3.Distance(middle.transform.position, radius.transform.position) * GUIData.screenHeightRatio;
-        spawn = GameObject.FindObjectOfType<ContextMenuSpawn>();
     }
     public void AddButton(AbilityInfo ability) {                                 // add button to existing points
         if (slot < buttonSlotPositions.Length){

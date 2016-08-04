@@ -9,7 +9,7 @@ public class ContextMenuPosition : MonoBehaviour {
     void Awake()
     {
         offset = new Vector3(0,offsetY, 0);
-        t_unit = GUIData.ContextUnit.transform;
+        t_unit = ContextMenuSpawn.currentUnit.transform;
     }
 	// Update is called once per frame
 	void Update () {

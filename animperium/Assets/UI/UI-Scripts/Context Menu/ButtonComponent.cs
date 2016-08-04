@@ -82,14 +82,15 @@ public  class DynamicButton : MonoBehaviour{
     
     public  void OnClick(PointerEventData data){
         eventSprite.SwitchToPressed();
+        GUIData.canSelectTarget = true;
+        GUIData.activeButton = gameObject;
         TargetingManager.selectTarget(fields.targets, (GameObject target) => {   //select tile and execute callback
             TileInfo tile = target.GetComponent<TileInfo>();
             fields.ability.execute(tile.gridPosition, tile.grid.isMainGrid, () =>{
-                    ContextMenuSpawn.SpawnContextMenu(GUIData.ContextUnit);
-                });
+                ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
+            });
         }, fields.ability.checkAoe);
-        GUIData.canSelectTarget = true;
-        GUIData.activeButton = gameObject;
+        ContextMenuSpawn.DestroyContextMenu();
     }
 
     public void OnPointerEnter(PointerEventData data){

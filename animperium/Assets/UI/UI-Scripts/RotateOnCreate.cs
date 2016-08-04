@@ -13,7 +13,7 @@ public class RotateOnCreate : MonoBehaviour {
 	void Update () {
 	    if(gameObject.transform.rotation.z < 0f)
         {
-            gameObject.transform.Rotate(new Vector3(0f,0f, 1f) * Time.deltaTime * speed);
+            gameObject.transform.Rotate(new Vector3(0f,0f, 1f) * Time.deltaTime * speed *10f);
         }
         else if(gameObject.transform.rotation.z > 0f)
         {

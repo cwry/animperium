@@ -98,7 +98,7 @@
     <Compile Include="Assets\Scripts\Networking\ServerMessages\UnitAbilityMessage.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
-    <Compile Include="Assets\Scripts\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\SoundManagerCoroutine.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\AoeChecks.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\AttackAbility.cs" />
@@ -136,8 +136,8 @@
     <Compile Include="Assets\UI\UI-Scripts\SetDescriptionStats.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetOnGui.cs" />
     <Compile Include="Assets\UI\UI-Scripts\ShowNameText.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\SoundManager.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SpawnButton.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\UISoundManager.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UnitInfoControl.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UnitInfoGui.cs" />
   </ItemGroup>

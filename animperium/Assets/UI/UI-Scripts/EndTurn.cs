@@ -27,6 +27,7 @@ public class EndTurn : MonoBehaviour {
     {
         if (Data.isActivePlayer())
         {
+            SoundManager.instance.PlaySound("confirm");
             ContextMenuSpawn.DestroyContextMenu();
             TurnManager.endTurn();
         }

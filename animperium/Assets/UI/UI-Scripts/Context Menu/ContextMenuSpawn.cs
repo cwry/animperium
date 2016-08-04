@@ -9,7 +9,7 @@ public class ContextMenuSpawn : MonoBehaviour {
     public  GameObject contextMenuPrefab;
     public static  GameObject contextMenu = null; 
     public  GameObject canvas;
-    public static GameObject unit = null;
+    public static GameObject currentUnit = null;
     public static GameObject m_prefab;
     public static GameObject m_canvas;
     // Use this for initialization
@@ -40,6 +40,7 @@ public class ContextMenuSpawn : MonoBehaviour {
             {
                 if (unit.GetComponent<Unit>().playerID == Data.playerID)
                 {
+                    currentUnit = unit;
                     List<AbilityInfo> abilities;
                     Unit m_unit = unit.GetComponent<Unit>();
                     Vector3 initPosition = unit.transform.position;
@@ -60,7 +61,6 @@ public class ContextMenuSpawn : MonoBehaviour {
     
 
     public static void DestroyContextMenu(){
-        unit = null;
         GUIData.pointerOnGUI = false;
         GUIData.hasContextMenu = false;
         Destroy(contextMenu);
