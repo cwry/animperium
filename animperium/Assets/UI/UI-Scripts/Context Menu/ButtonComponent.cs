@@ -11,6 +11,8 @@ public struct BC_fields
     public GameObject descFieldPrefab;
     public string abilityDescription;
     public bool isActivated;
+    public GameObject[] ranges;
+    public bool isCostValid;
 }
 public class ButtonComponent : MonoBehaviour
 {
@@ -27,6 +29,8 @@ public class ButtonComponent : MonoBehaviour
         fields.targets = abili.checkRange();
         fields.descFieldPrefab = descrField;
         fields.isActivated = true;
+        if(!abili.selfCast) fields.ranges = abili.getRangeIndicator();
+        fields.isCostValid = abili.checkCost();
         AddListener();
     }
 
@@ -34,13 +38,10 @@ public class ButtonComponent : MonoBehaviour
     {
         button = gameObject.AddComponent<DynamicButton>();
         trigger = GetComponent<EventTrigger>();
-        if (fields.targets != null)
-        {
-            EventTrigger.Entry entryClick = new EventTrigger.Entry();
-            entryClick.eventID = EventTriggerType.PointerClick;
-            entryClick.callback.AddListener((data) => { button.OnClick((PointerEventData)data); });
-            trigger.triggers.Add(entryClick);
-        }
+        EventTrigger.Entry entryClick = new EventTrigger.Entry();
+        entryClick.eventID = EventTriggerType.PointerClick;
+        entryClick.callback.AddListener((data) => { button.OnClick((PointerEventData)data); });
+        trigger.triggers.Add(entryClick);
         EventTrigger.Entry entryEnter = new EventTrigger.Entry();
         entryEnter.eventID = EventTriggerType.PointerEnter;
         entryEnter.callback.AddListener((data) => { button.OnPointerEnter((PointerEventData)data); });
@@ -50,7 +51,7 @@ public class ButtonComponent : MonoBehaviour
         entryExit.callback.AddListener((data) => { button.OnPointerExit((PointerEventData)data); });
         trigger.triggers.Add(entryExit);
         
-        if(fields.targets == null)
+        if(!fields.isCostValid || (!fields.ability.selfCast && fields.ranges == null)|| (fields.ability.selfCast && fields.targets == null)) 
         {
             EventSprite e = GetComponent<EventSprite>();
             e.normal = e.deactivated;
@@ -80,18 +81,32 @@ public  class DynamicButton : MonoBehaviour{
         txt = fields.descFieldPrefab.GetComponentInChildren<Text>();
     }
     
-    public  void OnClick(PointerEventData data){
+    public void OnClick(PointerEventData data){
         eventSprite.SwitchToPressed();
         GUIData.canSelectTarget = true;
         GUIData.activeButton = gameObject;
-        TargetingManager.selectTarget(fields.targets, (GameObject target) => {   //select tile and execute callback
-            TileInfo tile = target.GetComponent<TileInfo>();
-            fields.ability.execute(tile.gridPosition, tile.grid.isMainGrid, () =>{
+        if (fields.ability.selfCast){
+            TileInfo ti = fields.ability.owner.GetComponent<Unit>().currentTile.GetComponent<TileInfo>();
+            fields.ability.execute(ti.gridPosition, ti.grid.isMainGrid, () =>
+            {
                 ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
             });
-        }, fields.ability.checkAoe);
+        }
+        else{
+            TargetingManager.selectTarget(fields.targets, fields.ranges, (GameObject target) => {   //select tile and execute callback
+                TileInfo tile = target.GetComponent<TileInfo>();
+                fields.ability.execute(tile.gridPosition, tile.grid.isMainGrid, () =>{
+                    ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
+                });
+                },
+                () => {
+                    ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
+                },
+                fields.ability.checkAoe);
+        }
+        
         ContextMenuSpawn.DestroyContextMenu();
-    }
+   }
 
     public void OnPointerEnter(PointerEventData data){
         eventSprite.SwitchToHighlighted();

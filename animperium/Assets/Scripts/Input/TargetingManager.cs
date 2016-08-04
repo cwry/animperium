@@ -133,12 +133,13 @@ public class TargetingManager : MonoBehaviour {
     }
 
     public static void selectTarget(GameObject[] targets, GameObject[] ranges, Action<GameObject> callback, Action cancelledCallback, Func<TileInfo, GameObject[]> getCursor = null){
-        if (targets == null) return;
         instance.isActive = true;
         if (getCursor == null) getCursor = AoeChecks.dot;
         instance.getCursor = getCursor;
         instance.currentTargets = targets;
+        if (targets == null) instance.currentTargets = new GameObject[0];
         instance.currentRanges = ranges;
+        if (ranges == null) instance.currentRanges = new GameObject[0];
         instance.currentCallback = callback;
         instance.currentCancelledCallback = cancelledCallback;
         instance.redraw();

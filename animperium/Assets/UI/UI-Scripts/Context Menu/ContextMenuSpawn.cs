@@ -46,7 +46,6 @@ public class ContextMenuSpawn : MonoBehaviour {
                     Vector3 initPosition = unit.transform.position;
                     contextMenu = Instantiate(m_prefab, Camera.main.WorldToScreenPoint(initPosition), Quaternion.identity) as GameObject;
                     contextMenu.transform.SetParent(m_canvas.transform, false);
-                    //contextMenu.GetComponent<ContextMenuPosition>().Init(unit);
                     abilities = m_unit.abilities;
                     contextMenu.GetComponent<ContextMenuControl>().SetSlotNumber(abilities.Count);
                     foreach (AbilityInfo ability in abilities)
