@@ -11,6 +11,8 @@ public class TargetingManager : MonoBehaviour {
     public GameObject markerPrefab;
     public GameObject cursorPrefab;
     public GameObject rangePrefab;
+    public Material activeCursorMaterial;
+    public Material inactiveCursorMaterial;
     List<GameObject> markers = new List<GameObject>();
     List<GameObject> cursors = new List<GameObject>();
     List<GameObject> ranges = new List<GameObject>();
@@ -40,11 +42,24 @@ public class TargetingManager : MonoBehaviour {
             deactivate();
             currentCancelledCallback();
         }else if (lastCursorTarget != SelectionManager.hoverTile){
+            bool isInCurrTargets = false;
             foreach (GameObject go in currentTargets){
-                if (go == SelectionManager.hoverTile) lastCursorTarget = go;
+                if (go == SelectionManager.hoverTile) {
+                    lastCursorTarget = go;
+                    isInCurrTargets = true;
+                    break;
+                }
+            }
+            if (!isInCurrTargets) {
+                foreach (GameObject go in currentRanges) {
+                    if (go == SelectionManager.hoverTile) {
+                        lastCursorTarget = go;
+                        break;
+                    }
+                }
             }
             if(lastCursorTarget == SelectionManager.hoverTile){
-                redrawCursor(lastCursorTarget);
+                redrawCursor(lastCursorTarget, isInCurrTargets ? activeCursorMaterial : inactiveCursorMaterial);
             }else{
                 deactivateCursors();
                 lastCursorTarget = SelectionManager.hoverTile;
@@ -52,7 +67,7 @@ public class TargetingManager : MonoBehaviour {
         }
     }
 
-    void redrawCursor(GameObject tile){
+    void redrawCursor(GameObject tile, Material material){
         GameObject[] currCursor = getCursor(tile.GetComponent<TileInfo>());
         for (int i = 0; i < currCursor.Length || i < cursors.Count; i++){
             if (i >= currCursor.Length){
@@ -68,6 +83,7 @@ public class TargetingManager : MonoBehaviour {
 
             cursors[i].SetActive(true);
             cursors[i].transform.position = currCursor[i].transform.position;
+            cursors[i].GetComponentInChildren<Renderer>().material = material;
         }
     }
 

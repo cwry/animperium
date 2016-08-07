@@ -8,6 +8,8 @@ public class SpawnManager : MonoBehaviour {
     public GameObject[] spawnablePrefabs;
     static Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
 
+    static Dictionary<int, Action> callbacks = new Dictionary<int, Action>();
+
 
     void Awake () {
         foreach(GameObject nf in spawnablePrefabs){
@@ -39,10 +41,12 @@ public class SpawnManager : MonoBehaviour {
             u.unitID = msg.unitID;
             u.attach(ti);
             Data.units.Add(msg.unitID, obj);
+            if (callbacks[msg.actionID] != null) callbacks[msg.actionID]();
+            callbacks[msg.actionID] = null;
         });
     }
 
-    public static void spawnUnit(GridManager grid, Vec2i pos, string prefabID){
+    public static void spawnUnit(GridManager grid, Vec2i pos, string prefabID, Action callback = null){
         ServerMessage.SpawnUnitMessage msg = new ServerMessage.SpawnUnitMessage();
         msg.actionID = ActionQueue.getInstance().actionID++;
         msg.isMainGrid = grid.isMainGrid;
@@ -50,6 +54,7 @@ public class SpawnManager : MonoBehaviour {
         msg.tileY = pos.y;
         msg.unitType = prefabID;
         msg.playerID = Data.playerID;
+        callbacks.Add(msg.actionID, callback);
 
         NetworkData.client.netClient.Send((short)ServerMessage.Types.SPAWN_UNIT, msg);
     }

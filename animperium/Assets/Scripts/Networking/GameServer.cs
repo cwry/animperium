@@ -20,8 +20,8 @@ public class GameServer{
     }
 
     void onTurnEnded(NetworkMessage netMsg){
-        UnityEngine.Networking.NetworkSystem.EmptyMessage msg = new UnityEngine.Networking.NetworkSystem.EmptyMessage();
-        NetworkServer.SendToAll(netMsg.msgType, msg);
+        ServerMessage.TurnEndedMessage msg = netMsg.ReadMessage<ServerMessage.TurnEndedMessage>();
+        NetworkServer.SendToClient(NetworkServer.connections.IndexOf(netMsg.conn) == 1 ? 2 : 1, netMsg.msgType, msg);
     }
 
     void onUnitAbility(NetworkMessage netMsg){

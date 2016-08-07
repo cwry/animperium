@@ -94,12 +94,14 @@
     <Compile Include="Assets\Scripts\Networking\ServerMessages\InitGameMessage.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\ServerMessageTypes.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\SpawnUnitMessage.cs" />
+    <Compile Include="Assets\Scripts\Networking\ServerMessages\TurnEndedMessage.cs" />
     <Compile Include="Assets\Scripts\Networking\ServerMessages\UnitAbilityMessage.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
     <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\AoeChecks.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\AttackAbility.cs" />
+    <Compile Include="Assets\Scripts\Unit\Abilities\DestroyUnitAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\DigHoleAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\HealAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\MineAbility.cs" />

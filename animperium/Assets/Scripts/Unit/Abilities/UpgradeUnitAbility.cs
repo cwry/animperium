@@ -16,7 +16,9 @@ public class UpgradeUnitAbility : MonoBehaviour {
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.dot;
         abilityInfo.execute = (Vec2i target, bool isMainGrid, Action callback) => {
-            AbilityManager.useAbility(abilityInfo, target, isMainGrid, callback);
+            AbilityManager.useAbility(abilityInfo, target, isMainGrid, () => {
+                SpawnManager.spawnUnit(isMainGrid ? Data.mainGrid : Data.subGrid, target, prefab.GetComponent<Unit>().prefabID, callback);
+            });
         };
         abilityInfo.onExecution = executeAbility;
         abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
@@ -26,8 +28,6 @@ public class UpgradeUnitAbility : MonoBehaviour {
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         GameObject unitObj = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>().unit;
         Destroy(unitObj);
-        if (!Data.isActivePlayer()) return;
-        SpawnManager.spawnUnit(grid, new Vec2i(msg.targetX, msg.targetY), prefab.GetComponent<Unit>().prefabID);
     }
 
     GameObject[] checkRange(){
