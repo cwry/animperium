@@ -49,6 +49,7 @@ public class Unit : MonoBehaviour {
     public float meleeResistBuff = 0;
     [HideInInspector]
     public float rangedResistBuff = 0;
+    [HideInInspector]
     private int resistBuffEndTurn;
 
     [HideInInspector]
@@ -199,10 +200,10 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    void buffResistance(float melee, float ranged, float magic) {
-        meleeResistBuff = melee;
-        rangedResistBuff = ranged;
-        magicResistBuff = magic;
+    public void buffResistance(float melee, float ranged, float magic) {
+        if(meleeResistBuff < melee) meleeResistBuff = melee;
+        if(rangedResistBuff < ranged) rangedResistBuff = ranged;
+        if(magicResistBuff < magic) magicResistBuff = magic;
         resistBuffEndTurn = TurnManager.turnID + 2;
     }
 }
