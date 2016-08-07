@@ -15,7 +15,14 @@ public enum UnitFootprintType{
     BIGCIRCLE
 }
 
+public enum UnitType{
+    UNDEFINED,
+    UNIT,
+    BUILDING
+}
+
 public class Unit : MonoBehaviour {
+    public UnitType type;
     public string prefabID;
     public Sprite icon;
 
