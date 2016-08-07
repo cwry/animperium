@@ -10,8 +10,9 @@ public class HealAbility : MonoBehaviour {
     public float amt;
     public int minRange = 0;
     public int maxRange = 3;
-    public bool selfCast = true;
+    public bool selfCast = false;
     public AoeType aoeType = AoeType.DOT;
+    public UnitType targetType = UnitType.UNDEFINED;
 
     void Awake() {
         if (selfCast) {
@@ -41,7 +42,7 @@ public class HealAbility : MonoBehaviour {
                 continue;
             }
             Unit unit = tInfo.unit.GetComponent<Unit>();
-            if (unit.playerID == Data.playerID) targetUnits.Add(unit);
+            if (unit.playerID == Data.playerID && (targetType == UnitType.UNDEFINED || unit.type == targetType)) targetUnits.Add(unit);
         }
 
         foreach (Unit unit in targetUnits) {
@@ -60,7 +61,7 @@ public class HealAbility : MonoBehaviour {
                     continue;
                 }
                 Unit unit = tInfo.unit.GetComponent<Unit>();
-                if (unit.playerID == Data.playerID) return true;
+                if(unit.playerID == Data.playerID && (targetType == UnitType.UNDEFINED || unit.type == targetType)) return true;
             }
             return false;
         });
