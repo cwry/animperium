@@ -36,12 +36,23 @@ public class ButtonComponent : MonoBehaviour
 
     void AddListener()
     {
+        if (!fields.isCostValid || (!fields.ability.selfCast && fields.ranges == null)|| (fields.ability.selfCast && fields.targets == null)) 
+        {
+            EventSprite e = GetComponent<EventSprite>();
+            e.normal = e.deactivated;
+            e.highlighted = e.deactivated;
+            e.pressed = e.deactivated;
+            GetComponent<Image>().sprite = e.deactivated;
+            fields.isActivated = false;
+        }
         button = gameObject.AddComponent<DynamicButton>();
         trigger = GetComponent<EventTrigger>();
-        EventTrigger.Entry entryClick = new EventTrigger.Entry();
-        entryClick.eventID = EventTriggerType.PointerClick;
-        entryClick.callback.AddListener((data) => { button.OnClick((PointerEventData)data); });
-        trigger.triggers.Add(entryClick);
+        if (fields.isActivated) {
+            EventTrigger.Entry entryClick = new EventTrigger.Entry();
+            entryClick.eventID = EventTriggerType.PointerClick;
+            entryClick.callback.AddListener((data) => { button.OnClick((PointerEventData)data); });
+            trigger.triggers.Add(entryClick);
+        }
         EventTrigger.Entry entryEnter = new EventTrigger.Entry();
         entryEnter.eventID = EventTriggerType.PointerEnter;
         entryEnter.callback.AddListener((data) => { button.OnPointerEnter((PointerEventData)data); });
@@ -51,15 +62,7 @@ public class ButtonComponent : MonoBehaviour
         entryExit.callback.AddListener((data) => { button.OnPointerExit((PointerEventData)data); });
         trigger.triggers.Add(entryExit);
         
-        if(!fields.isCostValid || (!fields.ability.selfCast && fields.ranges == null)|| (fields.ability.selfCast && fields.targets == null)) 
-        {
-            EventSprite e = GetComponent<EventSprite>();
-            e.normal = e.deactivated;
-            e.highlighted = e.deactivated;
-            e.pressed = e.deactivated;
-            GetComponent<Image>().sprite = e.deactivated;
-            fields.isActivated = false;
-        }
+        
     }
 
     
@@ -80,34 +83,31 @@ public  class DynamicButton : MonoBehaviour{
         fields = GetComponent<ButtonComponent>().fields;
         txt = fields.descFieldPrefab.GetComponentInChildren<Text>();
     }
-    
-    public void OnClick(PointerEventData data){
-        eventSprite.SwitchToPressed();
-        GUIData.canSelectTarget = true;
-        GUIData.activeButton = gameObject;
-        if (fields.ability.selfCast){
-            TileInfo ti = fields.ability.owner.GetComponent<Unit>().currentTile.GetComponent<TileInfo>();
-            fields.ability.execute(ti.gridPosition, ti.grid.isMainGrid, () =>
-            {
-                ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
-            });
-        }
-        else{
-            TargetingManager.selectTarget(fields.targets, fields.ranges, (GameObject target) => {   //select tile and execute callback
-                TileInfo tile = target.GetComponent<TileInfo>();
-                fields.ability.execute(tile.gridPosition, tile.grid.isMainGrid, () =>{
+
+    public void OnClick(PointerEventData data) {
+            eventSprite.SwitchToPressed();
+            GUIData.canSelectTarget = true;
+            GUIData.activeButton = gameObject;
+            if (fields.ability.selfCast) {
+                TileInfo ti = fields.ability.owner.GetComponent<Unit>().currentTile.GetComponent<TileInfo>();
+                fields.ability.execute(ti.gridPosition, ti.grid.isMainGrid, () => {
                     ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
                 });
+            }
+            else {
+                TargetingManager.selectTarget(fields.targets, fields.ranges, (GameObject target) => {   //select tile and execute callback
+                    TileInfo tile = target.GetComponent<TileInfo>();
+                    fields.ability.execute(tile.gridPosition, tile.grid.isMainGrid, () => {
+                        ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
+                    });
                 },
-                () => {
-                    ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
-                },
-                fields.ability.checkAoe);
-        }
-        
-        ContextMenuSpawn.DestroyContextMenu();
-   }
-
+                    () => {
+                        ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
+                    },
+                    fields.ability.checkAoe);
+            }
+            ContextMenuSpawn.DestroyContextMenu();
+    }
     public void OnPointerEnter(PointerEventData data){
         eventSprite.SwitchToHighlighted();
         setOnGui.SetOnGUITrue();

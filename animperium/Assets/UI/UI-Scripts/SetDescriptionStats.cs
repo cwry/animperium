@@ -45,7 +45,7 @@ public class SetDescriptionStats : MonoBehaviour {
         MovementAbility movementAbility = currentUnit.GetComponent<MovementAbility>();
         text.text = String.Format(
             "{0}{1}{2}{3}{4}"
-            , (movementAbility != null) ? mP : ""
+            , mP 
             , hP
             , magicR
             , meleeR

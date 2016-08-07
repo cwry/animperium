@@ -16,11 +16,13 @@ public class SoundManager : MonoBehaviour
     public NamedAudioClip[] namedClips;
     public static SoundManager instance;
     private Dictionary<string, AudioClip> soundBible = new Dictionary<string, AudioClip>();
+    private Dictionary<string, AudioSource> soundsPlaying = new Dictionary<string, AudioSource>();
 
     void Awake()
     {
         instance = this;
         DontDestroyOnLoad(gameObject);
+        InitSoundBible();
     }
     // Use this for initialization
     void Start()
@@ -31,31 +33,28 @@ public class SoundManager : MonoBehaviour
     public void PlaySound(string sound, Action callback = null)
     {
         AudioSource a = gameObject.AddComponent<AudioSource>();
-
+        a.volume = 1f;
         if (soundBible.ContainsKey(sound))
         {
             a.clip = soundBible[sound];
             a.Play();
+            soundsPlaying.Add(sound, a);
         }
         
-        StartCoroutine(OnClipEnding(a,callback));
+        StartCoroutine(OnClipEnding(a,sound,callback));
     }
 
-    IEnumerator OnClipEnding(AudioSource a, Action callback)
+    public void StopPlayingSound(string sound) {
+        soundsPlaying[sound].Stop();
+    }
+    IEnumerator OnClipEnding(AudioSource a, string name, Action callback)
     {
         while (a.isPlaying){
             yield return 0;
         }
+        soundsPlaying.Remove(name);
         Destroy(a);
         if (callback != null) callback();
-    }
-
-    public void PlaySoundClip(AudioClip c, Action callback = null)
-    {
-        AudioSource a = gameObject.AddComponent<AudioSource>();
-        a.clip = c;
-        a.Play();
-        StartCoroutine(OnClipEnding(a, callback));
     }
 
     void InitSoundBible()
