@@ -12,8 +12,8 @@ public class DigHoleAbility : MonoBehaviour {
 
     void Awake() {
         if (selfCast) {
-            minRange = 1;
-            maxRange = 1;
+            minRange = 0;
+            maxRange = 0;
         }
         abilityInfo.selfCast = selfCast;
         abilityInfo.getRangeIndicator = getRangeIndicator;

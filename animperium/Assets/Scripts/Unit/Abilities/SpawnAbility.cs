@@ -16,14 +16,16 @@ public class SpawnAbility : MonoBehaviour {
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = prefab.GetComponent<Unit>().getFootprint;
         abilityInfo.execute = (Vec2i target, bool isMainGrid, Action callback) => {
-            AbilityManager.useAbility(abilityInfo, target, isMainGrid, callback);
+            AbilityManager.useAbility(abilityInfo, target, isMainGrid, () => {
+                SpawnManager.spawnUnit(isMainGrid ? Data.mainGrid : Data.subGrid, target, prefab.GetComponent<Unit>().prefabID, callback);
+            });
         };
         abilityInfo.onExecution = executeAbility;
         abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
     }
 
     void executeAbility(ServerMessage.UnitAbilityMessage msg){
-        SpawnManager.spawnUnit(msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid, new Vec2i(msg.targetX, msg.targetY), prefab.GetComponent<Unit>().prefabID);
+       //nothing to do on both clients
     }
 
     GameObject[] checkRange(){

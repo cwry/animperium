@@ -135,7 +135,7 @@ public class TileInfo : MonoBehaviour {
         current.Add(gameObject);
         visited.Add(gameObject);
         int currDepth = 1;
-        if (minRange == 0) result.Add(gameObject);
+        if (minRange == 0 && shouldInclude(gameObject.GetComponent<TileInfo>())) result.Add(gameObject);
         while (currDepth <= maxRange){
             foreach(GameObject go in current){
                 GameObject[] adj = go.GetComponent<TileInfo>().getAdjacent();
