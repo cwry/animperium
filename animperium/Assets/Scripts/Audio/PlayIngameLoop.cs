@@ -3,10 +3,14 @@ using System.Collections;
 
 public class PlayIngameLoop : MonoBehaviour {
 
-	void Awake() {
-        SoundManager manager = SoundManager.instance;
+    SoundManager manager;
+    void Awake() {
+        manager = SoundManager.instance;
         manager.StopPlayingSound("mainmenutheme");
         manager.PlaySound("ingameloop");
-        manager.PlaySound("bigfight",0.2f);
+    }
+
+    void Update() {
+        if (!manager.isPlaying("ingameloop")) manager.PlaySound("ingameloop", SoundManager.musicVolume);
     }
 }

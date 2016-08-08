@@ -58,14 +58,14 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\ActionQueueManager.cs" />
     <Compile Include="Assets\Scripts\Audio\PlayIngameLoop.cs" />
     <Compile Include="Assets\Scripts\Audio\PlayVillageSound.cs" />
+    <Compile Include="Assets\Scripts\Audio\SoundManager.cs" />
     <Compile Include="Assets\Scripts\AutoDestroyParticle.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFocus.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraMoveOnRightclick.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Assets\UI\UI-Scripts\Context Menu\EventSprite.cs" />
     <Compile Include="Assets\UI\UI-Scripts\DisplayRound.cs" />
     <Compile Include="Assets\UI\UI-Scripts\EndTurn.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\EscapeMenu.cs" />
     <Compile Include="Assets\UI\UI-Scripts\FadeUI.cs" />
     <Compile Include="Assets\UI\UI-Scripts\GUIData.cs" />
     <Compile Include="Assets\UI\UI-Scripts\HealthBar.cs" />
@@ -138,9 +140,9 @@
     <Compile Include="Assets\UI\UI-Scripts\ResourcesText.cs" />
     <Compile Include="Assets\UI\UI-Scripts\RotateOnCreate.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetDescriptionStats.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\SetMusicVolume.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetOnGui.cs" />
     <Compile Include="Assets\UI\UI-Scripts\ShowNameText.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\SoundManager.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SpawnButton.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UnitInfoControl.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UnitInfoGui.cs" />

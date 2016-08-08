@@ -17,27 +17,29 @@ public class PlayVillageSound : MonoBehaviour {
         environment = AoeChecks.getCircle(circleSize, 3)(gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>());
         requestTime = Time.time + loopFrequenz;
         soundManager = SoundManager.instance;
-        Debug.Log(soundManager.soundBible.Count);
     }
 	
     void Update() {
         if (Time.time >= requestTime) {
             if (gameObject.GetComponent<Unit>().playerID == 1 && isUnderAttack(countEnemys())) {
                 if (!soundManager.isPlaying("villagedefense")) {
-                    soundManager.StopPlayingSound("ingameloop");
-                    soundManager.PlaySound("villagedefense");
+                    soundManager.SetVolume("ingameloop",0f);
+                    soundManager.PlaySound("villagedefense", SoundManager.musicVolume
+                        , () => {
+                            soundManager.SetVolume("ingameloop", 1f);
+                            Update();
+                        });
                 }
             }
             else if (gameObject.GetComponent<Unit>().playerID == 2 && isUnderAttack(countMyAttackers())) {
                 if (!soundManager.isPlaying("villageattack")) {
-                    soundManager.StopPlayingSound("ingameloop");
-                    soundManager.PlaySound("villageattack");
+                    soundManager.SetVolume("ingameloop",0f);
+                    soundManager.PlaySound("villageattack", SoundManager.musicVolume
+                        ,() => {
+                            soundManager.SetVolume("ingameloop", SoundManager.musicVolume);
+                            Update();
+                        });
                 }
-            }
-            else {
-                if (soundManager.isPlaying("villageattack")) soundManager.StopPlayingSound("villageattack");
-                if (soundManager.isPlaying("villagedefense")) soundManager.StopPlayingSound("villagedefense");
-                if (!soundManager.isPlaying("ingameloop")) soundManager.PlaySound("ingameloop");
             }
             requestTime = Time.time + loopFrequenz;
         }
