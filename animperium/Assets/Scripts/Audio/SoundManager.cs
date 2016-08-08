@@ -17,6 +17,7 @@ public class SoundManager : MonoBehaviour
     public NamedAudioClip[] namedClips;
     public static SoundManager instance;
     public static float musicVolume = 1f;
+    public static float effectVolume = 1f;
     public Dictionary<string, AudioClip> soundBible = new Dictionary<string, AudioClip>();
     private Dictionary<string, AudioSource> soundsPlaying = new Dictionary<string, AudioSource>();
 
@@ -79,6 +80,15 @@ public class SoundManager : MonoBehaviour
         foreach(NamedAudioClip n in namedClips) {
             if (n.isMusic) {
                 SetVolume(n.name, musicVolume);
+            }
+        }
+    }
+
+    public void SetSoundEffectVolume(float volume) {
+        effectVolume = volume;
+        foreach (NamedAudioClip n in namedClips) {
+            if (!n.isMusic) {
+                SetVolume(n.name, effectVolume);
             }
         }
     }

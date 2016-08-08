@@ -137,11 +137,13 @@
     <Compile Include="Assets\UI\UI-Scripts\LookAtCamera.cs" />
     <Compile Include="Assets\UI\UI-Scripts\New UI\UISpawn.cs" />
     <Compile Include="Assets\UI\UI-Scripts\PlayerTimer.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\QuitButton.cs" />
     <Compile Include="Assets\UI\UI-Scripts\ResourcesText.cs" />
     <Compile Include="Assets\UI\UI-Scripts\RotateOnCreate.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetDescriptionStats.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetMusicVolume.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetOnGui.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\SetSoundEffectVolume.cs" />
     <Compile Include="Assets\UI\UI-Scripts\ShowNameText.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SpawnButton.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UnitInfoControl.cs" />
