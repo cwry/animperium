@@ -10,6 +10,7 @@ public class AttackAbility : MonoBehaviour{
     public int strength;
     public float mortalBlowPercentage = 0;
     public float mortalBlowMultiplier = 1;
+    public float demolishMultiplier = 1;
     public DamageType type = DamageType.MELEE;
     public int minRange = 1;
     public int maxRange = 1;
@@ -44,6 +45,7 @@ public class AttackAbility : MonoBehaviour{
         foreach (Unit unit in targetUnits) {
             float multiplier = thisUnit.attackMultiplier;
             if(unit.getHPPercentage() <= mortalBlowPercentage) multiplier *= mortalBlowMultiplier;
+            if(unit.type == UnitType.BUILDING) multiplier *= demolishMultiplier;
             unit.damage(multiplier, strength, type);
         }
         thisUnit.attackMultiplier = 1;

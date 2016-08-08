@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
 
-public class HealAbility : MonoBehaviour {
+public class OffensiveBuffAbility : MonoBehaviour {
     public AbilityInfo abilityInfo;
-
-    public float amt;
+    public float multiplier = 1;
     public int minRange = 0;
     public int maxRange = 3;
-    public float maxMotivationMultiplier = 1f;
     public bool selfCast = false;
     public AoeType aoeType = AoeType.DOT;
     public UnitType targetType = UnitType.UNDEFINED;
@@ -47,14 +45,7 @@ public class HealAbility : MonoBehaviour {
         }
 
         foreach (Unit unit in targetUnits) {
-            unit.hitPoints += amt;
-            if (unit.hitPoints > unit.maxHitPoints) {
-                float overheal = unit.hitPoints - unit.maxHitPoints;
-                float motivation = overheal / amt * (maxMotivationMultiplier - 1) + 1;
-                if (unit.attackMultiplier < motivation) unit.attackMultiplier = motivation; 
-                unit.hitPoints = unit.maxHitPoints;
-            }
-
+            if (unit.attackMultiplier < multiplier) unit.attackMultiplier = multiplier;
         }
     }
 
@@ -68,7 +59,7 @@ public class HealAbility : MonoBehaviour {
                     continue;
                 }
                 Unit unit = tInfo.unit.GetComponent<Unit>();
-                if(unit.playerID == Data.playerID && (targetType == UnitType.UNDEFINED || unit.type == targetType)) return true;
+                if (unit.playerID == Data.playerID && (targetType == UnitType.UNDEFINED || unit.type == targetType)) return true;
             }
             return false;
         });
