@@ -73,6 +73,8 @@
     <Compile Include="Assets\Map\MapGeneratorInit.cs" />
     <Compile Include="Assets\Scripts\ActionQueue.cs" />
     <Compile Include="Assets\Scripts\ActionQueueManager.cs" />
+    <Compile Include="Assets\Scripts\Audio\PlayIngameLoop.cs" />
+    <Compile Include="Assets\Scripts\Audio\PlayVillageSound.cs" />
     <Compile Include="Assets\Scripts\AutoDestroyParticle.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFocus.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraMoveOnRightclick.cs" />

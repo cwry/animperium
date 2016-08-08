@@ -15,7 +15,7 @@ public class SoundManager : MonoBehaviour
 
     public NamedAudioClip[] namedClips;
     public static SoundManager instance;
-    private Dictionary<string, AudioClip> soundBible = new Dictionary<string, AudioClip>();
+    public Dictionary<string, AudioClip> soundBible = new Dictionary<string, AudioClip>();
     private Dictionary<string, AudioSource> soundsPlaying = new Dictionary<string, AudioSource>();
 
     void Awake()
@@ -25,30 +25,38 @@ public class SoundManager : MonoBehaviour
         InitSoundBible();
     }
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
         PlaySound("mainmenutheme");
     }
-
-    public void PlaySound(string sound, Action callback = null)
-    {
+    
+    public void PlaySound(string sound, float volume = 1f, Action callback = null) {
         AudioSource a = gameObject.AddComponent<AudioSource>();
-        a.volume = 1f;
+        Debug.Log(sound + "-" + soundBible.ContainsKey(sound));
         if (soundBible.ContainsKey(sound))
         {
             a.clip = soundBible[sound];
             a.Play();
+            a.volume = volume;
             soundsPlaying.Add(sound, a);
         }
         
         StartCoroutine(OnClipEnding(a,sound,callback));
     }
 
-    public void StopPlayingSound(string sound) {
-        soundsPlaying[sound].Stop();
+    public bool isPlaying(string sound) {
+        if (soundsPlaying.ContainsKey(sound)) return true;
+        else return false;
     }
-    IEnumerator OnClipEnding(AudioSource a, string name, Action callback)
-    {
+    public void StopPlayingSound(string sound) {
+        if (soundsPlaying.ContainsKey(sound)) soundsPlaying[sound].Stop();
+    }
+
+    public void SetVolume(string sound, float volume) {
+        if (soundsPlaying.ContainsKey(sound)) {
+            soundsPlaying[sound].volume = volume;
+        }
+    }
+    IEnumerator OnClipEnding(AudioSource a, string name, Action callback) {
         while (a.isPlaying){
             yield return 0;
         }
@@ -56,11 +64,9 @@ public class SoundManager : MonoBehaviour
         Destroy(a);
         if (callback != null) callback();
     }
-
-    void InitSoundBible()
-    {
-        foreach(NamedAudioClip n in namedClips)
-        {
+   
+    void InitSoundBible() {
+        foreach(NamedAudioClip n in namedClips) {
             soundBible.Add(n.name, n.clip);
         }
     }
