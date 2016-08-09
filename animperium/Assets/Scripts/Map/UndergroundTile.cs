@@ -100,10 +100,9 @@ public class UndergroundTile : MonoBehaviour {
         if(ti.unit != null) {
             Unit u = ti.unit.GetComponent<Unit>();
             if (u.playerID != Data.playerID) {
-                if (inSight) {
+                if (inSight && state == UndergroundTileState.REVEALED) {
                     u.reveal();
-                }
-                else {
+                }else {
                     u.hide();
                 }
             }

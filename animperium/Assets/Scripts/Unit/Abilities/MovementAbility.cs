@@ -38,21 +38,22 @@ public class MovementAbility : MonoBehaviour {
         movementPoints = maxMovementPoints;
     }
 
-    bool checkHexTraversabilityAndVisibility(TileInfo ti){
+    bool checkHexTraversability(TileInfo ti) {
+        UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
+        bool underground = ut == null || (ut.state == UndergroundTileState.REVEALED);
+        return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject);
+    }
+
+    bool checkHexTraversabilityAndVisibility(TileInfo ti) {
         UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
         bool underground = ut == null || (ut.state == UndergroundTileState.REVEALED && ut.isInSight());
         return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject);
     }
 
-    bool checkHexTraversability(TileInfo ti) {
-        UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
-        bool underground = ut == null || ut.state == UndergroundTileState.REVEALED;
-        return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject);
-    }
-
     void executeAbility(ServerMessage.UnitAbilityMessage msg){
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
-        Vec2i currentPos = gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().gridPosition;
+        Unit u = gameObject.GetComponent<Unit>();
+        Vec2i currentPos = u.currentTile.GetComponent<TileInfo>().gridPosition;
         Vec2i[] path = PathFinding.findPath(grid, currentPos.x, currentPos.y, msg.targetX, msg.targetY, movementPoints, (Vec2i hx) => {
             TileInfo ti = grid.gridData[hx.x, hx.y].GetComponent<TileInfo>();
             return checkHexTraversability(ti);
@@ -69,15 +70,14 @@ public class MovementAbility : MonoBehaviour {
         return inRange.Length == 0 ? null : inRange;
     }
 
+    bool checkRangeTraversability(TileInfo ti) {
+        UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
+        return ti.traversable && (ti.unit == null || ti.unit == gameObject) && (ut == null || !ut.isInSight() || ut.state == UndergroundTileState.REVEALED);
+    }
+
     GameObject[] getRangeIndicator(){
         if (movementPoints == 0) return null;
-        GameObject[] inRange = gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(1, movementPoints,
-        (TileInfo ti) => {
-            return ti.traversable;
-        },
-        (TileInfo ti) => {
-            return ti.traversable;
-        });
+        GameObject[] inRange = gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, checkHexTraversabilityAndVisibility, checkHexTraversabilityAndVisibility);
         return inRange.Length == 0 ? null : inRange;
     }
 
