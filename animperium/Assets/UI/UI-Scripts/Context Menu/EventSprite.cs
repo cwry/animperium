@@ -3,10 +3,10 @@ using UnityEngine.UI;
 using System.Collections;
 public class EventSprite : MonoBehaviour {
 
-    public Sprite normal;
-    public Sprite highlighted;
-    public Sprite pressed;
-    public Sprite deactivated;
+    public Color normal;
+    public Color highlighted;
+    public Color pressed;
+    public Color deactivated;
     private Image image;
     public Texture2D cursorTexture;
     public Texture2D cursorBasicTexture;
@@ -18,22 +18,22 @@ public class EventSprite : MonoBehaviour {
 	
 	public void SwitchToHighlighted()
     {
-        image.sprite = highlighted;
+        image.color = highlighted;
     }
 
     public void SwitchToNormal()
     {
-        image.sprite = normal;
+        image.color = normal;
     }
 
     public void SwitchToPressed()
     {
-        image.sprite = pressed;
+        image.color = pressed;
     }
 
     public void SwitchToDeactivated()
     {
-        image.sprite = deactivated;
+        image.color = deactivated;
     }
 
     public void SwitchCursorToTexture()

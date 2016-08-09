@@ -20,7 +20,7 @@ public class ButtonComponent : MonoBehaviour
     public DynamicButton button;
     public BC_fields fields;
    
-    //EventSprite spriteEvent;
+    EventSprite spriteEvent;
 
 
     public void Init(AbilityInfo abili, GameObject descrField)
@@ -42,7 +42,7 @@ public class ButtonComponent : MonoBehaviour
             e.normal = e.deactivated;
             e.highlighted = e.deactivated;
             e.pressed = e.deactivated;
-            GetComponent<Image>().sprite = e.deactivated;
+            GetComponent<Image>().color = e.deactivated;
             fields.isActivated = false;
         }
         button = gameObject.AddComponent<DynamicButton>();
@@ -85,28 +85,33 @@ public  class DynamicButton : MonoBehaviour{
     }
 
     public void OnClick(PointerEventData data) {
-            eventSprite.SwitchToPressed();
-            GUIData.canSelectTarget = true;
-            GUIData.activeButton = gameObject;
-            if (fields.ability.selfCast) {
-                TileInfo ti = fields.ability.owner.GetComponent<Unit>().currentTile.GetComponent<TileInfo>();
-                fields.ability.execute(ti.gridPosition, ti.grid.isMainGrid, () => {
+        eventSprite.SwitchToPressed();
+        GUIData.canSelectTarget = true;
+        GUIData.activeButton = gameObject;
+        if (fields.ability.selfCast) {
+            TileInfo ti = fields.ability.owner.GetComponent<Unit>().currentTile.GetComponent<TileInfo>();
+            GUIData.contextMenuLock = true;
+            fields.ability.execute(ti.gridPosition, ti.grid.isMainGrid, () => {
+                GUIData.contextMenuLock = false;
+                ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
+            });
+        }
+        else {
+            TargetingManager.selectTarget(fields.targets, fields.ranges, (GameObject target) => {   //select tile and execute callback
+                TileInfo tile = target.GetComponent<TileInfo>();
+                GUIData.contextMenuLock = true;
+                fields.ability.execute(tile.gridPosition, tile.grid.isMainGrid, () => {
+                    GUIData.contextMenuLock = false;
                     ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
                 });
-            }
-            else {
-                TargetingManager.selectTarget(fields.targets, fields.ranges, (GameObject target) => {   //select tile and execute callback
-                    TileInfo tile = target.GetComponent<TileInfo>();
-                    fields.ability.execute(tile.gridPosition, tile.grid.isMainGrid, () => {
-                        ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
-                    });
-                },
-                    () => {
-                        ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
-                    },
-                    fields.ability.checkAoe);
-            }
-            ContextMenuSpawn.DestroyContextMenu();
+            },
+            () => {
+                GUIData.contextMenuLock = false;
+                ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
+            },
+            fields.ability.checkAoe);
+        }
+        ContextMenuSpawn.DestroyContextMenu();
     }
     public void OnPointerEnter(PointerEventData data){
         eventSprite.SwitchToHighlighted();
