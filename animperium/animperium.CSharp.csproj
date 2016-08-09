@@ -58,14 +58,14 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +137,7 @@
     <Compile Include="Assets\UI\UI-Scripts\GUIData.cs" />
     <Compile Include="Assets\UI\UI-Scripts\HealthBar.cs" />
     <Compile Include="Assets\UI\UI-Scripts\LookAtCamera.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\New UI\ChangeSpriteColor.cs" />
     <Compile Include="Assets\UI\UI-Scripts\New UI\UISpawn.cs" />
     <Compile Include="Assets\UI\UI-Scripts\PlayerTimer.cs" />
     <Compile Include="Assets\UI\UI-Scripts\QuitButton.cs" />

@@ -11,4 +11,5 @@ public class GUIData {
     public static GameObject activeButton;
     public static GameObject ContextUnit;
     public static float screenHeightRatio;
+    public static bool contextMenuLock = false;
 }
