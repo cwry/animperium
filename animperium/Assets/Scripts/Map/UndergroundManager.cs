@@ -13,13 +13,11 @@ public class UndergroundManager : MonoBehaviour {
 
     void Awake() {
         instance = this;
-        Debug.Log("wtf is happening?");
     }
 
     public static GameObject getAppearancePrefab(UndergroundTileAppearanceState appearance, bool isInSight) {
         switch (appearance) {
             case UndergroundTileAppearanceState.HIDDEN :
-                Debug.Log(instance);
                 return instance.hiddenPrefab;
             case UndergroundTileAppearanceState.BLOCKED :
                 return isInSight ? instance.blockedPrefab : instance.datedBlockedPrefab;
