@@ -40,7 +40,7 @@ public class MovementAbility : MonoBehaviour {
 
     bool checkHexTraversability(TileInfo ti){
         UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
-        bool underground = ut != null && ut.state == UndergroundTileState.REVEALED && ut.isInSight();
+        bool underground = ut == null || (ut.state == UndergroundTileState.REVEALED && ut.isInSight());
         return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject);
     }
 
