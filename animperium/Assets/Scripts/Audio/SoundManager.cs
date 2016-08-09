@@ -83,7 +83,6 @@ public class SoundManager : MonoBehaviour
             }
         }
     }
-
     public void SetSoundEffectVolume(float volume) {
         effectVolume = volume;
         foreach (NamedAudioClip n in namedClips) {

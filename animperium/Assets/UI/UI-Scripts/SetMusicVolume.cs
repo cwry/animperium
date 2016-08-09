@@ -14,7 +14,7 @@ public class SetMusicVolume : MonoBehaviour {
         soundManager = SoundManager.instance;
         s = slider.GetComponent<Slider>();
         t = toggle.GetComponent<Toggle>();
-        }
+    }
 
     public void SetVolume() {
         soundManager.SetMusicVolume(s.value);
