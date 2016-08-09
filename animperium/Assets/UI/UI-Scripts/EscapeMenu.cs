@@ -13,6 +13,7 @@ public class EscapeMenu : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             isActive = !isActive;
             escapeMenu.SetActive(isActive);
+            if(!isActive) GUIData.pointerOnGUI = false;
         }
     }
 }

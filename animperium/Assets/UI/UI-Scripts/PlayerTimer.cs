@@ -10,7 +10,8 @@ public class PlayerTimer : MonoBehaviour {
 
     private int playerTime;
     private int turn;
-
+    public float maxRoundTime = 120f;
+    public int basicGold = 10;
 
     // Use this for initialization
     void Start () {
@@ -22,7 +23,7 @@ public class PlayerTimer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (playerTime >= 300 && Data.isActivePlayer())
+        if (playerTime >= maxRoundTime && Data.isActivePlayer())
         {
             TurnManager.endTurn();
         }
@@ -68,4 +69,8 @@ public class PlayerTimer : MonoBehaviour {
         return (min.ToString("d2") + ":" + sec.ToString("d2"));
     }
    
+    private void PlayerTimeToGold(int time) {
+        float multiplicator = maxRoundTime / playerTime;
+        
+    }
 }
