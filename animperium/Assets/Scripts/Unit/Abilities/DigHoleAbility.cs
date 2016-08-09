@@ -46,11 +46,40 @@ public class DigHoleAbility : MonoBehaviour {
             Destroy(otherTargetModel);
             target.isHole = false;
             otherTile.isHole = false;
+            target.removeHole = () => { };
+            otherTile.removeHole = () => { };
+            target.hideHole = () => { };
+            otherTile.hideHole = () => { };
+            target.revealHole = () => { };
+            otherTile.revealHole = () => { };
         };
         target.removeHole = removeHoles;
-        otherTile.removeHole = removeHoles;
+        target.hideHole = () => {
+            foreach(Renderer render in targetModel.GetComponentsInChildren<Renderer>()) {
+                render.enabled = false;
+            }
+        };
+        target.revealHole = () => {
+            foreach (Renderer render in targetModel.GetComponentsInChildren<Renderer>()) {
+                render.enabled = true;
+            }
+        };
 
-        UndergroundTile undergroundTile = (target.grid.isMainGrid ? otherTile : target).GetComponent<UndergroundTile>();
+        otherTile.removeHole = removeHoles;
+        otherTile.hideHole = () => {
+            foreach (Renderer render in otherTargetModel.GetComponentsInChildren<Renderer>()) {
+                render.enabled = false;
+            }
+        };
+        otherTile.revealHole = () => {
+            foreach (Renderer render in otherTargetModel.GetComponentsInChildren<Renderer>()) {
+                render.enabled = true;
+            }
+        };
+
+        TileInfo undergroundTI = (target.grid.isMainGrid ? otherTile : target);
+        UndergroundTile undergroundTile = undergroundTI.GetComponent<UndergroundTile>();
+        if (!undergroundTile.isInSight()) undergroundTI.hideHole();
         undergroundTile.state = UndergroundTileState.REVEALED;
         undergroundTile.updateSightRange();
     }

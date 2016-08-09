@@ -159,8 +159,11 @@ public class Unit : MonoBehaviour {
     }
 
     void OnDestroy(){
+        UndergroundTile ut = currentTile.GetComponent<UndergroundTile>();
+        if (ut != null) ut.removeSightRange(gameObject);
         detach();
         Data.units.Remove(unitID);
+
     }
 
     public GameObject[] getFootprint(TileInfo ti){

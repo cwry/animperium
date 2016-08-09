@@ -93,7 +93,10 @@ public class UndergroundTile : MonoBehaviour {
         if (!ti.traversable) return;
         if (currentObject != null) Destroy(currentObject);
         bool inSight = isInSight();
-        if (inSight) appearance = (UndergroundTileAppearanceState)state;
+        if (inSight) {
+            appearance = (UndergroundTileAppearanceState)state;
+            ti.revealHole();
+        }
         if(ti.unit != null) {
             Unit u = ti.unit.GetComponent<Unit>();
             if (u.playerID != Data.playerID) {

@@ -114,6 +114,7 @@
     <Compile Include="Assets\Scripts\Unit\Abilities\MovementAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\OffensiveBuffAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\SpawnAbility.cs" />
+    <Compile Include="Assets\Scripts\Unit\Abilities\UndergroundDigAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\UpgradeUnitAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\Abilities\UseHoleAbility.cs" />
     <Compile Include="Assets\Scripts\Unit\AbilityManager.cs" />

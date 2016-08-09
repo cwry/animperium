@@ -38,9 +38,15 @@ public class MovementAbility : MonoBehaviour {
         movementPoints = maxMovementPoints;
     }
 
-    bool checkHexTraversability(TileInfo ti){
+    bool checkHexTraversabilityAndVisibility(TileInfo ti){
         UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
         bool underground = ut == null || (ut.state == UndergroundTileState.REVEALED && ut.isInSight());
+        return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject);
+    }
+
+    bool checkHexTraversability(TileInfo ti) {
+        UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
+        bool underground = ut == null || ut.state == UndergroundTileState.REVEALED;
         return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject);
     }
 
@@ -59,7 +65,7 @@ public class MovementAbility : MonoBehaviour {
     GameObject[] checkRange(){
         if (movementPoints == 0) return null;
         Unit u = gameObject.GetComponent<Unit>();
-        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, checkHexTraversability, checkHexTraversability);
+        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, checkHexTraversabilityAndVisibility, checkHexTraversabilityAndVisibility);
         return inRange.Length == 0 ? null : inRange;
     }
 

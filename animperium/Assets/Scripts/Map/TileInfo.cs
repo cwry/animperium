@@ -14,6 +14,8 @@ public class TileInfo : MonoBehaviour {
     [HideInInspector]
     public bool isHole = false;
     public Action removeHole = () => { };
+    public Action hideHole = () => { };
+    public Action revealHole = () => { };
     public GameObject unit;
     public GameEvent onUnitDetached = new GameEvent();
     public GameEvent onUnitAttached = new GameEvent();
