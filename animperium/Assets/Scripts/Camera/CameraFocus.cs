@@ -244,13 +244,14 @@ public class CameraFocus : MonoBehaviour {
 	private void InputHandling()
 	{
 		if (Input.GetKeyDown (KeyCode.T)) {
-			if (isMainGrid) {
+            StartPosition();
+			/*if (isMainGrid) {
 				isMainGrid = false;
 				CameraJumpInStageMiddle (isMainGrid);
 			} else {
 				isMainGrid = true;
 				CameraJumpInStageMiddle (isMainGrid);
-			}
+			}*/
 		}
 
 		//JD_Start
@@ -293,10 +294,15 @@ public class CameraFocus : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space) && SelectionManager.hoverTile != null)
         {
-            TileInfo ti = SelectionManager.hoverTile.GetComponent<TileInfo>();
+            /*TileInfo ti = SelectionManager.hoverTile.GetComponent<TileInfo>();
             GridManager otherGrid = ti.grid.isMainGrid ? Data.subGrid : Data.mainGrid;
             TileInfo otherTi = otherGrid.gridData[ti.gridPosition.x, ti.gridPosition.y].GetComponent<TileInfo>();
-            Camera.main.GetComponent<CameraFocus>().CameraJump(otherTi.gameObject);
+            Camera.main.GetComponent<CameraFocus>().CameraJump(otherTi.gameObject);*/
+            if (Data.isCameraOnMainGrid) {
+                cam.transform.position -= offsetSub;
+            }else {
+                cam.transform.position -= offsetMain;
+            }
             Data.isCameraOnMainGrid = !Data.isCameraOnMainGrid;
         }
 	}

@@ -89,7 +89,7 @@ public class DigHoleAbility : MonoBehaviour {
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
             GridManager otherGrid = ti.grid.isMainGrid ? Data.subGrid : Data.mainGrid;
             TileInfo otherTile = otherGrid.gridData[ti.gridPosition.x, ti.gridPosition.y].GetComponent<TileInfo>();
-            return ti.traversable && otherTile.traversable && !ti.isHole && !otherTile.isHole;
+            return ti.traversable && otherTile.traversable && !ti.isHole && !otherTile.isHole && otherTile.unit == null;
         });
         return inRange.Length == 0 ? null : inRange;
     }
