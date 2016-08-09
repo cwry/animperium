@@ -60,6 +60,10 @@ public class AttackAbility : MonoBehaviour{
                 if (tInfo.unit == null) {
                     continue;
                 }
+                UndergroundTile ut = go.GetComponent<UndergroundTile>();
+                if(ut != null && (ut.state != UndergroundTileState.REVEALED || !ut.isInSight())) {
+                    continue;
+                }
                 Unit unit = tInfo.unit.GetComponent<Unit>();
                 if (unit.playerID != 0 && unit.playerID != Data.playerID) return true;
             }
@@ -70,6 +74,8 @@ public class AttackAbility : MonoBehaviour{
     }
 
     GameObject[] getRangeIndicator(){
-        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange);
+        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
+            return ti.traversable;
+        });
     }
 }

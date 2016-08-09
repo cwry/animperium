@@ -49,6 +49,10 @@ public class DigHoleAbility : MonoBehaviour {
         };
         target.removeHole = removeHoles;
         otherTile.removeHole = removeHoles;
+
+        UndergroundTile undergroundTile = (target.grid.isMainGrid ? otherTile : target).GetComponent<UndergroundTile>();
+        undergroundTile.state = UndergroundTileState.REVEALED;
+        undergroundTile.updateSightRange();
     }
 
     GameObject[] checkRange() {
@@ -62,6 +66,8 @@ public class DigHoleAbility : MonoBehaviour {
     }
 
     GameObject[] getRangeIndicator() {
-        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange);
+        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
+            return ti.traversable;
+        });
     }
 }

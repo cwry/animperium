@@ -57,6 +57,8 @@ public class MineAbility : MonoBehaviour {
         Unit u = gameObject.GetComponent<Unit>();
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
             if (ti.unit == null) return false;
+            UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
+            if (ut != null && (ut.state != UndergroundTileState.REVEALED || !ut.isInSight())) return false;
             Minable mine = ti.unit.GetComponent<Minable>();
             if (mine == null) return false;
             return true;
@@ -66,6 +68,8 @@ public class MineAbility : MonoBehaviour {
     }
 
     GameObject[] getRangeIndicator() {
-        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange);
+        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
+            return ti.traversable;
+        });
     }
 }

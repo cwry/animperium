@@ -41,6 +41,8 @@ public class UpgradeUnitAbility : MonoBehaviour {
     }
 
     GameObject[] getRangeIndicator() {
-        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange);
+        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
+            return ti.traversable;
+        });
     }
 }

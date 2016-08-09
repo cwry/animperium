@@ -32,6 +32,19 @@ public class UseHoleAbility : MonoBehaviour {
         ti.detachUnit();
         otherTi.attachUnit(gameObject);
         transform.position = otherTi.transform.position;
+
+        UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
+        if (ut != null) ut.removeSightRange(gameObject);
+        if(ut == null || ut.isInSight()) {
+            u.reveal();
+        }
+        UndergroundTile otherUT = otherTi.GetComponent<UndergroundTile>();
+        if (otherUT != null) {
+            otherUT.addSightRange(gameObject);
+            if (u.playerID != Data.playerID && !otherUT.isInSight()) {
+                u.hide();
+            }
+        }
     }
 
     GameObject[] checkRange() {

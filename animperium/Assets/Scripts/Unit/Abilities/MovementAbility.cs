@@ -13,6 +13,8 @@ public class MovementAbility : MonoBehaviour {
 
     Action removeTurnBegin;
 
+    Action currentCallback;
+
     void Awake(){
         abilityInfo.getRangeIndicator = getRangeIndicator;
         movementPoints = maxMovementPoints;
@@ -21,7 +23,8 @@ public class MovementAbility : MonoBehaviour {
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.dot;
         abilityInfo.execute = (Vec2i target, bool isMainGrid, Action callback) => {
-            AbilityManager.useAbility(abilityInfo, target, isMainGrid, callback);
+            currentCallback = callback;
+            AbilityManager.useAbility(abilityInfo, target, isMainGrid);
         };
         abilityInfo.onExecution = executeAbility;
         abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
@@ -36,7 +39,9 @@ public class MovementAbility : MonoBehaviour {
     }
 
     bool checkHexTraversability(TileInfo ti){
-        return ti.traversable && ti.unit == null;
+        UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
+        bool underground = ut != null && ut.state == UndergroundTileState.REVEALED && ut.isInSight();
+        return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject);
     }
 
     void executeAbility(ServerMessage.UnitAbilityMessage msg){
@@ -47,18 +52,27 @@ public class MovementAbility : MonoBehaviour {
             return checkHexTraversability(ti);
         });
         movementPoints -= path.Length - 1;
-        PathMovement.move(gameObject, grid, path, animationSpeed, jumpHeight);
+        PathMovement.move(gameObject, grid, path, animationSpeed, jumpHeight, currentCallback);
+        currentCallback = null;
     }
 
     GameObject[] checkRange(){
+        if (movementPoints == 0) return null;
         Unit u = gameObject.GetComponent<Unit>();
-        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, checkHexTraversability);
+        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, checkHexTraversability, checkHexTraversability);
         return inRange.Length == 0 ? null : inRange;
     }
 
     GameObject[] getRangeIndicator(){
         if (movementPoints == 0) return null;
-        return gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, checkHexTraversability);
+        GameObject[] inRange = gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(1, movementPoints,
+        (TileInfo ti) => {
+            return ti.traversable;
+        },
+        (TileInfo ti) => {
+            return ti.traversable;
+        });
+        return inRange.Length == 0 ? null : inRange;
     }
 
 }

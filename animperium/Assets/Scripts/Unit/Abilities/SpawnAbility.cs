@@ -49,6 +49,8 @@ public class SpawnAbility : MonoBehaviour {
     GameObject[] getRangeIndicator(){
         TileInfo tile = gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>();
         if (!tile.grid.isMainGrid) return null;
-        return tile.listTree(minRange, maxRange);
+        return tile.listTree(minRange, maxRange, null, (TileInfo ti) => {
+            return ti.traversable;
+        });
     }
 }

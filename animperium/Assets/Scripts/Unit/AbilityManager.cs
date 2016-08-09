@@ -49,7 +49,7 @@ public class AbilityManager : MonoBehaviour {
         });
     }
 
-    public static void useAbility(AbilityInfo abilityInfo, Vec2i target, bool isTargetMainGrid, Action callback){
+    public static void useAbility(AbilityInfo abilityInfo, Vec2i target, bool isTargetMainGrid, Action callback = null){
         Unit u = abilityInfo.owner.GetComponent<Unit>();
         ServerMessage.UnitAbilityMessage msg = new ServerMessage.UnitAbilityMessage();
         msg.unitID = u.unitID;

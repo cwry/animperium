@@ -22,6 +22,7 @@ public enum UnitType{
 }
 
 public class Unit : MonoBehaviour {
+    public bool hidden = false;
     public UnitType type;
     public string prefabID;
     public Sprite icon;
@@ -30,6 +31,7 @@ public class Unit : MonoBehaviour {
     public int playerID;
     public string unitID;
 
+    public int undergroundSightRange = 4;
     public int maxActionPoints = 12;
     [HideInInspector]
     public int actionPoints;
@@ -65,6 +67,11 @@ public class Unit : MonoBehaviour {
     Action removeTurnBegin;
 
     void Awake(){
+        if (hidden) {
+            foreach (Renderer render in gameObject.GetComponentsInChildren<Renderer>()) {
+                render.enabled = false;
+            }
+        }
         removeTurnBegin = TurnManager.onTurnBegin.add<int>(onTurnBegin);
         hitPoints = maxHitPoints;
         actionPoints = maxActionPoints;
@@ -205,5 +212,21 @@ public class Unit : MonoBehaviour {
         if(rangedResistBuff < ranged) rangedResistBuff = ranged;
         if(magicResistBuff < magic) magicResistBuff = magic;
         resistBuffEndTurn = TurnManager.turnID + 2;
+    }
+
+    public void hide() {
+        if (hidden) return;
+        hidden = true;
+        foreach(Renderer render in gameObject.GetComponentsInChildren<Renderer>()) {
+            render.enabled = false;
+        }
+    }
+
+    public void reveal() {
+        if (!hidden) return;
+        hidden = false;
+        foreach (Renderer render in gameObject.GetComponentsInChildren<Renderer>()) {
+            render.enabled = true;
+        }
     }
 }
