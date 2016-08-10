@@ -37,51 +37,22 @@ public class DigHoleAbility : MonoBehaviour {
         TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
         GridManager otherGrid = msg.isTargetMainGrid ? Data.subGrid : Data.mainGrid;
         TileInfo otherTile = otherGrid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
-        GameObject targetModel = Instantiate(target.grid.isMainGrid ? holeModel : holeModelUngerground, target.transform.position, Quaternion.identity) as GameObject;
-        GameObject otherTargetModel = Instantiate(otherTile.grid.isMainGrid ? holeModel : holeModelUngerground, otherTile.transform.position, Quaternion.identity) as GameObject;
-        target.isHole = true;
-        otherTile.isHole = true;
-        Action removeHoles = () => {
-            Destroy(targetModel);
-            Destroy(otherTargetModel);
-            target.isHole = false;
-            otherTile.isHole = false;
-            target.removeHole = () => { };
-            otherTile.removeHole = () => { };
-            target.hideHole = () => { };
-            otherTile.hideHole = () => { };
-            target.revealHole = () => { };
-            otherTile.revealHole = () => { };
-        };
-        target.removeHole = removeHoles;
-        target.hideHole = () => {
-            foreach(Renderer render in targetModel.GetComponentsInChildren<Renderer>()) {
-                render.enabled = false;
-            }
-        };
-        target.revealHole = () => {
-            foreach (Renderer render in targetModel.GetComponentsInChildren<Renderer>()) {
-                render.enabled = true;
-            }
-        };
-
-        otherTile.removeHole = removeHoles;
-        otherTile.hideHole = () => {
-            foreach (Renderer render in otherTargetModel.GetComponentsInChildren<Renderer>()) {
-                render.enabled = false;
-            }
-        };
-        otherTile.revealHole = () => {
-            foreach (Renderer render in otherTargetModel.GetComponentsInChildren<Renderer>()) {
-                render.enabled = true;
-            }
-        };
-
-        TileInfo undergroundTI = (target.grid.isMainGrid ? otherTile : target);
-        UndergroundTile undergroundTile = undergroundTI.GetComponent<UndergroundTile>();
-        if (!undergroundTile.isInSight()) undergroundTI.hideHole();
-        undergroundTile.state = UndergroundTileState.REVEALED;
-        undergroundTile.updateSightRange();
+        if(!target.isHole && !otherTile.isHole) {
+            target.makeHole(target.grid.isMainGrid ? holeModel : holeModelUngerground);
+            otherTile.makeHole(otherTile.grid.isMainGrid ? holeModel : holeModelUngerground);
+            
+            TileInfo undergroundTI = (target.grid.isMainGrid ? otherTile : target);
+            UndergroundTile undergroundTile = undergroundTI.GetComponent<UndergroundTile>();
+            if (!undergroundTile.isInSight()) undergroundTI.hideHole();
+            undergroundTile.state = UndergroundTileState.REVEALED;
+            undergroundTile.updateSightRange();
+        }
+        else {
+            target.hideHole();
+            target.removeHole();
+            otherTile.hideHole();
+            otherTile.removeHole();
+        }
     }
 
     GameObject[] checkRange() {
@@ -89,7 +60,7 @@ public class DigHoleAbility : MonoBehaviour {
         GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(minRange, maxRange, null, (TileInfo ti) => {
             GridManager otherGrid = ti.grid.isMainGrid ? Data.subGrid : Data.mainGrid;
             TileInfo otherTile = otherGrid.gridData[ti.gridPosition.x, ti.gridPosition.y].GetComponent<TileInfo>();
-            return ti.traversable && otherTile.traversable && !ti.isHole && !otherTile.isHole && otherTile.unit == null;
+            return (ti.traversable && otherTile.traversable && !ti.isHole && !otherTile.isHole && otherTile.unit == null) || (ti.isHole && otherTile.isHole);
         });
         return inRange.Length == 0 ? null : inRange;
     }
