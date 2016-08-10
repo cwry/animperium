@@ -33,7 +33,7 @@ public class ContextMenuSpawn : MonoBehaviour {
 
     public static void SpawnContextMenu(GameObject unit)
     {
-        if (unit != null && !GUIData.contextMenuLock)
+        if (unit != null && !GUIData.blockAction && Data.isActivePlayer())
         {
             DestroyContextMenu();
             if (Data.isActivePlayer() && unit.GetComponent<Unit>() != null)

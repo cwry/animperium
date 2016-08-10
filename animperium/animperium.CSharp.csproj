@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\AutoDestroyParticle.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFocus.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraMoveOnRightclick.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraSwapLayer.cs" />
     <Compile Include="Assets\Scripts\Data.cs" />
     <Compile Include="Assets\Scripts\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />

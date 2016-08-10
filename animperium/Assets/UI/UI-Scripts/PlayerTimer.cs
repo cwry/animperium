@@ -7,7 +7,7 @@ public class PlayerTimer : MonoBehaviour {
     public Text playerTimerText;
     public Text goldText;
 
-    private int playerTime;
+    private int playerTime = 0;
     private int turn;
     public int maxRoundTime = 180;
     private int turnGold = 0;
@@ -16,6 +16,8 @@ public class PlayerTimer : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
+        playerTimerText.text = "";
+        goldText.text = "";
         turn = TurnManager.turnID;
         StartCoroutine(TimerStart());
         TurnManager.onTurnBegin.add<int>((int turnID) => {
@@ -29,6 +31,7 @@ public class PlayerTimer : MonoBehaviour {
                 StopAllCoroutines();
                 isActive = false;
                 playerTime = 0;
+                GUIData.roundTime = playerTime;
                 playerTimerText.text = "";
                 goldText.text = "";
                 Data.gold += turnGold;
@@ -40,13 +43,13 @@ public class PlayerTimer : MonoBehaviour {
 	void Update () {
 
         if (playerTime >= maxRoundTime && Data.isActivePlayer()) {
-            TurnManager.endTurn();
+            if(!GUIData.blockAction) TurnManager.endTurn();
         }
         if (isActive) {
             int time = maxRoundTime - playerTime;
             playerTimerText.text = PlayerTimeToString(time);
             turnGold = PlayerTimeToGold(playerTime);
-            goldText.text = turnGold.ToString(); ;
+            goldText.text = turnGold.ToString();
             GUIData.roundTime = playerTime;
         }
 	}

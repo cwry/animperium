@@ -31,8 +31,8 @@ public class InputManager : MonoBehaviour
             SelectionManager.selectedTile = hover;
             if (hover == null) return;
             GameObject unit = hover.GetComponent<TileInfo>().unit;
+            if (unit != null && !unit.GetComponent<Unit>().hidden) SelectionManager.selectedUnit = unit;
             if (SelectionManager.selectedUnit != null && !TargetingManager.getActive()){
-                if (!SelectionManager.selectedUnit.GetComponent<Unit>().hidden) SelectionManager.selectedUnit = unit;
                 SelectionManager.onSelectedUnitChanged.fire(SelectionManager.selectedUnit);
             }
             oldSelectedUnit = SelectionManager.selectedUnit;

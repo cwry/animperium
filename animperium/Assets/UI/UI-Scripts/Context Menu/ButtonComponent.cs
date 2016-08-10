@@ -45,24 +45,37 @@ public class ButtonComponent : MonoBehaviour
             GetComponent<Image>().color = e.deactivated;
             fields.isActivated = false;
         }
+
         button = gameObject.AddComponent<DynamicButton>();
         trigger = GetComponent<EventTrigger>();
+
         if (fields.isActivated) {
             EventTrigger.Entry entryClick = new EventTrigger.Entry();
             entryClick.eventID = EventTriggerType.PointerClick;
             entryClick.callback.AddListener((data) => { button.OnClick((PointerEventData)data); });
             trigger.triggers.Add(entryClick);
         }
+
         EventTrigger.Entry entryEnter = new EventTrigger.Entry();
         entryEnter.eventID = EventTriggerType.PointerEnter;
         entryEnter.callback.AddListener((data) => { button.OnPointerEnter((PointerEventData)data); });
         trigger.triggers.Add(entryEnter);
+
         EventTrigger.Entry entryExit = new EventTrigger.Entry();
         entryExit.eventID = EventTriggerType.PointerExit;
         entryExit.callback.AddListener((data) => { button.OnPointerExit((PointerEventData)data); });
         trigger.triggers.Add(entryExit);
-        
-        
+
+        EventTrigger.Entry entryDown = new EventTrigger.Entry();
+        entryDown.eventID = EventTriggerType.PointerDown;
+        entryDown.callback.AddListener((data) => { button.OnPointerDown((PointerEventData)data); });
+        trigger.triggers.Add(entryDown);
+
+        EventTrigger.Entry entryUp = new EventTrigger.Entry();
+        entryUp.eventID = EventTriggerType.PointerUp;
+        entryUp.callback.AddListener((data) => { button.OnPointerUp((PointerEventData)data); });
+        trigger.triggers.Add(entryUp);
+
     }
 
     
@@ -90,23 +103,23 @@ public  class DynamicButton : MonoBehaviour{
         GUIData.activeButton = gameObject;
         if (fields.ability.selfCast) {
             TileInfo ti = fields.ability.owner.GetComponent<Unit>().currentTile.GetComponent<TileInfo>();
-            GUIData.contextMenuLock = true;
+            GUIData.blockAction = true;
             fields.ability.execute(ti.gridPosition, ti.grid.isMainGrid, () => {
-                GUIData.contextMenuLock = false;
+                GUIData.blockAction = false;
                 ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
             });
         }
         else {
             TargetingManager.selectTarget(fields.targets, fields.ranges, (GameObject target) => {   //select tile and execute callback
                 TileInfo tile = target.GetComponent<TileInfo>();
-                GUIData.contextMenuLock = true;
+                GUIData.blockAction = true;
                 fields.ability.execute(tile.gridPosition, tile.grid.isMainGrid, () => {
-                    GUIData.contextMenuLock = false;
+                    GUIData.blockAction = false;
                     ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
                 });
             },
             () => {
-                GUIData.contextMenuLock = false;
+                GUIData.blockAction = false;
                 ContextMenuSpawn.SpawnContextMenu(ContextMenuSpawn.currentUnit);
             },
             fields.ability.checkAoe);
@@ -127,9 +140,10 @@ public  class DynamicButton : MonoBehaviour{
         Destroy(descriptionField);
     }
     
-    //public void SetFunction(Action v)
-    //{
-    //   execute = v;
-    //}
-
+    public void OnPointerDown(PointerEventData data) {
+        eventSprite.SwitchToPressed();
+    }
+    public void OnPointerUp(PointerEventData data) {
+        eventSprite.SwitchToHighlighted();
+    }
 }
