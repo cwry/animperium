@@ -15,12 +15,10 @@ public class ShowNameText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (SelectionManager.selectedUnit == null && SelectionManager.selectedUnit != currentUnit)
-            txt.text = "";
+        if (SelectionManager.selectedUnit == null && SelectionManager.selectedUnit != currentUnit) txt.text = "";
         if (SelectionManager.selectedUnit != currentUnit) { 
             currentUnit = SelectionManager.selectedUnit;
-            if(currentUnit != null)
-            txt.text = currentUnit.GetComponent<Unit>().prefabID;
+            if(currentUnit != null) txt.text = currentUnit.GetComponent<Unit>().prefabID;
         }
 	}
 }

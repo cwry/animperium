@@ -64,4 +64,8 @@ public class ContextMenuSpawn : MonoBehaviour {
         GUIData.hasContextMenu = false;
         Destroy(contextMenu);
     }
+
+    public static void ClearTarget() {
+        currentUnit = null;
+    }
 }
