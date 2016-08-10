@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class SetSoundEffectVolume : MonoBehaviour {
+
     private SoundManager soundManager;
     public GameObject slider;
     public GameObject toggle;
@@ -20,7 +21,7 @@ public class SetSoundEffectVolume : MonoBehaviour {
     }
 
     public void MuteSoundEffect() {
-        if (t.isOn) soundManager.SetSoundEffectVolume(0f);
+        if(t.isOn) soundManager.SetSoundEffectVolume(0f);
         else soundManager.SetSoundEffectVolume(s.value);
     }
 }

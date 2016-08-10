@@ -7,29 +7,34 @@ public class EndTurn : MonoBehaviour {
 
     
     EventTrigger eventTrigger;
-    public Sprite disabledButton;
-    public Sprite normalButton;
+    EventSprite eventSprite;
     Image image;
+
+    bool shouldEndTurn = false;
 
 	// Use this for initialization
 	void Awake () {
-        image = GetComponent<Image>();
+        eventSprite = GetComponent<EventSprite>();
         eventTrigger = GetComponent<EventTrigger>();
         TurnManager.onTurnBegin.add<int>(OnTurnBegin);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    
+	    if(shouldEndTurn && !GUIData.blockAction) {
+            shouldEndTurn = false;
+            TurnManager.endTurn();
+        }
 	}
 
     public void EndTurnExecute()
     {
-        if (Data.isActivePlayer())
-        {
-            SoundManager.instance.PlaySound("confirm");
+        if (Data.isActivePlayer() && !shouldEndTurn) {
+            shouldEndTurn = true;
+            SoundManager.instance.PlaySound("confirm", SoundManager.effectVolume);
             ContextMenuSpawn.DestroyContextMenu();
-            TurnManager.endTurn();
+            eventSprite.SwitchToDeactivated();
+            
         }
 
         
@@ -40,11 +45,11 @@ public class EndTurn : MonoBehaviour {
         eventTrigger.enabled = Data.isActivePlayer();
         if(!Data.isActivePlayer())
         {
-            image.sprite = disabledButton;
+            eventSprite.SwitchToDeactivated();
         }
         else
         {
-            image.sprite = normalButton;
+            eventSprite.SwitchToNormal();
         }
     }
     

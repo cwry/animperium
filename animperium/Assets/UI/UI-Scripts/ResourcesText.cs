@@ -7,6 +7,7 @@ public class ResourcesText : MonoBehaviour {
     public Text wood;
     public Text iron;
     public Text stone;
+    public Text gold;
     
 
 	// Use this for initialization
@@ -19,6 +20,7 @@ public class ResourcesText : MonoBehaviour {
         wood.text = Data.wood.ToString();
         iron.text = Data.iron.ToString();
         stone.text = Data.stone.ToString();
+        gold.text = Data.gold.ToString();
     }
     
 }

@@ -143,14 +143,19 @@ public class CameraFocus : MonoBehaviour {
 		//enshure height
 		Vector3 temp = Camera.main.transform.TransformDirection (Vector3.forward);
 		Camera.main.transform.position += temp * (startHeight+levelPosition.y - Camera.main.transform.position.y)/temp.y;
-		//startposition
-		if (Data.playerID == 1) {
-			CameraJump(startingHexP1);
-		}
-		if (Data.playerID == 2){
-			CameraJump(startingHexP2);
-		}
-	}
+        CameraJumpStart();
+
+    }
+
+    public void CameraJumpStart() {
+        //startposition
+        if (Data.playerID == 1) {
+            CameraJump(startingHexP1);
+        }
+        if (Data.playerID == 2) {
+            CameraJump(startingHexP2);
+        }
+    }
 
 	public void CameraJumpInStageMiddle(bool mainGridBool)
 	{
@@ -244,15 +249,15 @@ public class CameraFocus : MonoBehaviour {
 	private void InputHandling()
 	{
 		if (Input.GetKeyDown (KeyCode.T)) {
-            StartPosition();
-			/*if (isMainGrid) {
+            CameraJumpStart();
+            /*if (isMainGrid) {
 				isMainGrid = false;
 				CameraJumpInStageMiddle (isMainGrid);
 			} else {
 				isMainGrid = true;
 				CameraJumpInStageMiddle (isMainGrid);
 			}*/
-		}
+        }
 
 		//JD_Start
 		// map movement
@@ -298,14 +303,19 @@ public class CameraFocus : MonoBehaviour {
             GridManager otherGrid = ti.grid.isMainGrid ? Data.subGrid : Data.mainGrid;
             TileInfo otherTi = otherGrid.gridData[ti.gridPosition.x, ti.gridPosition.y].GetComponent<TileInfo>();
             Camera.main.GetComponent<CameraFocus>().CameraJump(otherTi.gameObject);*/
-            if (Data.isCameraOnMainGrid) {
-                cam.transform.position -= offsetSub;
-            }else {
-                cam.transform.position -= offsetMain;
-            }
-            Data.isCameraOnMainGrid = !Data.isCameraOnMainGrid;
+            SwapLayer();
         }
 	}
+
+    public void SwapLayer() {
+        if (Data.isCameraOnMainGrid) {
+            cam.transform.position -= offsetSub;
+        }
+        else {
+            cam.transform.position -= offsetMain;
+        }
+        Data.isCameraOnMainGrid = !Data.isCameraOnMainGrid;
+    }
 
 	private void CameraHandling()
 	{

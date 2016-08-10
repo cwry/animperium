@@ -42,7 +42,7 @@ public class SpawnManager : MonoBehaviour {
             u.attach(ti);
             Data.units.Add(msg.unitID, obj);
             if (callbacks[msg.actionID] != null) callbacks[msg.actionID]();
-            callbacks[msg.actionID] = null;
+            callbacks.Remove(msg.actionID);
         });
     }
 
@@ -54,6 +54,7 @@ public class SpawnManager : MonoBehaviour {
         msg.tileY = pos.y;
         msg.unitType = prefabID;
         msg.playerID = Data.playerID;
+        Debug.Log(msg.actionID);
         callbacks.Add(msg.actionID, callback);
 
         NetworkData.client.netClient.Send((short)ServerMessage.Types.SPAWN_UNIT, msg);
