@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_3_4;UNITY_5_3;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_WEBPLAYER;ENABLE_SUBSTANCE;WEBPLUG;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_3_4;UNITY_5_3;UNITY_5;UNITY_64;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_LOG_MIXED_STACKTRACE;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;CROSS_PLATFORM_INPUT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -38,44 +38,109 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Unity534/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Unity534/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Map\MapEditorHelper.cs" />
+     <Compile Include="Assets\Map\MapGeneratorInit.cs" />
+     <Compile Include="Assets\Scripts\ActionQueue.cs" />
+     <Compile Include="Assets\Scripts\ActionQueueManager.cs" />
+     <Compile Include="Assets\Scripts\Audio\PlayIngameLoop.cs" />
+     <Compile Include="Assets\Scripts\Audio\PlayVillageSound.cs" />
+     <Compile Include="Assets\Scripts\Audio\SoundManager.cs" />
+     <Compile Include="Assets\Scripts\AutoDestroyParticle.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraFocus.cs" />
-     <Compile Include="Assets\Scripts\CameraMoveOnRightclick.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraMoveOnRightclick.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraSwapLayer.cs" />
      <Compile Include="Assets\Scripts\Data.cs" />
-     <Compile Include="Assets\Scripts\EntryPoint.cs" />
-     <Compile Include="Assets\Scripts\FightHack.cs" />
-     <Compile Include="Assets\Scripts\GameEvent.cs" />
-     <Compile Include="Assets\Scripts\GameObjectAction.cs" />
-     <Compile Include="Assets\Scripts\GameObjectFilter.cs" />
-     <Compile Include="Assets\Scripts\GridManager.cs" />
-     <Compile Include="Assets\Scripts\InputManager.cs" />
-     <Compile Include="Assets\Scripts\MapGenerator.cs" />
-     <Compile Include="Assets\Scripts\PathMovement.cs" />
+     <Compile Include="Assets\Scripts\EffectInfo.cs" />
+     <Compile Include="Assets\Scripts\Input\InputManager.cs" />
+     <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
+     <Compile Include="Assets\Scripts\Input\TargetingManager.cs" />
+     <Compile Include="Assets\Scripts\InputFieldStandardValue.cs" />
+     <Compile Include="Assets\Scripts\Map Editor\MapGridContainer.cs" />
+     <Compile Include="Assets\Scripts\Map\GridManager.cs" />
+     <Compile Include="Assets\Scripts\Map\MapLoadData.cs" />
+     <Compile Include="Assets\Scripts\Map\MapLoader.cs" />
+     <Compile Include="Assets\Scripts\Map\TileInfo.cs" />
+     <Compile Include="Assets\Scripts\Map\UndergroundManager.cs" />
+     <Compile Include="Assets\Scripts\Map\UndergroundTile.cs" />
+     <Compile Include="Assets\Scripts\MapTileOffsetHack.cs" />
+     <Compile Include="Assets\Scripts\Networking\GameClient.cs" />
+     <Compile Include="Assets\Scripts\Networking\GameServer.cs" />
+     <Compile Include="Assets\Scripts\Networking\NetworkData.cs" />
+     <Compile Include="Assets\Scripts\Networking\NetworkInitializationManager.cs" />
+     <Compile Include="Assets\Scripts\Networking\NetworkLobbyInput.cs" />
+     <Compile Include="Assets\Scripts\Networking\ServerMessages\InitGameMessage.cs" />
+     <Compile Include="Assets\Scripts\Networking\ServerMessages\ServerMessageTypes.cs" />
+     <Compile Include="Assets\Scripts\Networking\ServerMessages\SpawnUnitMessage.cs" />
+     <Compile Include="Assets\Scripts\Networking\ServerMessages\TurnEndedMessage.cs" />
+     <Compile Include="Assets\Scripts\Networking\ServerMessages\UnitAbilityMessage.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\PathFinding.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\PathNode.cs" />
-     <Compile Include="Assets\Scripts\Pathfinding\PathfindingTest.cs" />
-     <Compile Include="Assets\Scripts\SelectedUnitGridTeleporter.cs" />
-     <Compile Include="Assets\Scripts\SelectedUnitMover.cs" />
-     <Compile Include="Assets\Scripts\SelectionManager.cs" />
-     <Compile Include="Assets\Scripts\SpawnHack.cs" />
-     <Compile Include="Assets\Scripts\TeleportMovement.cs" />
-     <Compile Include="Assets\Scripts\TileInfo.cs" />
      <Compile Include="Assets\Scripts\TurnManager.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\AoeChecks.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\AttackAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\DefensiveBuffAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\DestroyUnitAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\DigHoleAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\HealAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\MineAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\MovementAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\OffensiveBuffAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\SpawnAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\UndergroundDigAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\UpgradeUnitAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\Abilities\UseHoleAbility.cs" />
+     <Compile Include="Assets\Scripts\Unit\AbilityManager.cs" />
+     <Compile Include="Assets\Scripts\Unit\DefaultUnit.cs" />
+     <Compile Include="Assets\Scripts\Unit\Minable.cs" />
+     <Compile Include="Assets\Scripts\Unit\Movement\PathMovement.cs" />
+     <Compile Include="Assets\Scripts\Unit\SpawnManager.cs" />
      <Compile Include="Assets\Scripts\Unit\Unit.cs" />
-     <Compile Include="Assets\Scripts\Unit\UnitData.cs" />
-     <Compile Include="Assets\Scripts\Unit\UnitFunctions.cs" />
-     <Compile Include="Assets\Scripts\Vec2i.cs" />
+     <Compile Include="Assets\Scripts\Util\GameEvent.cs" />
+     <Compile Include="Assets\Scripts\Util\Vec2i.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\Context Menu\ButtonComponent.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\Context Menu\ContextMenuControl.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\Context Menu\ContextMenuPosition.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\Context Menu\ContextMenuSpawn.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\Context Menu\DestroyContextMenu.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\Context Menu\EventSprite.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\DisplayRound.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\EndTurn.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\EscapeMenu.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\FadeUI.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\GUIData.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\HealthBar.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\LookAtCamera.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\New UI\ChangeSpriteColor.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\New UI\UISpawn.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\PlayerTimer.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\QuitButton.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\ResourcesText.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\RotateOnCreate.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\SetDescriptionStats.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\SetMusicVolume.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\SetOnGui.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\SetSoundEffectVolume.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\ShowNameText.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\SpawnButton.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\UnitInfoControl.cs" />
+     <Compile Include="Assets\UI\UI-Scripts\UnitInfoGui.cs" />
+     <None Include="Assets\Map\UCLAGameLab\Wireframe\Shaders\UCLA GameLab Wireframe Functions.cginc" />
+     <None Include="Assets\Map\UCLAGameLab\Wireframe\Shaders\UCLA GameLab Wireframe.shader" />
+     <None Include="Assets\Map\UCLAGameLab\Wireframe\Shaders\UCLA GameLab Cutout Wireframe.shader" />
+     <None Include="Assets\Map\UCLAGameLab\Wireframe\Shaders\UCLA GameLab Double-Sided Wireframe.shader" />
+     <None Include="Assets\Map\UCLAGameLab\Wireframe\Shaders\UCLA GameLab Double-Sided Cutout Wireframe.shader" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Unity534/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Unity534/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
