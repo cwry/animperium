@@ -7,7 +7,7 @@ public class PlayerTimer : MonoBehaviour {
     public Text playerTimerText;
     public Text goldText;
 
-    private int playerTime = 0;
+    private float playerTime = 0;
     private int turn;
     public int maxRoundTime = 180;
     private int turnGold = 0;
@@ -19,19 +19,16 @@ public class PlayerTimer : MonoBehaviour {
         playerTimerText.text = "";
         goldText.text = "";
         turn = TurnManager.turnID;
-        StartCoroutine(TimerStart());
         TurnManager.onTurnBegin.add<int>((int turnID) => {
             if (Data.isActivePlayer()) {
-                StartCoroutine(TimerStart());
                 isActive = true;
             }
         });
         TurnManager.onTurnEnd.add<int>((int turnID) => {
             if (Data.isActivePlayer()) {
-                StopAllCoroutines();
                 isActive = false;
                 playerTime = 0;
-                GUIData.roundTime = playerTime;
+                GUIData.roundTime = (int)playerTime;
                 playerTimerText.text = "";
                 goldText.text = "";
                 Data.gold += turnGold;
@@ -46,24 +43,15 @@ public class PlayerTimer : MonoBehaviour {
             if(!GUIData.blockAction) TurnManager.endTurn();
         }
         if (isActive) {
-            int time = maxRoundTime - playerTime;
+            playerTime = playerTime + Time.deltaTime;
+            int time =(int) (maxRoundTime - playerTime);
             playerTimerText.text = PlayerTimeToString(time);
-            turnGold = PlayerTimeToGold(playerTime);
-            goldText.text = turnGold.ToString();
-            GUIData.roundTime = playerTime;
+            turnGold = PlayerTimeToGold((int)playerTime);
+            goldText.text = "+" + turnGold.ToString();
+            GUIData.roundTime = (int)playerTime;
         }
 	}
-
-   private IEnumerator TimerStart()
-    {
-        for (int i = 0; i <= 900; i++ )
-        {
-            playerTime = i;
-            yield return new WaitForSeconds(1f);
-        }
-        yield return 0;
-    }
-
+    
     private string PlayerTimeToString(int seconds)
     {
         int min = seconds / 60;
@@ -72,8 +60,8 @@ public class PlayerTimer : MonoBehaviour {
     }
    
     private int PlayerTimeToGold(int time) {
-        int remainingTime = maxRoundTime - playerTime;
-        int gold = (int)(maxGold * remainingTime / (float)maxRoundTime);
+        float remainingTime = maxRoundTime - playerTime;
+        int gold = (int)(maxGold * remainingTime / maxRoundTime);
         return gold;
     }
 }
