@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\Map\TileInfo.cs" />
     <Compile Include="Assets\Scripts\Map\UndergroundManager.cs" />
     <Compile Include="Assets\Scripts\Map\UndergroundTile.cs" />
+    <Compile Include="Assets\Scripts\MapTileOffsetHack.cs" />
     <Compile Include="Assets\Scripts\Networking\GameClient.cs" />
     <Compile Include="Assets\Scripts\Networking\GameServer.cs" />
     <Compile Include="Assets\Scripts\Networking\NetworkData.cs" />
