@@ -11,7 +11,10 @@ public struct AbilityInfo {
     public string name;
     public string description;
     public GameObject button;
-    public GameObject targetParticle;
+    public GameObject[] effectsOnCaster;
+    public GameObject[] effectsOnAffected;
+    public GameObject[] effectsOnTarget;
+    public GameObject[] effectsOnAoe;
     public int apCost;
     public float woodCost;
     public float ironCost;
@@ -22,6 +25,7 @@ public struct AbilityInfo {
     public GameObject owner;
     public Func<GameObject[]> getRangeIndicator;
     public Func<GameObject[]> checkRange;
+    public Func<ServerMessage.UnitAbilityMessage, Unit[]> getAffected;
     public Func<bool> checkCost;
     public Func<TileInfo, GameObject[]> checkAoe;
     public Action<Vec2i, bool, Action> execute;

@@ -61,12 +61,6 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Map\MapEditorHelper.cs" />
@@ -80,6 +74,7 @@
     <Compile Include="Assets\Scripts\Camera\CameraFocus.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraMoveOnRightclick.cs" />
     <Compile Include="Assets\Scripts\Data.cs" />
+    <Compile Include="Assets\Scripts\EffectInfo.cs" />
     <Compile Include="Assets\Scripts\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
     <Compile Include="Assets\Scripts\Input\TargetingManager.cs" />

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
+using System.Linq;
 
 public class AttackAbility : MonoBehaviour{
     public AbilityInfo abilityInfo;
@@ -17,6 +18,7 @@ public class AttackAbility : MonoBehaviour{
     public AoeType aoeType = AoeType.DOT;
 
     void Awake(){
+        abilityInfo.getAffected = getAffected;
         abilityInfo.getRangeIndicator = getRangeIndicator;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
@@ -28,12 +30,12 @@ public class AttackAbility : MonoBehaviour{
         abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
     }
 
-    void executeAbility(ServerMessage.UnitAbilityMessage msg){
+    Unit[] getAffected(ServerMessage.UnitAbilityMessage msg) {
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
         GameObject[] aoeTargets = abilityInfo.checkAoe(target);
         HashSet<Unit> targetUnits = new HashSet<Unit>();
-        foreach(GameObject go in aoeTargets) {
+        foreach (GameObject go in aoeTargets) {
             TileInfo tInfo = go.GetComponent<TileInfo>();
             if (tInfo.unit == null) {
                 continue;
@@ -41,8 +43,13 @@ public class AttackAbility : MonoBehaviour{
             Unit unit = tInfo.unit.GetComponent<Unit>();
             if (unit.playerID != 0 && unit.playerID != gameObject.GetComponent<Unit>().playerID) targetUnits.Add(unit);
         }
+        return targetUnits.ToArray();
+    }
+
+    void executeAbility(ServerMessage.UnitAbilityMessage msg){
+        Unit[] affected = getAffected(msg);
         Unit thisUnit = gameObject.GetComponent<Unit>();
-        foreach (Unit unit in targetUnits) {
+        foreach (Unit unit in affected) {
             float multiplier = thisUnit.attackMultiplier;
             if(unit.getHPPercentage() <= mortalBlowPercentage) multiplier *= mortalBlowMultiplier;
             if(unit.type == UnitType.BUILDING) multiplier *= demolishMultiplier;

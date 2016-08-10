@@ -12,6 +12,7 @@ public class UpgradeUnitAbility : MonoBehaviour {
 
     void Awake(){
         abilityInfo.getRangeIndicator = getRangeIndicator;
+        abilityInfo.getAffected = getAffected;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.dot;
@@ -24,10 +25,17 @@ public class UpgradeUnitAbility : MonoBehaviour {
         abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
     }
 
-    void executeAbility(ServerMessage.UnitAbilityMessage msg){
+    Unit[] getAffected(ServerMessage.UnitAbilityMessage msg) {
+        Unit[] affected = new Unit[1];
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
-        GameObject unitObj = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>().unit;
-        Destroy(unitObj);
+        TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
+        affected[0] = target.unit.GetComponent<Unit>();
+        return affected;
+    }
+
+    void executeAbility(ServerMessage.UnitAbilityMessage msg){
+        Unit[] affected = getAffected(msg);
+        Destroy(affected[0].gameObject);
     }
 
     GameObject[] checkRange(){

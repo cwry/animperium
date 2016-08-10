@@ -112,14 +112,10 @@ public class Unit : MonoBehaviour {
         };
 
         Action<ServerMessage.UnitAbilityMessage> handleParticles = (ServerMessage.UnitAbilityMessage msg) => {
-            if (ai.targetParticle != null) {
-                GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
-                TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
-                GameObject[] aoe = ai.checkAoe(target);
-                foreach (GameObject go in aoe) {
-                    Instantiate(ai.targetParticle, go.transform.position, Quaternion.identity);
-                }
-            }
+            handleEffectsOnAffected(ai, msg);
+            handleEffectsOnCaster(ai, msg);
+            handleEffectsOnTarget(ai, msg);
+            handleEffectsOnAoe(ai, msg);
         };
 
         Action<ServerMessage.UnitAbilityMessage> executionAction = (ServerMessage.UnitAbilityMessage msg) => {
@@ -134,9 +130,58 @@ public class Unit : MonoBehaviour {
         return abilities.Count - 1;
     }
 
+    public void handleEffectsOnCaster(AbilityInfo ai, ServerMessage.UnitAbilityMessage msg) {
+        GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
+        TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
+        foreach (GameObject go in ai.effectsOnCaster) {
+            EffectInfo ei = go.GetComponent<EffectInfo>();
+            bool shouldRotate = ei != null && ei.shouldRotate;
+            GameObject effect = (GameObject)Instantiate(go, gameObject.transform.position, Quaternion.identity);
+            if (shouldRotate) effect.transform.LookAt(target.transform);
+        }
+    }
+
+    public void handleEffectsOnAffected(AbilityInfo ai, ServerMessage.UnitAbilityMessage msg){
+        if (ai.getAffected == null) return;
+        foreach (GameObject go in ai.effectsOnAffected) {
+            EffectInfo ei = go.GetComponent<EffectInfo>();
+            bool shouldRotate = ei != null && ei.shouldRotate;
+            foreach (Unit u in ai.getAffected(msg)){
+                GameObject effect = (GameObject)Instantiate(go, u.transform.position, Quaternion.identity);
+                if (shouldRotate) effect.transform.LookAt(transform);
+            }
+        }
+    }
+
+    public void handleEffectsOnAoe(AbilityInfo ai, ServerMessage.UnitAbilityMessage msg) {
+        GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
+        TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
+        foreach (GameObject e in ai.effectsOnAoe) {
+            EffectInfo ei = e.GetComponent<EffectInfo>();
+            bool shouldRotate = ei != null && ei.shouldRotate;
+            foreach (GameObject tile in ai.checkAoe(target)) {
+                GameObject effect = (GameObject)Instantiate(e, tile.transform.position, Quaternion.identity);
+                if (shouldRotate) effect.transform.LookAt(transform);
+            }
+        }
+    }
+
+    public void handleEffectsOnTarget(AbilityInfo ai, ServerMessage.UnitAbilityMessage msg) {
+        GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
+        TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
+        foreach (GameObject e in ai.effectsOnTarget) {
+            EffectInfo ei = e.GetComponent<EffectInfo>();
+            bool shouldRotate = ei != null && ei.shouldRotate;
+            GameObject effect = (GameObject)Instantiate(e, target.transform.position, Quaternion.identity);
+            if (shouldRotate) effect.transform.LookAt(transform);
+        }
+    }
+
     public void attach(TileInfo ti) {
         GameObject[] footprint = getFootprint(ti);
         foreach (GameObject go in footprint) {
+            EffectInfo ei = go.GetComponent<EffectInfo>();
+            bool shouldRotate = ei != null && ei.shouldRotate;
             go.GetComponent<TileInfo>().unit = gameObject;
         }
     }

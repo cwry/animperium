@@ -18,6 +18,7 @@ public class MineAbility : MonoBehaviour {
     Action removeOnUseAbility;
 
     void Awake() {
+        abilityInfo.getAffected = getAffected;
         abilityInfo.getRangeIndicator = getRangeIndicator;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
@@ -31,11 +32,18 @@ public class MineAbility : MonoBehaviour {
         removeOnUseAbility = u.onUseAbility.add<AbilityInfo>(onUseAbility);
     }
 
-    void executeAbility(ServerMessage.UnitAbilityMessage msg) {
+    Unit[] getAffected(ServerMessage.UnitAbilityMessage msg) {
+        Unit[] affected = new Unit[1];
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
+        affected[0] = target.unit.GetComponent<Unit>();
+        return affected;
+    }
+
+    void executeAbility(ServerMessage.UnitAbilityMessage msg) {
+        Unit[] affected = getAffected(msg);
         removeOnTurnBegin = TurnManager.onTurnEnd.add<int>(onTurnEnd);
-        currentMine = target.unit.GetComponent<Minable>();
+        currentMine = affected[0].gameObject.GetComponent<Minable>();
         onTurnEnd(TurnManager.turnID);
         initialMine = true;
     }

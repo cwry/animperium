@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
+using System.Linq;
 
 public class OffensiveBuffAbility : MonoBehaviour {
     public AbilityInfo abilityInfo;
@@ -19,6 +20,7 @@ public class OffensiveBuffAbility : MonoBehaviour {
             maxRange = 0;
         }
         abilityInfo.selfCast = selfCast;
+        abilityInfo.getAffected = getAffected;
         abilityInfo.getRangeIndicator = getRangeIndicator;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
@@ -30,7 +32,7 @@ public class OffensiveBuffAbility : MonoBehaviour {
         abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
     }
 
-    void executeAbility(ServerMessage.UnitAbilityMessage msg) {
+    Unit[] getAffected(ServerMessage.UnitAbilityMessage msg) {
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
         GameObject[] aoeTargets = abilityInfo.checkAoe(target);
@@ -43,8 +45,13 @@ public class OffensiveBuffAbility : MonoBehaviour {
             Unit unit = tInfo.unit.GetComponent<Unit>();
             if (unit.playerID == Data.playerID && (targetType == UnitType.UNDEFINED || unit.type == targetType)) targetUnits.Add(unit);
         }
+        return targetUnits.ToArray();
+    }
 
-        foreach (Unit unit in targetUnits) {
+    void executeAbility(ServerMessage.UnitAbilityMessage msg) {
+        Unit[] affected = getAffected(msg);
+
+        foreach (Unit unit in affected) {
             if (unit.attackMultiplier < multiplier) unit.attackMultiplier = multiplier;
         }
     }
