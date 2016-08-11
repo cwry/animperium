@@ -10,8 +10,6 @@ public class EndTurn : MonoBehaviour {
     EventSprite eventSprite;
     Image image;
 
-    bool shouldEndTurn = false;
-
 	// Use this for initialization
 	void Awake () {
         eventSprite = GetComponent<EventSprite>();
@@ -21,16 +19,16 @@ public class EndTurn : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(shouldEndTurn && !GUIData.blockAction) {
-            shouldEndTurn = false;
+	    if(GUIData.shouldEndTurn && !GUIData.blockAction) {
+            GUIData.shouldEndTurn = false;
             TurnManager.endTurn();
         }
 	}
 
     public void EndTurnExecute()
     {
-        if (Data.isActivePlayer() && !shouldEndTurn) {
-            shouldEndTurn = true;
+        if (Data.isActivePlayer() && !GUIData.shouldEndTurn) {
+            GUIData.shouldEndTurn = true;
             SoundManager.instance.PlaySound("confirm", SoundManager.effectVolume);
             ContextMenuSpawn.DestroyContextMenu();
             eventSprite.SwitchToDeactivated();

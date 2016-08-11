@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class NetworkLobbyInput : MonoBehaviour {
-
-    bool isConnected = false;
+    
     public GameObject hostPortInput;
     public GameObject joinPortInput;
     public GameObject joinIPInput;
-    public GameObject testModeToggle;
 
     int hostPort = 7777;
     int joinPort = 7777;
@@ -17,15 +16,19 @@ public class NetworkLobbyInput : MonoBehaviour {
     string ip = "127.0.0.1";
     bool isTest = true;
     
+    void Update() {
+        if(NetworkServer.connections.Count == 3) {
+            NetworkData.isConnected = true;
+        }
+        else {
+            NetworkData.isConnected = false;
+        }
+    }
     public void SetIP()
     {
         ip = joinIPInput.GetComponent<InputField>().text;
     }
-
-    public void SetIsTest()
-    {
-        isTest = testModeToggle.GetComponent<Toggle>().isOn;
-    }
+    
     public void SetHostPort()
     {
        if(Int32.TryParse(hostPortInput.GetComponent<InputField>().text, out n))
@@ -46,20 +49,22 @@ public class NetworkLobbyInput : MonoBehaviour {
     {
         NetworkData.server = new GameServer(hostPort);
         NetworkData.client = new GameClient(ip, hostPort);
-        isConnected = true;
+        isTest = true;
     }
 
     public void StartGame()
     {
-        if (isConnected)
+        if (NetworkData.isConnected || isTest)
         {
-            NetworkData.server.initGame(100, 100, (int)UnityEngine.Random.Range(0, int.MaxValue), isTest);
+            NetworkData.server.initGame(100, 100, (int)UnityEngine.Random.Range(0, int.MaxValue), false);
         }
     }
 
     public void JoinServer()
     {
+        if(NetworkData.server != null) {
+            NetworkData.server = null;
+        }
         NetworkData.client = new GameClient(ip, joinPort);
-        isConnected = true;
     }
 }
