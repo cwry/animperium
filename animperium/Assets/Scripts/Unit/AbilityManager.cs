@@ -16,9 +16,11 @@ public class AbilityInfo {
     public GameObject[] effectsOnTarget;
     public GameObject[] effectsOnAoe;
     public int apCost;
+    public int mpCost;
     public float woodCost;
     public float ironCost;
     public float stoneCost;
+    public float goldCost;
     [HideInInspector]
     public bool selfCast;
     [HideInInspector]

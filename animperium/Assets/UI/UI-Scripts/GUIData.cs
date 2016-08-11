@@ -14,4 +14,5 @@ public class GUIData {
     public static bool blockAction = false;
     public static bool isClosed = false;
     public static bool shouldEndTurn = false;
+    public static bool unitInfoActive = false;
 }

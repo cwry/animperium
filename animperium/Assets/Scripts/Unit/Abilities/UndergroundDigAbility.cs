@@ -37,8 +37,12 @@ public class UndergroundDigAbility : MonoBehaviour {
                 TileInfo ti = grid.gridData[hx.x, hx.y].GetComponent<TileInfo>();
                 return ma.checkHexTraversability(ti);
             });
-            ma.movementPoints -= path.Length - 1;
-            PathMovement.move(gameObject, grid, path, ma.animationSpeed, ma.jumpHeight, currentCallback);
+            if(path.Length - 1 > ma.movementPoints) {
+                currentCallback();
+            }else {
+                ma.movementPoints -= path.Length - 1;
+                PathMovement.move(gameObject, grid, path, ma.animationSpeed, ma.jumpHeight, currentCallback);
+            }
         }else {
             if(currentCallback != null) currentCallback();
         }

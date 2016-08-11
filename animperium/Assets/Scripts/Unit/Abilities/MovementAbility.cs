@@ -41,13 +41,23 @@ public class MovementAbility : MonoBehaviour {
     public bool checkHexTraversability(TileInfo ti) {
         UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
         bool underground = ut == null || (ut.state == UndergroundTileState.REVEALED);
+        Unit u = null;
+        if (ti.unit != null) u = ti.unit.GetComponent<Unit>();
+        return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject || (u.playerID == Data.playerID && u.type == UnitType.UNIT));
+    }
+
+    bool checkHexTraversabilityAndVisibilityDontIgnoreFriendly(TileInfo ti) {
+        UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
+        bool underground = ut == null || (ut.state == UndergroundTileState.REVEALED && ut.isInSight());
         return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject);
     }
 
     bool checkHexTraversabilityAndVisibility(TileInfo ti) {
         UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
         bool underground = ut == null || (ut.state == UndergroundTileState.REVEALED && ut.isInSight());
-        return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject);
+        Unit u = null;
+        if(ti.unit != null) u = ti.unit.GetComponent<Unit>();
+        return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject || (u.playerID == Data.playerID && u.type == UnitType.UNIT));
     }
 
     void executeAbility(ServerMessage.UnitAbilityMessage msg){
@@ -66,7 +76,7 @@ public class MovementAbility : MonoBehaviour {
     GameObject[] checkRange(){
         if (movementPoints == 0) return null;
         Unit u = gameObject.GetComponent<Unit>();
-        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, checkHexTraversabilityAndVisibility, checkHexTraversabilityAndVisibility);
+        GameObject[] inRange = u.currentTile.GetComponent<TileInfo>().listTree(1, movementPoints - abilityInfo.mpCost, checkHexTraversabilityAndVisibility, checkHexTraversabilityAndVisibilityDontIgnoreFriendly);
         return inRange.Length == 0 ? null : inRange;
     }
 
@@ -77,7 +87,7 @@ public class MovementAbility : MonoBehaviour {
 
     GameObject[] getRangeIndicator(){
         if (movementPoints == 0) return null;
-        GameObject[] inRange = gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(1, movementPoints, checkHexTraversabilityAndVisibility, checkHexTraversabilityAndVisibility);
+        GameObject[] inRange = gameObject.GetComponent<Unit>().currentTile.GetComponent<TileInfo>().listTree(1, movementPoints - abilityInfo.mpCost, checkHexTraversabilityAndVisibility, checkHexTraversabilityAndVisibility);
         return inRange.Length == 0 ? null : inRange;
     }
 

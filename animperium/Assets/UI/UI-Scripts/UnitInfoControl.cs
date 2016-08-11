@@ -22,6 +22,7 @@ public class UnitInfoControl : MonoBehaviour {
     {
         if (SelectionManager.selectedUnit != currentUnit)
         {
+            GUIData.unitInfoActive = true;
             currentUnit = SelectionManager.selectedUnit;
             if (currentUnit != null)
             {
@@ -34,6 +35,9 @@ public class UnitInfoControl : MonoBehaviour {
             {
                 unitInfo.SetActive(false);
             }
+        }
+        if(GUIData.shouldEndTurn) {
+            unitInfo.SetActive(false);
         }
     }
 }

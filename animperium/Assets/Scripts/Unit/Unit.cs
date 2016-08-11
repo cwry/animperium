@@ -79,20 +79,24 @@ public class Unit : MonoBehaviour {
 
     public int addAbility(AbilityInfo ai) {
         ai.checkCost = () => {
-            if (
-            ai.apCost > actionPoints ||
-            ai.woodCost > Data.wood + Data.gold ||
-            ai.ironCost > Data.iron + Data.gold ||
-            ai.stoneCost > Data.stone + Data.gold
-            ){
-                return false;
-            }
-            return true;
+            float totalGoldCost = ai.goldCost;
+            if (ai.woodCost > Data.wood) totalGoldCost += ai.woodCost - Data.wood;
+            if (ai.ironCost > Data.iron) totalGoldCost += ai.ironCost - Data.iron;
+            if (ai.stoneCost > Data.stone) totalGoldCost += ai.stoneCost - Data.stone;
+            MovementAbility ma = gameObject.GetComponent<MovementAbility>();
+            int mp = 0;
+            if (ma != null) mp = ma.movementPoints;
+            return totalGoldCost <= Data.gold && ai.apCost <= actionPoints && (ma != null || ai.mpCost <= mp);
         };
 
         Action<ServerMessage.UnitAbilityMessage> onExecution = ai.onExecution;
         Action<ServerMessage.UnitAbilityMessage> handleCost = (ServerMessage.UnitAbilityMessage msg) => {
             actionPoints -= ai.apCost;
+            MovementAbility ma = gameObject.GetComponent<MovementAbility>();
+            if (ma != null) {
+                ma.movementPoints -= ai.mpCost;
+                if (ma.movementPoints < 0) ma.movementPoints = 0;
+            }
             if (playerID != Data.playerID) return;
             Data.wood -= ai.woodCost;
             if (Data.wood < 0) {
@@ -108,6 +112,10 @@ public class Unit : MonoBehaviour {
             if (Data.stone < 0) {
                 Data.gold += Data.stone;
                 Data.stone = 0;
+            }
+            Data.gold -= ai.goldCost;
+            if (Data.gold < 0) {
+                Data.gold = 0;
             }
         };
 
@@ -138,6 +146,7 @@ public class Unit : MonoBehaviour {
             return;
         }
         foreach (GameObject go in ai.effectsOnCaster) {
+            if (go == null) continue;
             EffectInfo ei = go.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
             GameObject effect = (GameObject)Instantiate(go, gameObject.transform.position, Quaternion.identity);
@@ -148,6 +157,7 @@ public class Unit : MonoBehaviour {
     public void handleEffectsOnAffected(AbilityInfo ai, ServerMessage.UnitAbilityMessage msg){
         if (ai.getAffected == null) return;
         foreach (GameObject go in ai.effectsOnAffected) {
+            if (go == null) continue;
             EffectInfo ei = go.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
             foreach (Unit u in ai.getAffected(msg)){
@@ -165,6 +175,7 @@ public class Unit : MonoBehaviour {
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
         foreach (GameObject e in ai.effectsOnAoe) {
+            if (e == null) continue;
             EffectInfo ei = e.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
             foreach (GameObject tile in ai.checkAoe(target)) {
@@ -186,6 +197,7 @@ public class Unit : MonoBehaviour {
             return;
         }
         foreach (GameObject e in ai.effectsOnTarget) {
+            if (e == null) continue;
             EffectInfo ei = e.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
             GameObject effect = (GameObject)Instantiate(e, target.transform.position, Quaternion.identity);
