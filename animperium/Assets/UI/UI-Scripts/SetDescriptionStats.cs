@@ -35,6 +35,9 @@ public class SetDescriptionStats : MonoBehaviour {
             , currentUnit.magicResist
             , currentUnit.meleeResist
             , currentUnit.rangedResist);
+        if(currentUnit.GetComponent<Minable>() != null) {
+            text.text = currentUnit.GetComponent<Minable>().amt.ToString();
+        }
     }
 
     public void SetDescriptionText(GameObject unit)
@@ -42,6 +45,7 @@ public class SetDescriptionStats : MonoBehaviour {
 
         Text text = GetComponent<Text>();
         Unit currentUnit = unit.GetComponent<Unit>();
+        string resource = "";
         MovementAbility movementAbility = currentUnit.GetComponent<MovementAbility>();
         text.text = String.Format(
             "{0}{1}{2}{3}{4}"
@@ -50,5 +54,22 @@ public class SetDescriptionStats : MonoBehaviour {
             , magicR
             , meleeR
             , rangeR);
+        if (currentUnit.GetComponent<Minable>() != null) {
+            switch (currentUnit.GetComponent<Minable>().type) {
+                case Resource.GOLD:
+                    resource = "gold";
+                    break;
+                case Resource.IRON:
+                    resource = "iron";
+                    break;
+                case Resource.STONE:
+                    resource = "stone";
+                    break;
+                case Resource.WOOD:
+                    resource = "wood";
+                    break;
+            }
+            text.text = "Amount of " + resource;
+        }
     }
 }
