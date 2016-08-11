@@ -86,7 +86,7 @@ public class Unit : MonoBehaviour {
             MovementAbility ma = gameObject.GetComponent<MovementAbility>();
             int mp = 0;
             if (ma != null) mp = ma.movementPoints;
-            return totalGoldCost <= Data.gold && ai.apCost <= actionPoints && (ma != null && ai.mpCost <= mp);
+            return totalGoldCost <= Data.gold && ai.apCost <= actionPoints && (ma != null || ai.mpCost <= mp);
         };
 
         Action<ServerMessage.UnitAbilityMessage> onExecution = ai.onExecution;
@@ -146,6 +146,7 @@ public class Unit : MonoBehaviour {
             return;
         }
         foreach (GameObject go in ai.effectsOnCaster) {
+            if (go == null) continue;
             EffectInfo ei = go.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
             GameObject effect = (GameObject)Instantiate(go, gameObject.transform.position, Quaternion.identity);
@@ -156,6 +157,7 @@ public class Unit : MonoBehaviour {
     public void handleEffectsOnAffected(AbilityInfo ai, ServerMessage.UnitAbilityMessage msg){
         if (ai.getAffected == null) return;
         foreach (GameObject go in ai.effectsOnAffected) {
+            if (go == null) continue;
             EffectInfo ei = go.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
             foreach (Unit u in ai.getAffected(msg)){
@@ -173,6 +175,7 @@ public class Unit : MonoBehaviour {
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
         foreach (GameObject e in ai.effectsOnAoe) {
+            if (e == null) continue;
             EffectInfo ei = e.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
             foreach (GameObject tile in ai.checkAoe(target)) {
@@ -194,6 +197,7 @@ public class Unit : MonoBehaviour {
             return;
         }
         foreach (GameObject e in ai.effectsOnTarget) {
+            if (e == null) continue;
             EffectInfo ei = e.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
             GameObject effect = (GameObject)Instantiate(e, target.transform.position, Quaternion.identity);

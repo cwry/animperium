@@ -11,7 +11,10 @@ public class NetworkLobbyInput : MonoBehaviour {
     public GameObject joinIPInput;
     public GameObject startButton;
     public GameObject connectionFields;
+    public GameObject resetButton;
 
+    bool canReset = false;
+    bool canConnect = true;
     int hostPort = 7777;
     int joinPort = 7777;
     int n;
@@ -19,21 +22,20 @@ public class NetworkLobbyInput : MonoBehaviour {
     
     void Awake() {
         startButton.SetActive(false);
+        resetButton.SetActive(false);
     }
     void Update() {
-        if (NetworkData.isConnected) {
-            startButton.SetActive(true);
-        }
-        else {
-            startButton.SetActive(false);
-        }
+        if (canReset)  resetButton.SetActive(true);
+        else resetButton.SetActive(false);
 
-        if (NetworkServer.connections.Count == 3) {
-            NetworkData.isConnected = true;
-        }
-        else {
-            NetworkData.isConnected = false;
-        }
+        if(canConnect) connectionFields.SetActive(true);
+        else connectionFields.SetActive(false);
+
+        if (NetworkData.isConnected) startButton.SetActive(true);
+        else startButton.SetActive(false);
+
+        if (NetworkServer.connections.Count == 3) NetworkData.isConnected = true;
+        else NetworkData.isConnected = false;
     }
     public void SetIP()
     {
@@ -46,7 +48,6 @@ public class NetworkLobbyInput : MonoBehaviour {
         {
             hostPort = n;
         }
-       
     }
 
     public void SetJoinPort()
@@ -60,7 +61,8 @@ public class NetworkLobbyInput : MonoBehaviour {
     {
         NetworkData.server = new GameServer(hostPort);
         NetworkData.client = new GameClient(ip, hostPort);
-        connectionFields.SetActive(false);
+        canConnect = false;
+        canReset = true;
     }
 
     public void StartGame()
@@ -77,6 +79,17 @@ public class NetworkLobbyInput : MonoBehaviour {
             NetworkData.server = null;
         }
         NetworkData.client = new GameClient(ip, joinPort);
-        connectionFields.SetActive(false);
+        canConnect = false;
+        canReset = true;
+    }
+
+    public void ResetNetwork() {
+        NetworkData.client.netClient.Disconnect();
+        NetworkData.client = null;
+        NetworkData.isConnected = false;
+        NetworkServer.Reset();
+        NetworkData.server = null;
+        canReset = false;
+        canConnect = true;
     }
 }
