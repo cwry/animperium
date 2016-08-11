@@ -161,6 +161,7 @@
     <Compile Include="Assets\UI\UI-Scripts\ResourcesText.cs" />
     <Compile Include="Assets\UI\UI-Scripts\RotateOnCreate.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetDescriptionStats.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\SetFactionColor.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetMusicVolume.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetOnGui.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetSoundEffectVolume.cs" />
