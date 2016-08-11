@@ -11,7 +11,10 @@ public class DestroyUnitAbility : MonoBehaviour {
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.dot;
         abilityInfo.execute = (Vec2i target, bool isMainGrid, Action callback) => {
-            AbilityManager.useAbility(abilityInfo, target, isMainGrid, callback);
+            AbilityManager.useAbility(abilityInfo, target, isMainGrid, () => {
+                ContextMenuSpawn.ClearTarget();
+                callback();
+            });
         };
         abilityInfo.onExecution = executeAbility;
         abilityInfo.abilityID = GetComponent<Unit>().addAbility(abilityInfo);
