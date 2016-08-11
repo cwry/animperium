@@ -12,4 +12,6 @@ public class GUIData {
     public static GameObject ContextUnit;
     public static float screenHeightRatio;
     public static bool blockAction = false;
+    public static bool isClosed = false;
+    public static bool shouldEndTurn = false;
 }
