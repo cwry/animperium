@@ -17,7 +17,7 @@ public class SpawnAbility : MonoBehaviour {
         abilityInfo.checkAoe = prefab.GetComponent<Unit>().getFootprint;
         abilityInfo.execute = (Vec2i target, bool isMainGrid, Action callback) => {
             AbilityManager.useAbility(abilityInfo, target, isMainGrid, () => {
-                SpawnManager.spawnUnit(isMainGrid ? Data.mainGrid : Data.subGrid, target, prefab.GetComponent<Unit>().prefabID, callback);
+                SpawnManager.spawnUnit(isMainGrid ? Data.mainGrid : Data.subGrid, target, prefab.GetComponent<Unit>().prefabID, -1, -1, -1, callback);
             });
         };
         abilityInfo.onExecution = executeAbility;

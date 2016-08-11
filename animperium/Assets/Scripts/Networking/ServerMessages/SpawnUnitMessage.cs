@@ -10,5 +10,8 @@ namespace ServerMessage{
         public string unitType;
         public int playerID;
         public string unitID;
+        public int ap;
+        public int mp;
+        public float hpPercentage;
     }
 }

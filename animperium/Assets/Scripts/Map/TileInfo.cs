@@ -13,9 +13,8 @@ public class TileInfo : MonoBehaviour {
     public bool traversable;
     [HideInInspector]
     public bool isHole = false;
-    public Action removeHole = () => { };
-    public Action hideHole = () => { };
-    public Action revealHole = () => { };
+    [HideInInspector]
+    public GameObject currentHoleModel;
     public GameObject unit;
     public GameEvent onUnitDetached = new GameEvent();
     public GameEvent onUnitAttached = new GameEvent();
@@ -36,6 +35,30 @@ public class TileInfo : MonoBehaviour {
                 u.currentTile = gameObject;
             }
         });
+    }
+
+    public void hideHole() {
+        if (currentHoleModel == null) return;
+        foreach (Renderer render in currentHoleModel.GetComponentsInChildren<Renderer>()) {
+            render.enabled = false;
+        }
+    }
+
+    public void revealHole() {
+        if (currentHoleModel == null) return;
+        foreach (Renderer render in currentHoleModel.GetComponentsInChildren<Renderer>()) {
+            render.enabled = true;
+        }
+    }
+
+    public void removeHole() {
+        Destroy(currentHoleModel);
+        isHole = false;
+    }
+
+    public void makeHole(GameObject hole) {
+        currentHoleModel = Instantiate(hole, transform.position, Quaternion.identity) as GameObject;
+        isHole = true;
     }
 
     public void detachUnit(){

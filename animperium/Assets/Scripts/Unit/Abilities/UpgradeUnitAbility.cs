@@ -18,7 +18,12 @@ public class UpgradeUnitAbility : MonoBehaviour {
         abilityInfo.checkAoe = AoeChecks.dot;
         abilityInfo.execute = (Vec2i target, bool isMainGrid, Action callback) => {
             AbilityManager.useAbility(abilityInfo, target, isMainGrid, () => {
-                SpawnManager.spawnUnit(isMainGrid ? Data.mainGrid : Data.subGrid, target, prefab.GetComponent<Unit>().prefabID, callback);
+                GridManager grid = isMainGrid ? Data.mainGrid : Data.subGrid;
+                Unit u = grid.gridData[target.x, target.y].GetComponent<TileInfo>().unit.GetComponent<Unit>();
+                int mp = -1;
+                MovementAbility ma = u.GetComponent<MovementAbility>();
+                if (ma != null) mp = ma.movementPoints;
+                SpawnManager.spawnUnit(isMainGrid ? Data.mainGrid : Data.subGrid, target, prefab.GetComponent<Unit>().prefabID, u.actionPoints, mp, u.getHPPercentage(), callback);
             });
         };
         abilityInfo.onExecution = executeAbility;
@@ -33,7 +38,7 @@ public class UpgradeUnitAbility : MonoBehaviour {
         return affected;
     }
 
-    void executeAbility(ServerMessage.UnitAbilityMessage msg){
+    void executeAbility(ServerMessage.UnitAbilityMessage msg) {
         Unit[] affected = getAffected(msg);
         Destroy(affected[0].gameObject);
     }

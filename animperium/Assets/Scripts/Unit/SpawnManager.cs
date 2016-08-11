@@ -40,21 +40,32 @@ public class SpawnManager : MonoBehaviour {
             u.playerID = msg.playerID;
             u.unitID = msg.unitID;
             u.attach(ti);
+            if(msg.ap >= 0) u.actionPoints = msg.ap;
+            if(msg.hpPercentage > 0) u.hitPoints = u.maxHitPoints * msg.hpPercentage;
+            MovementAbility ma = u.gameObject.GetComponent<MovementAbility>();
+            if (msg.mp >= 0 && ma != null) ma.movementPoints = msg.mp;
             Data.units.Add(msg.unitID, obj);
             if (callbacks[msg.actionID] != null) callbacks[msg.actionID]();
             callbacks.Remove(msg.actionID);
         });
     }
 
-    public static void spawnUnit(GridManager grid, Vec2i pos, string prefabID, Action callback = null){
+    public static void spawnUnit(GridManager grid, Vec2i pos, string prefabID, int ap, int mp, float hpPercentage, Action callback = null){
+        if (!Data.isActivePlayer()) {
+            Debug.Log("something horrible happened....");
+            callback();
+            return;
+        }
         ServerMessage.SpawnUnitMessage msg = new ServerMessage.SpawnUnitMessage();
+        msg.ap = ap;
+        msg.mp = mp;
+        msg.hpPercentage = hpPercentage;
         msg.actionID = ActionQueue.getInstance().actionID++;
         msg.isMainGrid = grid.isMainGrid;
         msg.tileX = pos.x;
         msg.tileY = pos.y;
         msg.unitType = prefabID;
         msg.playerID = Data.playerID;
-        Debug.Log(msg.actionID);
         callbacks.Add(msg.actionID, callback);
 
         NetworkData.client.netClient.Send((short)ServerMessage.Types.SPAWN_UNIT, msg);

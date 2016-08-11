@@ -27,6 +27,10 @@ public class TurnManager : MonoBehaviour {
     }
 
     public static void endTurn(){
+        if (!Data.isActivePlayer()) {
+            Debug.Log("something horrible happened....");
+            return;
+        }
         ServerMessage.TurnEndedMessage msg = new ServerMessage.TurnEndedMessage();
         msg.actionID = ActionQueue.getInstance().actionID++;
         msg.turnID = turnID;

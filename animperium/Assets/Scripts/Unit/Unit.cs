@@ -133,6 +133,10 @@ public class Unit : MonoBehaviour {
     public void handleEffectsOnCaster(AbilityInfo ai, ServerMessage.UnitAbilityMessage msg) {
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
+        UndergroundTile ut = currentTile.GetComponent<UndergroundTile>();
+        if (ut != null && !ut.isInSight()) {
+            return;
+        }
         foreach (GameObject go in ai.effectsOnCaster) {
             EffectInfo ei = go.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
@@ -147,6 +151,10 @@ public class Unit : MonoBehaviour {
             EffectInfo ei = go.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
             foreach (Unit u in ai.getAffected(msg)){
+                UndergroundTile ut = u.currentTile.GetComponent<UndergroundTile>();
+                if (ut != null && !ut.isInSight()) {
+                    continue;
+                }
                 GameObject effect = (GameObject)Instantiate(go, u.transform.position, Quaternion.identity);
                 if (shouldRotate) effect.transform.LookAt(transform);
             }
@@ -160,6 +168,10 @@ public class Unit : MonoBehaviour {
             EffectInfo ei = e.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
             foreach (GameObject tile in ai.checkAoe(target)) {
+                UndergroundTile ut = tile.GetComponent<UndergroundTile>();
+                if (ut != null && !ut.isInSight()) {
+                    continue;
+                }
                 GameObject effect = (GameObject)Instantiate(e, tile.transform.position, Quaternion.identity);
                 if (shouldRotate) effect.transform.LookAt(transform);
             }
@@ -169,6 +181,10 @@ public class Unit : MonoBehaviour {
     public void handleEffectsOnTarget(AbilityInfo ai, ServerMessage.UnitAbilityMessage msg) {
         GridManager grid = msg.isTargetMainGrid ? Data.mainGrid : Data.subGrid;
         TileInfo target = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
+        UndergroundTile ut = target.GetComponent<UndergroundTile>();
+        if (ut != null && !ut.isInSight()) {
+            return;
+        }
         foreach (GameObject e in ai.effectsOnTarget) {
             EffectInfo ei = e.GetComponent<EffectInfo>();
             bool shouldRotate = ei != null && ei.shouldRotate;
