@@ -31,7 +31,7 @@ public class GameServer{
 
     void onClientLoaded(NetworkMessage netMsg){
         loaded[NetworkServer.connections.IndexOf(netMsg.conn) - 1] = true;
-        if(!initialized && (loaded[0] && loaded[1]) || (testMode && loaded[0])){
+        if(!initialized && ((loaded[0] && loaded[1]) || (testMode && loaded[0]))){
             initialized = true;
             NetworkServer.SendToAll((short)ServerMessage.Types.ALL_LOADED, new UnityEngine.Networking.NetworkSystem.EmptyMessage());
         }
@@ -51,8 +51,9 @@ public class GameServer{
         Debug.Log("[SERVER] client disconnected. total connections: " + (NetworkServer.connections.Count - 1));
     }
 
-    public void initGame(int mapW, int mapH, int seed, bool testMode){
-        this.testMode = testMode;
+    public void initGame(int mapW, int mapH, int seed, bool test){
+        Debug.Log("TesMode: " + test);
+        testMode = test;
         initGame(mapW, mapH, seed);
     }
 

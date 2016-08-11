@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -96,6 +90,7 @@
     <Compile Include="Assets\Scripts\Map\GridManager.cs" />
     <Compile Include="Assets\Scripts\Map\MapLoadData.cs" />
     <Compile Include="Assets\Scripts\Map\MapLoader.cs" />
+    <Compile Include="Assets\Scripts\Map\SpawnMinesRandomly.cs" />
     <Compile Include="Assets\Scripts\Map\TileInfo.cs" />
     <Compile Include="Assets\Scripts\Map\UndergroundManager.cs" />
     <Compile Include="Assets\Scripts\Map\UndergroundTile.cs" />
