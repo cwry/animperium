@@ -54,6 +54,11 @@ public class AbilityManager : MonoBehaviour {
     }
 
     public static void useAbility(AbilityInfo abilityInfo, Vec2i target, bool isTargetMainGrid, Action callback = null){
+        if (!Data.isActivePlayer()) {
+            Debug.Log("something horrible happened....");
+            callback();
+            return;
+        }
         Unit u = abilityInfo.owner.GetComponent<Unit>();
         ServerMessage.UnitAbilityMessage msg = new ServerMessage.UnitAbilityMessage();
         msg.unitID = u.unitID;

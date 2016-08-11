@@ -153,7 +153,6 @@
     <Compile Include="Assets\UI\UI-Scripts\SetOnGui.cs" />
     <Compile Include="Assets\UI\UI-Scripts\SetSoundEffectVolume.cs" />
     <Compile Include="Assets\UI\UI-Scripts\ShowNameText.cs" />
-    <Compile Include="Assets\UI\UI-Scripts\SpawnButton.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UnitInfoControl.cs" />
     <Compile Include="Assets\UI\UI-Scripts\UnitInfoGui.cs" />
   </ItemGroup>

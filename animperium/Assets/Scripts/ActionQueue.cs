@@ -31,6 +31,8 @@ public class ActionQueue{
     public void push(int i, Action f){
         if (!actions.ContainsKey(i)){
             actions.Add(i, f);
+        }else {
+            actions[i] = f;
         }
     }
 
