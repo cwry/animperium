@@ -38,7 +38,7 @@ public class MovementAbility : MonoBehaviour {
         movementPoints = maxMovementPoints;
     }
 
-    bool checkHexTraversability(TileInfo ti) {
+    public bool checkHexTraversability(TileInfo ti) {
         UndergroundTile ut = ti.gameObject.GetComponent<UndergroundTile>();
         bool underground = ut == null || (ut.state == UndergroundTileState.REVEALED);
         return underground && ti.traversable && (ti.unit == null || ti.unit == gameObject);

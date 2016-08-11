@@ -7,13 +7,16 @@ public class UndergroundDigAbility : MonoBehaviour {
     public int minRange = 1;
     public int maxRange = 1;
 
+    Action currentCallback;
+
     void Awake() {
         abilityInfo.getRangeIndicator = getRangeIndicator;
         abilityInfo.owner = gameObject;
         abilityInfo.checkRange = checkRange;
         abilityInfo.checkAoe = AoeChecks.dot;
         abilityInfo.execute = (Vec2i target, bool isMainGrid, Action callback) => {
-            AbilityManager.useAbility(abilityInfo, target, isMainGrid, callback);
+            currentCallback = callback;
+            AbilityManager.useAbility(abilityInfo, target, isMainGrid);
         };
         abilityInfo.onExecution = executeAbility;
         Unit u = GetComponent<Unit>();
@@ -25,6 +28,21 @@ public class UndergroundDigAbility : MonoBehaviour {
         UndergroundTile target = grid.gridData[msg.targetX, msg.targetY].GetComponent<UndergroundTile>();
         target.state = UndergroundTileState.REVEALED;
         target.updateSightRange();
+        TileInfo tarTi = grid.gridData[msg.targetX, msg.targetY].GetComponent<TileInfo>();
+        Unit u = gameObject.GetComponent<Unit>();
+        MovementAbility ma = u.GetComponent<MovementAbility>();
+        if (tarTi.unit == null && ma != null) {
+            Vec2i currentPos = u.currentTile.GetComponent<TileInfo>().gridPosition;
+            Vec2i[] path = PathFinding.findPath(grid, currentPos.x, currentPos.y, msg.targetX, msg.targetY, ma.movementPoints, (Vec2i hx) => {
+                TileInfo ti = grid.gridData[hx.x, hx.y].GetComponent<TileInfo>();
+                return ma.checkHexTraversability(ti);
+            });
+            ma.movementPoints -= path.Length - 1;
+            PathMovement.move(gameObject, grid, path, ma.animationSpeed, ma.jumpHeight, currentCallback);
+        }else {
+            if(currentCallback != null) currentCallback();
+        }
+        currentCallback = null;
     }
 
     GameObject[] checkRange() {
