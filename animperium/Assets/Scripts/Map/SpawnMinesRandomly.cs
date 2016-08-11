@@ -16,7 +16,7 @@ public class SpawnMinesRandomly : MonoBehaviour {
                 validTiles.Add(ti);
             }
         }
-        System.Random rng = new System.Random(53);
+        System.Random rng = new System.Random(MapLoadData.seed);
         validTiles = validTiles.OrderBy((x) => {
             return rng.Next();
         }).ToList<TileInfo>();
