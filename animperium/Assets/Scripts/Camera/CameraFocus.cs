@@ -87,13 +87,13 @@ public class CameraFocus : MonoBehaviour {
 		UpdateCamVectors ();
 
 		// www.youtube.com/watch?v=ct7Ke_vH_vU
-		Transform levelTransform = GameObject.Find("level oberwelt lp").transform;
+		Transform levelTransform = GameObject.Find("oberwelt lp").transform;
 		levelPosition = levelTransform.position;
 		levelRotationY = levelTransform.rotation.eulerAngles.y;
 		levelScale = levelTransform.lossyScale;
 
-		minHeight = levelPosition.y + minHeight * levelScale.y; // -0 /1
-		maxHeight = levelPosition.y + maxHeight * levelScale.y; // -0 /1
+		minHeight = levelPosition.y + minHeight; // -0 /1
+		maxHeight = levelPosition.y + maxHeight; // -0 /1
 		Camera.main.fieldOfView = minFieldOfViewAngle + (maxFieldOfViewAngle - minFieldOfViewAngle)
 		* (Camera.main.transform.position.y - minHeight) / (maxHeight - minHeight);
 
