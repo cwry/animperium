@@ -11,7 +11,7 @@ public class PlayerTimer : MonoBehaviour {
     private int turn;
     public int maxRoundTime = 180;
     private int turnGold = 0;
-    public int maxGold = 100;
+    public int maxGold = 30;
     private bool isActive;
 
     // Use this for initialization
