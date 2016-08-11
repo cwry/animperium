@@ -83,10 +83,7 @@ public class Unit : MonoBehaviour {
             if (ai.woodCost > Data.wood) totalGoldCost += ai.woodCost - Data.wood;
             if (ai.ironCost > Data.iron) totalGoldCost += ai.ironCost - Data.iron;
             if (ai.stoneCost > Data.stone) totalGoldCost += ai.stoneCost - Data.stone;
-            MovementAbility ma = gameObject.GetComponent<MovementAbility>();
-            int mp = 0;
-            if (ma != null) mp = ma.movementPoints;
-            return totalGoldCost <= Data.gold && ai.apCost <= actionPoints && (ma != null || ai.mpCost <= mp);
+            return totalGoldCost <= Data.gold && ai.apCost <= actionPoints;
         };
 
         Action<ServerMessage.UnitAbilityMessage> onExecution = ai.onExecution;
