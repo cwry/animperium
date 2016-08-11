@@ -86,7 +86,8 @@ public class Unit : MonoBehaviour {
             MovementAbility ma = gameObject.GetComponent<MovementAbility>();
             int mp = 0;
             if (ma != null) mp = ma.movementPoints;
-            return totalGoldCost <= Data.gold && ai.apCost <= actionPoints && (ma != null && ai.mpCost <= mp);
+            Debug.Log(ma);
+            return totalGoldCost <= Data.gold && ai.apCost <= actionPoints && (ma != null || ai.mpCost <= mp);
         };
 
         Action<ServerMessage.UnitAbilityMessage> onExecution = ai.onExecution;
