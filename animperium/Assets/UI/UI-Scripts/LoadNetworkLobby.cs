@@ -4,13 +4,22 @@ using System.Collections;
 
 public class LoadNetworkLobby : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    public int sceneIndex = 2;
+    // Use this for initialization
+    void Start () {
         StartCoroutine(StartLobby());
 	}
 	
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            LoadLobby();
+        }
+    }
 	IEnumerator StartLobby() {
         yield return new WaitForSeconds(12f);
-        SceneManager.LoadScene(2);
+        LoadLobby();
+    }
+    void LoadLobby() {
+        SceneManager.LoadScene(sceneIndex);
     }
 }

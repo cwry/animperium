@@ -150,8 +150,10 @@
     <Compile Include="Assets\UI\UI-Scripts\FadeUI.cs" />
     <Compile Include="Assets\UI\UI-Scripts\GUIData.cs" />
     <Compile Include="Assets\UI\UI-Scripts\HealthBar.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\LoadCredits.cs" />
     <Compile Include="Assets\UI\UI-Scripts\LoadNetworkLobby.cs" />
     <Compile Include="Assets\UI\UI-Scripts\LookAtCamera.cs" />
+    <Compile Include="Assets\UI\UI-Scripts\MoveTextAndSwitchScene.cs" />
     <Compile Include="Assets\UI\UI-Scripts\New UI\ChangeSpriteColor.cs" />
     <Compile Include="Assets\UI\UI-Scripts\New UI\UISpawn.cs" />
     <Compile Include="Assets\UI\UI-Scripts\PlayerTimer.cs" />
