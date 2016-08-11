@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using System;
 
 [System.Serializable]
-public struct AbilityInfo {
+public class AbilityInfo {
     [HideInInspector]
     public int abilityID;
     public string name;
